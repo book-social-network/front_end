@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Header />
-      <Grid container spacing={1}>
+      <Grid container spacing={3}>
         <Grid item xs={0} sm={3}>
           <LeftContainer />
         </Grid>
