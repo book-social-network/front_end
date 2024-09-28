@@ -69,7 +69,7 @@ function Header() {
   const books = useIconInHeader(<LocalLibraryIcon/>, "Books");
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#3b5998" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#F4F1EA" }}>
       <Toolbar>
         <IconButton
           color="inherit"
@@ -91,8 +91,8 @@ function Header() {
               mr: 2,
               display: { xs: "none", sm: "block" },
               fontWeight: 700,
-              color: "inherit",
               textDecoration: "none",
+              color:"#000"
             }}
           >
             Social Book Network
@@ -117,7 +117,7 @@ function Header() {
             </Grid>
           </Grid>
         </Container>
-        <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
+        <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", color:"#000"}}>
           <IconButton size="large" aria-label="show new mails" color="inherit">
             <Badge badgeContent={4} color="error">
               <MailIcon />

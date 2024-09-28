@@ -1,80 +1,80 @@
+// LeftContent.jsx
 import React from "react";
-import "../../css/leftContainer.css"; // Import CSS
-import AvatarUser from "../../assets/images/MeoAnhLongNgan.webp";
-import { Grid, Avatar, Typography, Button } from "@mui/material";
-import { Group, Bookmark, Feed, GroupWork } from "@mui/icons-material";
+import {
+  Box,
+  Typography,
+  Container,
+  TextField,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Link,
+} from "@mui/material";
+import BookSVG from "../../assets/images/book-open-svgrepo-com.svg";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import SearchIcon from "@mui/icons-material/Search";
+import LinearProgessLabel from "../../hooks/LinearProgessLabel";
+import "../../css/leftContainer.css";
 
-function LeftContainer() {
+const LeftContainer = () => {
   return (
-    <Grid container className="left-container">
-      <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
-        <Grid item className="avatar" xs={1}>
-          <Avatar alt="avatar user" src={AvatarUser} />
-        </Grid>
-        <Grid item xs={10}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            Minh Đức
+    <Container>
+      <Box className="left-content">
+      <Typography variant="h6">Currently Reading</Typography>
+      <Grid>
+        <IconButton>
+          <AutoStoriesIcon />
+        </IconButton>
+        <Typography variant="p">Hôm nay bạn đọc gì?</Typography>
+      </Grid>
+      <Box className="search-books">
+        <TextField
+          placeholder="Tìm kiếm"
+          variant="outlined"
+          size="small"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+      <hr />
+      <Typography variant="h6">2024 Reading Challenge</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={6} className="grid-item" sx={{backgroundColor:"bisque", mt:3}}>
+          <Typography variant="h4" className="small-text">
+            2024
+          </Typography>
+          <img src={BookSVG} alt="Book" />
+          <Typography variant="h4" className="small-text">
+            READING
+          </Typography>
+          <Typography variant="h4" className="small-text">
+            CHALLENGE
           </Typography>
         </Grid>
+        <Grid item xs={6}>
+          <Box className="challenge-box">
+            <Link href="#" underline="none" className="custom-link">
+              <Typography variant="h4">0 </Typography>
+              <Typography variant="body1">books completed</Typography>
+            </Link>
+            <Typography className="book-count" sx={{fontSize:"0.75rem"}}>
+              1 book behind schedule
+            </Typography>
+            <LinearProgessLabel full={200} completed={33} />
+          </Box>
+          <Typography variant="h6">View Challenge</Typography>
+        </Grid>
       </Grid>
-
-      {/* Friends Button */}
-      <Grid item xs={12}>
-        <Button
-          fullWidth
-          color="primary"
-          startIcon={<Group />}
-          className="button"
-        >
-          <Typography variant="h6" sx={{ textTransform: "none" }}>
-            Friends
-          </Typography>
-        </Button>
-      </Grid>
-
-      {/* Save Button */}
-      <Grid item xs={12}>
-        <Button
-          fullWidth
-          color="primary"
-          startIcon={<Bookmark />}
-          className="button"
-        >
-          <Typography variant="h6" sx={{ textTransform: "none" }}>
-            Save
-          </Typography>
-        </Button>
-      </Grid>
-
-      {/* News Feed Button */}
-      <Grid item xs={12}>
-        <Button
-          fullWidth
-          color="primary"
-          startIcon={<Feed />}
-          className="button"
-        >
-          <Typography variant="h6" sx={{ textTransform: "none" }}>
-            News Feed
-          </Typography>
-        </Button>
-      </Grid>
-
-      {/* Groups Button */}
-      <Grid item xs={12}>
-        <Button
-          fullWidth
-          color="primary"
-          startIcon={<GroupWork />}
-          className="button"
-        >
-          <Typography variant="h6" sx={{ textTransform: "none" }}>
-            Groups
-          </Typography>
-        </Button>
-      </Grid>
-    </Grid>
+    </Box>
+    </Container>
   );
-}
+};
 
 export default LeftContainer;

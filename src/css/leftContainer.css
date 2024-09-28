@@ -1,26 +1,52 @@
-.left-container {
-    margin: 16px;
-    align-content: start;
-    align-items: flex-start;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-  }
-  
-  .left-container .button {
-    justify-content: flex-start;
-    text-align: left;
-    padding: 12px;
-    margin-top: 16px;
-  }
-  
-  .left-container .button:hover {
-    background-color: #e3f2fd;
-    border-radius: 4px;
-  }
-  
-  .left-container .avatar {
-    margin-right: 16px;
-  }
-  
+.left-content {
+  padding: 20px;
+}
+
+.search-books .MuiOutlinedInput-root {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  max-width: 400px;
+}
+.custom-link {
+  color: black;   text-decoration: none; 
+}
+
+.custom-link:hover {
+  text-decoration: underline; 
+}
+.book-count{ 
+  color: gray; 
+}
+.grid-item {
+  background-color: bisque;
+  padding: 0!important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.grid-item img {
+  width: 80%;
+  height: auto;
+}
+
+.grid-item .large-text {
+  font-size: 1.5rem; 
+  font-weight: bold;
+}
+
+.grid-item .small-text {
+  font-size: 1.25rem; 
+  font-weight: bold;
+}
+
+.challenge-box {
+  margin: 10px 0;
+}
+
+.want-to-read img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
