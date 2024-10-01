@@ -1,25 +1,61 @@
 // CenterContent.jsx
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import '../../css/centerContainer.css';
+import React from "react";
+import Banner from "../../assets/banners/banner_center.jpg";
+import { Box, Typography, IconButton, Grid } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import "../../css/centerContainer.css";
+import image from "../../assets/images/MeoAnhLongNgan.webp";
+import Post from "./Poster/Post";
 
 const CenterContainer = () => {
   return (
-    <Box className="center-content">
-      <Typography variant="h4" className="banner-title">
-        Celebrate Hispanic Heritage Month
-      </Typography>
-      <Typography>
-        Discover great new books to read this month and all year long!
-      </Typography>
-      <Box className="news-section">
-        <Typography variant="h6">News & Interviews</Typography>
-        <Box className="news-items">
-          <img src="path_to_news_image1" alt="News 1" />
-          <img src="path_to_news_image2" alt="News 2" />
-        </Box>
+    <>
+      <Box 
+        className="center-content"
+        sx={{
+          border: "2px solid #ccc", 
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", 
+          padding: "20px", 
+          borderRadius: "8px",
+          textAlign: "center", 
+          marginTop: "20px"
+        }}
+      >
+        <img src={Banner} alt="" style={{ width: "100%", borderRadius: "8px" }} />
+        <Typography 
+          variant="h4" 
+          className="banner-title"
+          sx={{ marginTop: "20px" }}
+        >
+          Mừng tháng đọc sách
+        </Typography>
+        <Typography 
+          variant="body1" 
+          sx={{ marginTop: "10px" }}
+        >
+          Khám phá những cuốn sách mới tuyệt vời để đọc trong tháng này và cả năm!
+        </Typography>
       </Box>
-    </Box>
+      <Grid container sx={{ marginTop: "20px" }}>
+        <Grid item xs={6} container justifyContent="flex-start">
+          <Typography variant="body2">UPDATES</Typography>
+        </Grid>
+        <Grid item xs={6} container justifyContent="flex-end">
+          <IconButton>
+            <SettingsIcon />
+            <Typography variant="body2">Customize</Typography>
+          </IconButton>
+        </Grid>
+      </Grid>
+      <Post
+        userAvatar={image}
+        bookImg={image}
+        bookTitle="Tên cuốn sách"
+        bookDescription="Nội dung cuốn sách................................"
+        bookLink="https://www.facebook.com/"
+        timeStamp="08:00:00 01/10/2024"
+      />
+    </>
   );
 };
 

@@ -1,0 +1,100 @@
+.post-container {
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.post-content {
+  display: flex;
+  padding: 16px;
+}
+
+.post-content-left {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.book-image {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.post-content-right {
+  flex: 2;
+}
+
+.book-title {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.status-select {
+  margin-top: 8px;
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.post-description {
+  margin-top: 8px;
+  color: #555;
+}
+
+.post-actions {
+  padding: 8px 16px;
+}
+
+.like-text,
+.comment-text {
+  margin-left: 4px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.comment-section {
+  margin-top: 16px;
+  padding: 8px;
+  border-top: 1px solid #ddd;
+}
+
+.comment-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.comment-input {
+  margin-left: 8px;
+  flex: 1;
+}
+
+.comments-list {
+  margin-top: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.comment-item {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.comment-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.comment-text {
+  margin-left: 8px;
+  color: #333;
+  background-color: #f1f1f1;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
