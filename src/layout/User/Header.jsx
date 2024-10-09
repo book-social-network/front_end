@@ -21,8 +21,8 @@ import {
   Stack,
 } from "@mui/material";
 import {
+  MenuBook as MenuBookIcon,
   Home as HomeIcon,
-  VideoLibrary as VideoLibraryIcon,
   Groups as GroupsIcon,
   LocalLibrary as LocalLibraryIcon,
   Notifications as NotificationsIcon,
@@ -64,7 +64,7 @@ function Header() {
   );
 
   const homeIcon =useIconInHeader(<HomeIcon/>, "Home Page");
-  const Video = useIconInHeader(<VideoLibraryIcon/>, "Video");
+  const Video = useIconInHeader(<MenuBookIcon/>, "Video");
   const groups = useIconInHeader(<GroupsIcon/>, "Groups");
   const books = useIconInHeader(<LocalLibraryIcon/>, "Books");
 

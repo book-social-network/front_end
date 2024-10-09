@@ -1,16 +1,20 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography,Link } from '@mui/material';
+import image1 from "../../assets/banners/right_banner.jpg";
 import '../../css/rightContainer.css';
 
 const RightContainer = () => {
   return (
     <Box className="right-content">
-      <Typography variant="h6">Improve Recommendations</Typography>
-      <Typography>
-        Rating at least 20 books improves your recommendations.
+      <Typography variant="h6">News & Interviews</Typography>
+      <Typography variant="body1">
+        <Link href="#" underline="none">
+          10 New Books Recommended by Readers This Week
+        </Link>
       </Typography>
-      <Typography variant="h6">Goodreads Choice Awards</Typography>
-      <img src="path_to_goodreads_image" alt="Goodreads Choice Awards" className="award-image" />
+      <Link href="#">
+        <img src={image1} alt="image1" style={{width:"100%"}} />
+      </Link>
     </Box>
   );
 };
