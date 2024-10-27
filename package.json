@@ -37,6 +37,8 @@
       "react-app/jest"
     ]
   },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "browserslist": {
     "production": [
       ">0.2%",

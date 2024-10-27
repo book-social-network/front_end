@@ -10,13 +10,13 @@ import {
   InputAdornment,
   Link,
 } from "@mui/material";
-import BookSVG from "../../assets/images/book-open-svgrepo-com.svg";
-import book1 from "../../assets/images/book_read/book1.jpg";
-import book2 from "../../assets/images/book_read/book2.jpg";
+import BookSVG from "../../../../assets/images/book-open-svgrepo-com.svg";
+import book1 from "../../../../assets/images/book_read/book1.jpg";
+import book2 from "../../../../assets/images/book_read/book2.jpg";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import SearchIcon from "@mui/icons-material/Search";
-import LinearProgessLabel from "../../hooks/LinearProgessLabel";
-import "../../css/leftContainer.css";
+import LinearProgessLabel from "../../../../hooks/LinearProgessLabel";
+import "../../../../css/leftContainer.css";
 
 const LeftContainer = () => {
   return (

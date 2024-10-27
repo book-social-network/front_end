@@ -1,21 +1,11 @@
+@media (max-width: 600px) {
+  .header-icons {
+    display: none;
+  }
+}
 
-  @media (min-width: 600px) {
-    .header-searchbox {
-      width: 300px;
-    }
-  
-    .header-logo {
-      display: block;
-    }
-  
-    .header-typography {
-      display: block; 
-    }
+@media (min-width: 600px) {
+  .header-icons {
+    display: flex;
   }
-  
-  @media (max-width: 600px) {
-    .header-searchbox {
-      width: 100%;
-    }
-  }
-  
+}

@@ -1,0 +1,29 @@
+li{
+    list-style: none;
+}
+ul{
+    padding: 1;
+}
+.footer{
+    background-color: #F4F1EA;
+    margin-top: 5px;
+}
+.footer-link{
+    text-decoration: none!important;
+    color: #000!important;
+}
+.footer-link:hover{
+    text-decoration: underline!important;
+}
+.icon-facebook:hover{
+    color: blue;
+}
+.icon-instagram:hover{
+    color: #bc1888; 
+}
+.icon-twitter:hover{
+    color: #000;
+}
+.icon-linkedin:hover{
+    color: #0077B5;
+}

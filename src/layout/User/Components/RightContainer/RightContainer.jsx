@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography,Link } from '@mui/material';
-import image1 from "../../assets/banners/right_banner.jpg";
-import '../../css/rightContainer.css';
+import image1 from "../../../../assets/banners/right_banner.jpg";
+import '../../../../css/rightContainer.css';
 
 const RightContainer = () => {
   return (

@@ -1,6 +1,7 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import Logo from "../../assets/images/MeoAnhLongNgan.webp";
+import Logo from "../../../../assets/images/MeoAnhLongNgan.webp";
 import {
   AppBar,
   Box,
@@ -19,6 +20,7 @@ import {
   Grid,
   Container,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
 import {
   MenuBook as MenuBookIcon,
@@ -29,17 +31,21 @@ import {
   Mail as MailIcon,
   Menu as MenuIcon,
 } from "@mui/icons-material";
-import useIconInHeader from "../../hooks/HeaderIcon";
+import useIconInHeader from "../../../../hooks/HeaderIcon";
+import "../../../../css/header.css"
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function Header() {
+const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+  
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -47,30 +53,47 @@ function Header() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  const homeIcon = useIconInHeader(<HomeIcon />, "Home Page", "/");
+  const myBooks = useIconInHeader(<MenuBookIcon />, "My books","/Mybooks");
+  const groups = useIconInHeader(<GroupsIcon />, "Groups", "/Groups");
+  const books = useIconInHeader(<LocalLibraryIcon />, "Books");
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", width: 250 }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center"}}>
       <Typography variant="h6" sx={{ my: 2 }}>
         Menu
       </Typography>
       <List>
-        {settings.map((setting) => (
-          <ListItem button key={setting}>
-            <ListItemText primary={setting} />
-          </ListItem>
-        ))}
+        {isMobile && (
+          <>
+            <ListItem button>
+                <HomeIcon />
+                <ListItemText primary="Home Page" />
+            </ListItem>
+            <ListItem button>
+                <MenuBookIcon />
+                <ListItemText primary="My books" />
+            </ListItem>
+            <ListItem button>
+                <GroupsIcon />
+                <ListItemText primary="Groups" />
+            </ListItem>
+            <ListItem button>
+              <Link to="/books">
+                <LocalLibraryIcon />
+                <ListItemText primary="Books" />
+              </Link>
+            </ListItem>
+          </>
+        )}
       </List>
     </Box>
   );
 
-  const homeIcon =useIconInHeader(<HomeIcon/>, "Home Page");
-  const Video = useIconInHeader(<MenuBookIcon/>, "Video");
-  const groups = useIconInHeader(<GroupsIcon/>, "Groups");
-  const books = useIconInHeader(<LocalLibraryIcon/>, "Books");
+
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#F4F1EA" }}>
-      <Toolbar>
+    <AppBar position="sticky" sx={{ backgroundColor: "#F4F1EA" }}>
+      <Toolbar sx={{ justifyContent: "space-between" }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -81,8 +104,8 @@ function Header() {
           <MenuIcon />
         </IconButton>
 
-          <Stack>
-            <Typography
+        <Stack>
+          <Typography
             variant="h6"
             noWrap
             component="a"
@@ -92,42 +115,46 @@ function Header() {
               display: { xs: "none", sm: "block" },
               fontWeight: 700,
               textDecoration: "none",
-              color:"#000"
+              color: "#000",
             }}
           >
             Social Book Network
           </Typography>
-          </Stack>
-        <Container>
-          <Grid
-            container
-            sx={{ alignItems: "center", justifyContent: "center" }}
-          >
-            <Grid xs={1}>
-              {homeIcon}
+        </Stack>
+
+        {!isMobile && (
+          <Container sx={{ flexGrow: 1 }}>
+            <Grid container sx={{ alignItems: "center", justifyContent: "space-evenly" }}>
+              <Link to="/">
+                <Grid item xs={1}>
+                  {homeIcon}
+                </Grid>
+              </Link>
+              <Link to="/my-books">
+                <Grid item xs={1}>
+                  {myBooks}
+                </Grid>
+              </Link>
+              <Link to="/groups">
+                <Grid item xs={1}>
+                  {groups}
+                </Grid>
+              </Link>
+              <Link to="/books">
+                <Grid item xs={1}>
+                  {books}
+                </Grid>
+              </Link>
             </Grid>
-            <Grid xs={1}>
-              {Video}
-            </Grid>
-            <Grid xs={1}>
-              {groups}
-            </Grid>
-            <Grid xs={1}>
-              {books}
-            </Grid>
-          </Grid>
-        </Container>
-        <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", color:"#000"}}>
+          </Container>
+        )}
+        <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", color: "#000", marginLeft: "auto" }}>
           <IconButton size="large" aria-label="show new mails" color="inherit">
             <Badge badgeContent={4} color="error">
               <MailIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            size="large"
-            aria-label="show new notifications"
-            color="inherit"
-          >
+          <IconButton size="large" aria-label="show new notifications" color="inherit">
             <Badge badgeContent={17} color="error">
               <NotificationsIcon />
             </Badge>
@@ -168,6 +195,8 @@ function Header() {
       </Drawer>
     </AppBar>
   );
-}
+};
 
 export default Header;
+
+

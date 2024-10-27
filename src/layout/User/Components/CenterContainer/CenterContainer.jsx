@@ -1,13 +1,10 @@
-// CenterContent.jsx
 import React from "react";
-import Banner from "../../assets/banners/banner_center.jpg";
+import Banner from "../../../../assets/banners/banner_center.jpg";
 import { Box, Typography, IconButton, Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import "../../css/centerContainer.css";
-import image from "../../assets/images/MeoAnhLongNgan.webp";
-import Post from "./Poster/Post";
+import "../../../../css/centerContainer.css";
 
-const CenterContainer = () => {
+const CenterContainer = ({children}) => {
   return (
     <>
       <Box 
@@ -47,14 +44,7 @@ const CenterContainer = () => {
           </IconButton>
         </Grid>
       </Grid>
-      <Post
-        userAvatar={image}
-        bookImg={image}
-        bookTitle="Tên cuốn sách"
-        bookDescription="Nội dung cuốn sách................................"
-        bookLink="https://www.facebook.com/"
-        timeStamp="08:00:00 01/10/2024"
-      />
+        {children}
     </>
   );
 };
