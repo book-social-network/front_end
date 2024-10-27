@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Typography,Link } from '@mui/material';
-import image1 from "../../../../assets/banners/right_banner.jpg";
+import { Box, Typography, Link } from '@mui/material';
+import image1 from '../../../../assets/banners/right_banner.jpg';
 import '../../../../css/rightContainer.css';
 
 const RightContainer = () => {
@@ -13,7 +13,7 @@ const RightContainer = () => {
         </Link>
       </Typography>
       <Link href="#">
-        <img src={image1} alt="image1" style={{width:"100%"}} />
+        <img src={image1} alt="image1" style={{ width: '100%' }} />
       </Link>
     </Box>
   );

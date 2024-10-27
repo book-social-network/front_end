@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import Logo from "../../../../assets/images/MeoAnhLongNgan.webp";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import Logo from '../../../../assets/images/MeoAnhLongNgan.webp';
 import {
   AppBar,
   Box,
@@ -21,7 +21,7 @@ import {
   Container,
   Stack,
   useMediaQuery,
-} from "@mui/material";
+} from '@mui/material';
 import {
   MenuBook as MenuBookIcon,
   Home as HomeIcon,
@@ -30,22 +30,22 @@ import {
   Notifications as NotificationsIcon,
   Mail as MailIcon,
   Menu as MenuIcon,
-} from "@mui/icons-material";
-import useIconInHeader from "../../../../hooks/HeaderIcon";
-import "../../../../css/header.css"
+} from '@mui/icons-material';
+import useIconInHeader from '../../../../hooks/HeaderIcon';
+import '../../../../css/header.css';
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isMobile = useMediaQuery("(max-width:600px)");
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-  
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -53,12 +53,12 @@ const Header = () => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const homeIcon = useIconInHeader(<HomeIcon />, "Home Page", "/");
-  const myBooks = useIconInHeader(<MenuBookIcon />, "My books","/Mybooks");
-  const groups = useIconInHeader(<GroupsIcon />, "Groups", "/Groups");
-  const books = useIconInHeader(<LocalLibraryIcon />, "Books");
+  const homeIcon = useIconInHeader(<HomeIcon />, 'Home Page', '/');
+  const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/Mybooks');
+  const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/Groups');
+  const books = useIconInHeader(<LocalLibraryIcon />, 'Books');
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center"}}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         Menu
       </Typography>
@@ -66,16 +66,16 @@ const Header = () => {
         {isMobile && (
           <>
             <ListItem button>
-                <HomeIcon />
-                <ListItemText primary="Home Page" />
+              <HomeIcon />
+              <ListItemText primary="Home Page" />
             </ListItem>
             <ListItem button>
-                <MenuBookIcon />
-                <ListItemText primary="My books" />
+              <MenuBookIcon />
+              <ListItemText primary="My books" />
             </ListItem>
             <ListItem button>
-                <GroupsIcon />
-                <ListItemText primary="Groups" />
+              <GroupsIcon />
+              <ListItemText primary="Groups" />
             </ListItem>
             <ListItem button>
               <Link to="/books">
@@ -89,17 +89,15 @@ const Header = () => {
     </Box>
   );
 
-
-
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "#F4F1EA" }}>
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#F4F1EA' }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: "none" } }}
+          sx={{ mr: 2, display: { sm: 'none' } }}
         >
           <MenuIcon />
         </IconButton>
@@ -112,10 +110,10 @@ const Header = () => {
             href="#"
             sx={{
               mr: 2,
-              display: { xs: "none", sm: "block" },
+              display: { xs: 'none', sm: 'block' },
               fontWeight: 700,
-              textDecoration: "none",
-              color: "#000",
+              textDecoration: 'none',
+              color: '#000',
             }}
           >
             Social Book Network
@@ -124,7 +122,10 @@ const Header = () => {
 
         {!isMobile && (
           <Container sx={{ flexGrow: 1 }}>
-            <Grid container sx={{ alignItems: "center", justifyContent: "space-evenly" }}>
+            <Grid
+              container
+              sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}
+            >
               <Link to="/">
                 <Grid item xs={1}>
                   {homeIcon}
@@ -148,13 +149,25 @@ const Header = () => {
             </Grid>
           </Container>
         )}
-        <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", color: "#000", marginLeft: "auto" }}>
+        <Box
+          sx={{
+            flexGrow: 0,
+            display: 'flex',
+            alignItems: 'center',
+            color: '#000',
+            marginLeft: 'auto',
+          }}
+        >
           <IconButton size="large" aria-label="show new mails" color="inherit">
             <Badge badgeContent={4} color="error">
               <MailIcon />
             </Badge>
           </IconButton>
-          <IconButton size="large" aria-label="show new notifications" color="inherit">
+          <IconButton
+            size="large"
+            aria-label="show new notifications"
+            color="inherit"
+          >
             <Badge badgeContent={17} color="error">
               <NotificationsIcon />
             </Badge>
@@ -166,17 +179,17 @@ const Header = () => {
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px" }}
+            sx={{ mt: '45px' }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             keepMounted
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
@@ -198,5 +211,3 @@ const Header = () => {
 };
 
 export default Header;
-
-

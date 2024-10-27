@@ -1,39 +1,41 @@
-import React from "react";
-import Banner from "../../../../assets/banners/banner_center.jpg";
-import { Box, Typography, IconButton, Grid } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import "../../../../css/centerContainer.css";
+import React from 'react';
+import Banner from '../../../../assets/banners/banner_center.jpg';
+import { Box, Typography, IconButton, Grid } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import '../../../../css/centerContainer.css';
 
-const CenterContainer = ({children}) => {
+const CenterContainer = ({ children }) => {
   return (
     <>
-      <Box 
+      <Box
         className="center-content"
         sx={{
-          border: "2px solid #ccc", 
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", 
-          padding: "20px", 
-          borderRadius: "8px",
-          textAlign: "center", 
-          marginTop: "20px"
+          border: '2px solid #ccc',
+          boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+          padding: '20px',
+          borderRadius: '8px',
+          textAlign: 'center',
+          marginTop: '20px',
         }}
       >
-        <img src={Banner} alt="" style={{ width: "100%", borderRadius: "8px" }} />
-        <Typography 
-          variant="h4" 
+        <img
+          src={Banner}
+          alt=""
+          style={{ width: '100%', borderRadius: '8px' }}
+        />
+        <Typography
+          variant="h4"
           className="banner-title"
-          sx={{ marginTop: "20px" }}
+          sx={{ marginTop: '20px' }}
         >
           Mừng tháng đọc sách
         </Typography>
-        <Typography 
-          variant="body1" 
-          sx={{ marginTop: "10px" }}
-        >
-          Khám phá những cuốn sách mới tuyệt vời để đọc trong tháng này và cả năm!
+        <Typography variant="body1" sx={{ marginTop: '10px' }}>
+          Khám phá những cuốn sách mới tuyệt vời để đọc trong tháng này và cả
+          năm!
         </Typography>
       </Box>
-      <Grid container sx={{ marginTop: "20px" }}>
+      <Grid container sx={{ marginTop: '20px' }}>
         <Grid item xs={6} container justifyContent="flex-start">
           <Typography variant="body2">UPDATES</Typography>
         </Grid>
@@ -44,7 +46,7 @@ const CenterContainer = ({children}) => {
           </IconButton>
         </Grid>
       </Grid>
-        {children}
+      {children}
     </>
   );
 };

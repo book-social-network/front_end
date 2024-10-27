@@ -1,5 +1,6 @@
-@media(max-width:600px){
-    .LeftContainer, .RightContainer{
-        display: none!important;
-    }
+@media (max-width: 600px) {
+  .LeftContainer,
+  .RightContainer {
+    display: none !important;
+  }
 }

@@ -1,8 +1,7 @@
-
-.link-item{
-    text-decoration: none;
-    color: #00635d;
+.link-item {
+  text-decoration: none;
+  color: #00635d;
 }
-.link-item:hover{
-    text-decoration: underline;
+.link-item:hover {
+  text-decoration: underline;
 }
