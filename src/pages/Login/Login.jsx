@@ -22,7 +22,7 @@ const Login = () => {
   const [passwordHelperText, setPasswordHelperText] = useState('');
 
   const handleLogin = () => {
-    if (pass != '12345678') {
+    if (pass !== '12345678') {
       setPasswordError(true);
       setPasswordHelperText('Wrong password');
     } else {
