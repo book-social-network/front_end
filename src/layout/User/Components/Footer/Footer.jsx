@@ -1,10 +1,10 @@
-import React from 'react';
-import { Grid, Typography, Link, IconButton, Container } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import XIcon from '@mui/icons-material/X';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import '../../../../css/footer.css';
+import React from 'react'
+import { Grid, Typography, Link, IconButton, Container } from '@mui/material'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import XIcon from '@mui/icons-material/X'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import '../../../../css/footer.css'
 
 export default function Footer({ classname = '' }) {
   const footerContent = (
@@ -96,17 +96,26 @@ export default function Footer({ classname = '' }) {
         </div>
       </Grid>
     </Grid>
-  );
+  )
 
   return (
     <div className="footer">
       {classname === 'sm' ? (
         footerContent
       ) : (
-        <Container sx={{ bottom: 0 }} className="footer-container">
-          {footerContent}
-        </Container>
+        <Grid
+          sx={{
+            bottom: 0,
+            left: 0,
+            right: 0,
+            position: 'fixed',
+            backgroundColor: '#f4f1ea',
+          }}
+          className="footer-container"
+        >
+          <Container>{footerContent}</Container>
+        </Grid>
       )}
     </div>
-  );
+  )
 }
