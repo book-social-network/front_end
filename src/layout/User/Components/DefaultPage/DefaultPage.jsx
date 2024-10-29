@@ -11,5 +11,18 @@ export const DefaultPage = ({ children }) => {
 };
 
 export const DefaultPageNoHeader = ({ children }) => {
-  return <div>{children}</div>;
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: '#F4F1EA',
+      overflowY: 'auto',
+      padding: '20px' 
+    }}>
+      {children}
+    </div>
+  );
 };

@@ -1,7 +1,7 @@
 import React, { Fragment, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from './routes';
-import { DefaultPage } from './layout/User/Components/DefaultPage/DefaultPage';
+import { DefaultPage, DefaultPageNoHeader } from './layout/User/Components/DefaultPage/DefaultPage';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
                   route.isShowHeader === true ? (
                     <DefaultPage>{route.page}</DefaultPage>
                   ) : (
-                    <div>Not found</div>
+                    <DefaultPageNoHeader>{route.page}</DefaultPageNoHeader>
                   )
                 }
               />
