@@ -1,0 +1,37 @@
+/* Register.css */
+
+.register-container {
+    margin-top: 5rem; /* Adjust as needed */
+    padding: 2rem; /* Adjust as needed */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .register-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-box {
+    margin-bottom: 1rem;
+  }
+  
+  .register-button {
+    margin-bottom: 1rem;
+    border-radius: 25px;
+    background-color: #F4F1EA; /* Custom color */
+    color: #000;
+  }
+  
+  .sign-up-with-text {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+    .login-link {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  

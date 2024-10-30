@@ -1,0 +1,22 @@
+.recommended-group {
+  max-width: 100%;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.img-group {
+  max-width: '200px';
+  height: auto;
+  object-fit: cover;
+}
+
+.group-info {
+  margin: 8px 0;
+}
+
+.state {
+  display: flex;
+  align-items: center;
+}

@@ -10,6 +10,7 @@ import {
   Box,
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
+import '../../css/Register.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -39,26 +40,14 @@ const Register = () => {
       setPasswordHelperText('Passwords do not match');
     }
   };
+
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        mt: 5,
-        p: 4,
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        boxShadow: 3,
-        backgroundColor: '#fff',
-      }}
-    >
-      <Typography
-        variant="h3"
-        sx={{ fontWeight: 'bold', textAlign: 'center', mb: 3 }}
-      >
+    <Container maxWidth="xs" className="register-container">
+      <Typography variant="h3" className="register-title">
         Register
       </Typography>
-      
-      <Box sx={{ mb: 2 }}>
+
+      <Box className="input-box">
         <Typography variant="body1">Name</Typography>
         <TextField
           onChange={(e) => setPass(e.target.value)}
@@ -69,7 +58,7 @@ const Register = () => {
           sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box className="input-box">
         <Typography variant="body1">Email</Typography>
         <TextField
           onChange={(e) => {
@@ -85,7 +74,7 @@ const Register = () => {
           sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box className="input-box">
         <Typography variant="body1">Password</Typography>
         <TextField
           onChange={(e) => setPass(e.target.value)}
@@ -96,7 +85,7 @@ const Register = () => {
           sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box className="input-box">
         <Typography variant="body1">Confirm Password</Typography>
         <TextField
           onChange={(e) => setIsConfirmPass(e.target.value)}
@@ -113,27 +102,22 @@ const Register = () => {
         variant="contained"
         color="primary"
         fullWidth
-        sx={{ mb: 2, borderRadius: '25px', backgroundColor: '#F4F1EA', color: '#000' }}
+        className="register-button"
         onClick={handleRegister}
       >
         Register
       </Button>
-      <Typography variant="body2" sx={{ textAlign: 'center', mb: 2 }}>
+      <Typography variant="body2" className="sign-up-with-text">
         Or sign up with
       </Typography>
       <Grid container spacing={2} justifyContent="center">
         <Grid item>
-          <IconButton
-            sx={{
-              backgroundColor: '#DB4437',
-              '&:hover': { backgroundColor: '#C13529' },
-            }}
-          >
+          <IconButton className="google-button" sx={{backgroundColor:'#DB4437', '&:hover': { backgroundColor: '#C13529' }}}>
             <GoogleIcon sx={{ color: '#fff' }} />
           </IconButton>
         </Grid>
       </Grid>
-      <Typography variant="body2" sx={{ textAlign: 'center', mt: 2 }}>
+      <Typography variant="body2" className="login-link">
         Already have an account? <Link href="/Login">Login</Link>
       </Typography>
     </Container>
