@@ -3,7 +3,7 @@ import '../../css/group.css'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import RecommendedGroup from '../../hooks/RecommendedGroup'
-import MyGroups from '../../hooks/MyGroups';
+import MyGroups from '../../hooks/MyGroups'
 import Img from '../../assets/images/MeoAnhLongNgan.webp'
 
 export default function Group() {
@@ -99,7 +99,7 @@ export default function Group() {
               </Grid>
             ) : (
               <div>
-                <MyGroups/>
+                <MyGroups />
               </div>
             )}
 

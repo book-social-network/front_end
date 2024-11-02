@@ -109,7 +109,7 @@ export default function Footer({ classname = '' }) {
             left: 0,
             right: 0,
             backgroundColor: '#f4f1ea',
-            marginTop:'100px'
+            marginTop: '100px',
           }}
           className="footer-container"
         >

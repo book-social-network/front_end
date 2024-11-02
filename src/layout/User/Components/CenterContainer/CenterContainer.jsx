@@ -1,8 +1,8 @@
-import React from 'react';
-import Banner from '../../../../assets/banners/banner_center.jpg';
-import { Box, Typography, IconButton, Grid } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
-import '../../../../css/centerContainer.css';
+import React from 'react'
+import Banner from '../../../../assets/banners/banner_center.jpg'
+import { Box, Typography, IconButton, Grid } from '@mui/material'
+import SettingsIcon from '@mui/icons-material/Settings'
+import '../../../../css/centerContainer.css'
 
 const CenterContainer = ({ children }) => {
   return (
@@ -48,7 +48,7 @@ const CenterContainer = ({ children }) => {
       </Grid>
       {children}
     </>
-  );
-};
+  )
+}
 
-export default CenterContainer;
+export default CenterContainer

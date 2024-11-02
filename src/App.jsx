@@ -1,7 +1,10 @@
-import React, { Fragment, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { routes } from './routes';
-import { DefaultPage, DefaultPageNoHeader } from './layout/User/Components/DefaultPage/DefaultPage';
+import React, { Fragment, Suspense } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { routes } from './routes'
+import {
+  DefaultPage,
+  DefaultPageNoHeader,
+} from './layout/User/Components/DefaultPage/DefaultPage'
 
 function App() {
   return (
@@ -26,7 +29,7 @@ function App() {
         </Suspense>
       </Router>
     </Fragment>
-  );
+  )
 }
 
-export default App;
+export default App

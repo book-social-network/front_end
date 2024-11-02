@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Card,
   CardHeader,
@@ -10,16 +10,16 @@ import {
   Select,
   MenuItem,
   TextField,
-} from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CommentIcon from '@mui/icons-material/Comment';
-import SendIcon from '@mui/icons-material/Send';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { formatDistanceToNow } from 'date-fns';
-import '../../../css/post.css';
+} from '@mui/material'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import CommentIcon from '@mui/icons-material/Comment'
+import SendIcon from '@mui/icons-material/Send'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
+import StarIcon from '@mui/icons-material/Star'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import { formatDistanceToNow } from 'date-fns'
+import '../../../css/post.css'
 
 const Post = ({
   userAvatar,
@@ -30,38 +30,38 @@ const Post = ({
   bookLink,
   timeStamp,
 }) => {
-  const [status, setStatus] = useState('Want to Read');
-  const [liked, setLiked] = useState(false);
-  const [showComment, setShowComment] = useState(false);
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(0);
+  const [status, setStatus] = useState('Want to Read')
+  const [liked, setLiked] = useState(false)
+  const [showComment, setShowComment] = useState(false)
+  const [comment, setComment] = useState('')
+  const [rating, setRating] = useState(0)
 
   const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
+    setStatus(event.target.value)
+  }
 
   const toggleLike = () => {
-    setLiked(!liked);
-  };
+    setLiked(!liked)
+  }
 
   const toggleCommentSection = () => {
-    setShowComment(!showComment);
-  };
+    setShowComment(!showComment)
+  }
 
   const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
+    setComment(event.target.value)
+  }
 
   const handleCommentSubmit = () => {
     if (comment.trim()) {
-      console.log('Comment submitted:', comment);
-      setComment('');
+      console.log('Comment submitted:', comment)
+      setComment('')
     }
-  };
+  }
 
-  const timeParts = timeStamp.split(' ');
-  const time = timeParts[0].split(':');
-  const date = timeParts[1].split('/');
+  const timeParts = timeStamp.split(' ')
+  const time = timeParts[0].split(':')
+  const date = timeParts[1].split('/')
   const dateObject = new Date(
     date[2],
     date[1] - 1,
@@ -69,8 +69,8 @@ const Post = ({
     time[0],
     time[1],
     time[2],
-  );
-  const timeAgo = formatDistanceToNow(dateObject, { addSuffix: true });
+  )
+  const timeAgo = formatDistanceToNow(dateObject, { addSuffix: true })
 
   return (
     <Card className="post-container">
@@ -175,7 +175,7 @@ const Post = ({
         </CardContent>
       )}
     </Card>
-  );
-};
+  )
+}
 
-export default Post;
+export default Post

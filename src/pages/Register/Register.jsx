@@ -1,45 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Container,
   Typography,
   TextField,
-  Link,
   Button,
   IconButton,
   Grid,
   Box,
-} from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import '../../css/Register.css';
+} from '@mui/material'
+import GoogleIcon from '@mui/icons-material/Google'
+import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import '../../css/Register.css'
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [isConfirmPass, setIsConfirmPass] = useState('');
-  const [emailError, setEmailError] = useState(false);
-  const [emailHelperText, setEmailHelperText] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordHelperText, setPasswordHelperText] = useState('');
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
   const validateEmail = (value) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.test(value)) {
-      setEmailError(false);
-      setEmailHelperText('');
-    } else {
-      setEmailError(true);
-      setEmailHelperText('Invalid email format');
-    }
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(value) || 'Invalid email format'
+  }
 
-  const handleRegister = () => {
-    setPasswordError(false);
-    setPasswordHelperText('');
-    if (pass !== isConfirmPass) {
-      setPasswordError(true);
-      setPasswordHelperText('Passwords do not match');
+  const onSubmit = async (data) => {
+    if (data.password !== data.password_confirmation) {
+      alert('Passwords do not match')
+      return
     }
-  };
+
+    try {
+      await axios.post(`${process.env.REACT_APP_BACKEND}/api/register`, data)
+      console.log(data)
+      navigate('/Login')
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <Container maxWidth="xs" className="register-container">
@@ -47,81 +48,100 @@ const Register = () => {
         Register
       </Typography>
 
-      <Box className="input-box">
-        <Typography variant="body1">Name</Typography>
-        <TextField
-          onChange={(e) => setPass(e.target.value)}
-          placeholder="Type your name"
-          type="text"
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box className="input-box">
+          <Typography variant="body1">Name</Typography>
+          <TextField
+            {...register('name', { required: 'Name is required' })}
+            placeholder="Type your name"
+            type="text"
+            fullWidth
+            variant="outlined"
+            error={!!errors.name}
+            helperText={errors.name?.message}
+            sx={{ mt: 1 }}
+          />
+        </Box>
+
+        <Box className="input-box">
+          <Typography variant="body1">Email</Typography>
+          <TextField
+            {...register('email', {
+              required: 'Email is required',
+              validate: validateEmail,
+            })}
+            placeholder="Type your email"
+            type="email"
+            fullWidth
+            variant="outlined"
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            sx={{ mt: 1 }}
+          />
+        </Box>
+
+        <Box className="input-box">
+          <Typography variant="body1">Password</Typography>
+          <TextField
+            {...register('password', { required: 'Password is required' })}
+            placeholder="Type your password"
+            type="password"
+            fullWidth
+            variant="outlined"
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            sx={{ mt: 1 }}
+          />
+        </Box>
+
+        <Box className="input-box">
+          <Typography variant="body1">Confirm Password</Typography>
+          <TextField
+            {...register('password_confirmation', {
+              required: 'Please confirm your password',
+            })}
+            placeholder="Confirm Password"
+            type="password"
+            fullWidth
+            variant="outlined"
+            error={!!errors.password_confirmation}
+            helperText={errors.password_confirmation?.message}
+            sx={{ mt: 1 }}
+          />
+        </Box>
+
+        <Button
+          variant="contained"
+          color="primary"
           fullWidth
-          variant="outlined"
-          sx={{ mt: 1 }}
-        />
-      </Box>
-      <Box className="input-box">
-        <Typography variant="body1">Email</Typography>
-        <TextField
-          onChange={(e) => {
-            setEmail(e.target.value);
-            validateEmail(e.target.value); // Validate email on change
-          }}
-          placeholder="Type your email"
-          type="email"
-          fullWidth
-          variant="outlined"
-          error={emailError} // Show error if email is invalid
-          helperText={emailHelperText} // Display error message
-          sx={{ mt: 1 }}
-        />
-      </Box>
-      <Box className="input-box">
-        <Typography variant="body1">Password</Typography>
-        <TextField
-          onChange={(e) => setPass(e.target.value)}
-          placeholder="Type your password"
-          type="password"
-          fullWidth
-          variant="outlined"
-          sx={{ mt: 1 }}
-        />
-      </Box>
-      <Box className="input-box">
-        <Typography variant="body1">Confirm Password</Typography>
-        <TextField
-          onChange={(e) => setIsConfirmPass(e.target.value)}
-          placeholder="Confirm Password"
-          type="password"
-          fullWidth
-          variant="outlined"
-          error={passwordError}
-          helperText={passwordHelperText}
-          sx={{ mt: 1 }}
-        />
-      </Box>
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        className="register-button"
-        onClick={handleRegister}
-      >
-        Register
-      </Button>
+          className="register-button"
+          type="submit"
+        >
+          Register
+        </Button>
+      </form>
+
       <Typography variant="body2" className="sign-up-with-text">
         Or sign up with
       </Typography>
       <Grid container spacing={2} justifyContent="center">
         <Grid item>
-          <IconButton className="google-button" sx={{backgroundColor:'#DB4437', '&:hover': { backgroundColor: '#C13529' }}}>
+          <IconButton
+            className="google-button"
+            sx={{
+              backgroundColor: '#DB4437',
+              '&:hover': { backgroundColor: '#C13529' },
+            }}
+          >
             <GoogleIcon sx={{ color: '#fff' }} />
           </IconButton>
         </Grid>
       </Grid>
       <Typography variant="body2" className="login-link">
-        Already have an account? <Link href="/Login">Login</Link>
+        Already have an account? <Link to="/Login">Login</Link>
       </Typography>
     </Container>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
