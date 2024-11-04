@@ -75,7 +75,6 @@ export default function Profile() {
                     sx={{ width: 80, height: 80, mb: 2 }}
                   />
                   <Typography variant="h5">{user ? user.name : ''}</Typography>
-                  <Typography variant="body2">Web Designer</Typography>
                   <IconButton sx={{ color: '#fff', mt: 2 }}>
                     <Edit />
                   </IconButton>
@@ -88,7 +87,7 @@ export default function Profile() {
                       <Grid item xs={6}>
                         <Typography variant="subtitle2">Email</Typography>
                         <Typography variant="body2" color="text.secondary">
-                          info@example.com
+                          {user ? user.email :''}
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>

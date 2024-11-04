@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import {
   AppBar,
@@ -29,16 +29,10 @@ import {
   Notifications as NotificationsIcon,
   Mail as MailIcon,
   Menu as MenuIcon,
-  ElevatorSharp,
-  Category,
 } from '@mui/icons-material'
 import useIconInHeader from '../../../../hooks/HeaderIcon'
 import '../../../../css/header.css'
 import axios from 'axios'
-import { set } from 'date-fns'
-import { useUserContext } from '../../../../hooks/UseContext'
-import { clearConfigCache } from 'prettier'
-import { get } from 'react-hook-form'
 
 const settings = [
   {
@@ -52,6 +46,7 @@ const settings = [
 ]
 
 const Header = () => {
+  const navigate = useNavigate()
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [user, setUser] = useState(null)
@@ -72,12 +67,17 @@ const Header = () => {
         console.log(e)
       }
     }
+
     setToken(localStorage.getItem('access_token'))
     if (token === localStorage.getItem('access_token')) {
       getUser()
     }
   }, [token])
-
+  const handleLogout = () => {
+    localStorage.removeItem('access_token')
+    setToken(null)
+    navigate('/')
+  }
   const isMobile = useMediaQuery('(max-width:600px)')
 
   const handleOpenUserMenu = (event) => {
@@ -239,12 +239,26 @@ const Header = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                    <Link to={setting.path}>
+                  <MenuItem
+                    key={setting.label}
+                    onClick={() => {
+                      handleCloseUserMenu()
+                      if (setting.label === 'Logout') {
+                        handleLogout()
+                      }
+                    }}
+                  >
+                    {setting.label === 'Logout' ? (
                       <Typography textAlign="center">
                         {setting.label}
                       </Typography>
-                    </Link>
+                    ) : (
+                      <Link to={setting.path}>
+                        <Typography textAlign="center">
+                          {setting.label}
+                        </Typography>
+                      </Link>
+                    )}
                   </MenuItem>
                 ))}
               </Menu>

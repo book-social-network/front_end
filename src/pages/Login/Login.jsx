@@ -17,14 +17,12 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import '../../css/Login.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import bcrypt from 'bcryptjs'
 import { useUserContext } from '../../hooks/UseContext'
 
 const Login = () => {
   const [email, setEmail] = useState('')
-  const [users, setUser] = useState(null)
   const [pass, setPass] = useState('')
-  const [isShowPass, setIsShowPass] = useState(true)
+  const [isShowPass, setIsShowPass] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
   const [passwordHelperText, setPasswordHelperText] = useState('')
   const navigate = useNavigate()
@@ -32,48 +30,39 @@ const Login = () => {
 
   useEffect(() => {
     document.title = 'Login'
-    const fetchUser = async () => {
-      const lst_user = await axios.get(
-        `${process.env.REACT_APP_BACKEND}/api/user/get-all`,
-      )
-      setUser(lst_user)
-    }
-    fetchUser()
   }, [])
-
-  const validateUser = (email, password) => {
-    if (users) {
-      for (let i = 0; i < users.length; i++) {
-        if (
-          users[i].email === email &&
-          bcrypt.compare(users[i].password, password)
-        ) {
-          return true
-        }
-      }
-    }
-  }
 
   const handleLogin = async () => {
     if (!email || !pass) {
       setPasswordHelperText('Bạn phải nhập đủ các trường')
+      setPasswordError(true)
       return
     }
-    if (!validateUser) {
-      setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
-      return
-    } else {
+
+    try {
+      // Send the email and password to the server for verification
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND}/api/login`,
         {
           email: email,
           password: pass,
-        },
+        }
       )
-      const access_token = res.data.access_token
-      localStorage.setItem('access_token', access_token)
-      setToken(access_token)
-      navigate('/Home')
+
+      // Handle response and store token
+      if (res.data.access_token) {
+        const access_token = res.data.access_token
+        localStorage.setItem('access_token', access_token)
+        setToken(access_token)
+        navigate('/Home')
+      } else {
+        setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
+        setPasswordError(true)
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      setPasswordHelperText('Đã xảy ra lỗi khi đăng nhập')
+      setPasswordError(true)
     }
   }
 

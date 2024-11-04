@@ -18,7 +18,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 // import { formatDistanceToNow } from 'date-fns'
 import '../css/post.css'
 import Image from '../assets/images/MeoAnhLongNgan.webp'
-import { UserContext } from './UseContext'
 
 export default function CatPost() {
   const [countLike, setCountLike] = useState(10)

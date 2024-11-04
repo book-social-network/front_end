@@ -7,11 +7,8 @@ import Post from '../../layout/User/Poster/Post'
 import avatarU from '../../assets/images/MeoAnhLongNgan.webp'
 import { Grid } from '@mui/material'
 import '../../css/HomePage.css'
-import { useUserContext } from '../../hooks/UseContext'
-import Header from '../../layout/User/Components/Header/Header'
 
 const HomePage = () => {
-  const { token } = useUserContext()
 
   return (
     <>
