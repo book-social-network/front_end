@@ -6,6 +6,7 @@
 .pnp.js
 .prettierrc
 .eslintrc.json
+.env
 
 # testing
 /coverage

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Container,
   Typography,
@@ -9,65 +9,87 @@ import {
   Grid,
   Box,
   InputAdornment,
-} from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import PersonIcon from '@mui/icons-material/Person';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+} from '@mui/material'
+import GoogleIcon from '@mui/icons-material/Google'
+import PersonIcon from '@mui/icons-material/Person'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import '../../css/Login.css'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useUserContext } from '../../hooks/UseContext'
 
 const Login = () => {
-  const [pass, setPass] = useState('');
-  const [isShowPass, setIsShowPass] = useState(true);
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordHelperText, setPasswordHelperText] = useState('');
+  const [email, setEmail] = useState('')
+  const [pass, setPass] = useState('')
+  const [isShowPass, setIsShowPass] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [passwordHelperText, setPasswordHelperText] = useState('')
+  const navigate = useNavigate()
+  const { setToken } = useUserContext()
 
-  const handleLogin = () => {
-    if (pass !== '12345678') {
-      setPasswordError(true);
-      setPasswordHelperText('Wrong password');
-    } else {
-      setPasswordError(false);
-      setPasswordHelperText('');
-      console.log('Login successful');
+  useEffect(() => {
+    document.title = 'Login'
+  }, [])
+
+  const handleLogin = async () => {
+    if (!email || !pass) {
+      setPasswordHelperText('Bạn phải nhập đủ các trường')
+      setPasswordError(true)
+      return
     }
-  };
+
+    try {
+      // Send the email and password to the server for verification
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/api/login`,
+        {
+          email: email,
+          password: pass,
+        }
+      )
+
+      // Handle response and store token
+      if (res.data.access_token) {
+        const access_token = res.data.access_token
+        localStorage.setItem('access_token', access_token)
+        setToken(access_token)
+        navigate('/Home')
+      } else {
+        setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
+        setPasswordError(true)
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      setPasswordHelperText('Đã xảy ra lỗi khi đăng nhập')
+      setPasswordError(true)
+    }
+  }
 
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        mt: 5,
-        p: 4,
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        boxShadow: 3,
-        backgroundColor: '#fff',
-      }}
-    >
-      <Typography
-        variant="h3"
-        sx={{ fontWeight: 'bold', textAlign: 'center', mb: 3 }}
-      >
+    <Container maxWidth="xs" className="login-container">
+      <Typography variant="h3" className="login-title">
         Login
       </Typography>
-      <Box sx={{ mb: 2 }}>
+      <Box className="input-box">
         <Typography variant="body1">Email</Typography>
         <TextField
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Type your email"
           type="email"
           fullWidth
           variant="outlined"
           sx={{ mt: 1 }}
           InputProps={{
-            startAdornment:(
-              <InputAdornment position='start'>
-                <PersonIcon/>
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonIcon />
               </InputAdornment>
-            )
+            ),
           }}
         />
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box className="input-box">
         <Typography variant="body1">Password</Typography>
         <TextField
           onChange={(e) => setPass(e.target.value)}
@@ -89,29 +111,25 @@ const Login = () => {
           }}
         />
       </Box>
-      <Link href="#" sx={{ display: 'block', mb: 2, textAlign: 'right' }}>
+      <Link href="#" className="forgot-password-link">
         Forgot password?
       </Link>
       <Button
         variant="contained"
         color="primary"
         fullWidth
-        sx={{
-          mb: 2,
-          borderRadius: '25px',
-          backgroundColor: '#F4F1EA',
-          color: '#000',
-        }}
+        className="login-button"
         onClick={handleLogin}
       >
         Login
       </Button>
-      <Typography variant="body2" sx={{ textAlign: 'center', mb: 2 }}>
+      <Typography variant="body2" className="signup-using-text">
         Or Sign Up Using
       </Typography>
       <Grid container spacing={2} justifyContent="center">
         <Grid item>
           <IconButton
+            className="google-button"
             sx={{
               backgroundColor: '#DB4437',
               '&:hover': { backgroundColor: '#C13529' },
@@ -121,11 +139,11 @@ const Login = () => {
           </IconButton>
         </Grid>
       </Grid>
-      <Typography variant="body2" sx={{ textAlign: 'center', mt: 2 }}>
+      <Typography variant="body2" className="signup-link">
         Or <Link href="/Register">Sign up</Link>
       </Typography>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

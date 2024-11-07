@@ -1,6 +1,6 @@
-import React from 'react';
-import { IconButton, Tooltip } from '@mui/material';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { IconButton, Tooltip } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const useIconInHeader = (icon, title, path = '/') => {
   return (
@@ -17,6 +17,6 @@ const useIconInHeader = (icon, title, path = '/') => {
         </Tooltip>
       </div>
     </Link>
-  );
-};
-export default useIconInHeader;
+  )
+}
+export default useIconInHeader

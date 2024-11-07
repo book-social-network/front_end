@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Typography,
   IconButton,
@@ -15,37 +15,37 @@ import {
   TableHead,
   TableBody,
   TableContainer,
-} from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import '../../css/MyBooks.css';
-import Image from '../../assets/images/MeoAnhLongNgan.webp';
-import Footer from '../../layout/User/Components/Footer/Footer';
+} from '@mui/material'
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
+import '../../css/MyBooks.css'
+import Image from '../../assets/images/MeoAnhLongNgan.webp'
+import Footer from '../../layout/User/Components/Footer/Footer'
 
 const MyBooks = () => {
-  const [books, setBooks] = useState([]);
-  const [ratings, setRatings] = useState([]);
+  const [books, setBooks] = useState([])
+  const [ratings, setRatings] = useState([])
   useEffect(() => {
     const fetchBooks = async () => {
       const fetchedBooks = [
         { title: 'Book 1', author: 'Author 1', image: Image },
         { title: 'Book 2', author: 'Author 2', image: Image },
         { title: 'Book 3', author: 'Author 3', image: Image },
-      ];
-      setBooks(fetchedBooks);
-      setRatings(Array(fetchedBooks.length).fill(0));
-    };
+      ]
+      setBooks(fetchedBooks)
+      setRatings(Array(fetchedBooks.length).fill(0))
+    }
 
-    fetchBooks();
-  }, []);
+    fetchBooks()
+  }, [])
 
   const handleRatingChange = (rowIndex, rating) => {
     setRatings((prevRatings) => {
-      const newRatings = [...prevRatings];
-      newRatings[rowIndex] = rating === newRatings[rowIndex] ? 0 : rating;
-      return newRatings;
-    });
-  };
+      const newRatings = [...prevRatings]
+      newRatings[rowIndex] = rating === newRatings[rowIndex] ? 0 : rating
+      return newRatings
+    })
+  }
 
   return (
     <div>
@@ -138,7 +138,7 @@ const MyBooks = () => {
       </Box>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default MyBooks;
+export default MyBooks

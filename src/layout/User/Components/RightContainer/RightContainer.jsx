@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Typography, Link } from '@mui/material';
-import image1 from '../../../../assets/banners/right_banner.jpg';
-import '../../../../css/rightContainer.css';
+import React from 'react'
+import { Box, Typography, Link } from '@mui/material'
+import image1 from '../../../../assets/banners/right_banner.jpg'
+import '../../../../css/rightContainer.css'
 
 const RightContainer = () => {
   return (
@@ -16,7 +16,7 @@ const RightContainer = () => {
         <img src={image1} alt="image1" style={{ width: '100%' }} />
       </Link>
     </Box>
-  );
-};
+  )
+}
 
-export default RightContainer;
+export default RightContainer
