@@ -21,10 +21,10 @@ export default function DetailBook() {
         padding: 3,
         boxShadow: 3,
         mt: 4,
-        '@media (max-width: 600px)': { padding: 2, mt: 3 } // Responsive padding on small screens
+        '@media (max-width: 600px)': { padding: 2, mt: 3 }
       }}>
         <Grid container spacing={3}>
-          <Grid item sm={4} xs={12}> {/* Adjusted to 4/12 for better balance */}
+          <Grid item sm={4} xs={12}>
             <img
               style={{
                 width: '100%',
@@ -34,11 +34,11 @@ export default function DetailBook() {
               }}
               src="https://top10tphcm.com/wp-content/uploads/2024/04/hinh-anh-gai-xinh-han-quoc-dep-nhat-42.jpg"
               alt="Book"
-              onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} // Hover effect
-              onMouseOut={(e) => e.target.style.transform = 'scale(1)'} // Reset hover effect
+              onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
+              onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
             />
           </Grid>
-          <Grid item sm={8} xs={12}> {/* Adjusted to 8/12 for content */}
+          <Grid item sm={8} xs={12}>
             <Box sx={{ padding: 2 }}>
               <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}>Tên cuốn sách</Typography>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
@@ -101,11 +101,10 @@ export default function DetailBook() {
                   </Button>
                 </Grid>
               </Grid>
-              {/* Comment section */}
               <Box sx={{
                 marginTop: 3,
-                maxHeight: 200, // Adjust height for scrollable section
-                overflowY: 'auto', // Enable vertical scroll if the content exceeds the max height
+                maxHeight: 200,
+                overflowY: 'auto',
                 padding: 2,
                 backgroundColor: '#fff',
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
