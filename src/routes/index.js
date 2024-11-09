@@ -6,15 +6,17 @@ const Login = lazy(() => import('../pages/Login/Login'))
 const Register = lazy(() => import('../pages/Register/Register'))
 const Profile = lazy(() => import('../pages/Profile/Profile'))
 const DetailBook = lazy(() => import('../pages/DetailBook/DetailBook'))
-const DetailGroup = lazy(()=>import('../pages/DetailGroup/DetailGroup'))
+const DetailGroup = lazy(() => import('../pages/DetailGroup/DetailGroup'))
+const DetailUser = lazy(() => import('../pages/DetailUser/DetailUser'))
 
 export const routes = [
   { path: '/', page: <Login />, isShowHeader: false },
-  { path: '/Home', page: <HomePage />, isShowHeader: true },
-  { path: '/Mybooks', page: <Mybooks />, isShowHeader: true },
-  { path: '/Groups', page: <Group />, isShowHeader: true },
-  { path: '/Register', page: <Register />, isShowHeader: false },
-  { path: '/Profile', page: <Profile />, isShowHeader: true },
-  { path: '/DetailBook', page: <DetailBook />, isShowHeader: true },
-  {path: '/DetailGroup', page: <DetailGroup/>, isShowHeader: true}
+  { path: '/home', page: <HomePage />, isShowHeader: true },
+  { path: '/mybooks', page: <Mybooks />, isShowHeader: true },
+  { path: '/groups', page: <Group />, isShowHeader: true },
+  { path: '/register', page: <Register />, isShowHeader: false },
+  { path: '/my-profile', page: <Profile />, isShowHeader: true },
+  { path: '/detail-book/:id', page: <DetailBook />, isShowHeader: true },
+  { path: '/detail-group/:id', page: <DetailGroup />, isShowHeader: true },
+  { path: '/detail-user/:id', page: <DetailUser />, isShowHeader: true },
 ]

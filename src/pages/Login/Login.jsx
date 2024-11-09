@@ -46,7 +46,7 @@ const Login = () => {
         {
           email: email,
           password: pass,
-        }
+        },
       )
 
       // Handle response and store token
@@ -140,7 +140,7 @@ const Login = () => {
         </Grid>
       </Grid>
       <Typography variant="body2" className="signup-link">
-        Or <Link href="/Register">Sign up</Link>
+        Or <Link href="/register">Sign up</Link>
       </Typography>
     </Container>
   )

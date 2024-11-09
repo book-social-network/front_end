@@ -36,7 +36,7 @@ const Register = () => {
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND}/api/register`, data)
       console.log(data)
-      navigate('/Login')
+      navigate('/login')
     } catch (err) {
       console.log(err)
     }

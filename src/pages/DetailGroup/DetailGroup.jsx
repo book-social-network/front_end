@@ -65,32 +65,31 @@ export default function DetailGroup() {
             <Typography variant="body2" color="#b0b0b0" mt={1}>
               Đây là dảo mèo cute phô mai que
             </Typography>
-            
+
             <Box display="flex" alignItems="center" gap={1} mt={1}>
-              <Icon sx={{color:'white'}}>
-                {isPublic ? <VisibilityIcon/> : <LockIcon />}
+              <Icon sx={{ color: 'white' }}>
+                {isPublic ? <VisibilityIcon /> : <LockIcon />}
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
-              Công khai
-            </Typography>
-              
+                Công khai
+              </Typography>
             </Box>
             <Typography variant="body2" color="#b0b0b0">
-                {isPublic
-                  ? 'Bất kỳ ai cũng có thể nhìn thấy mọi người trong nhóm và những gì họ đăng.'
-                  : 'Chỉ các thành viên mới có thể nhìn thấy những gì được đăng trong nhóm.'}
-              </Typography>
+              {isPublic
+                ? 'Bất kỳ ai cũng có thể nhìn thấy mọi người trong nhóm và những gì họ đăng.'
+                : 'Chỉ các thành viên mới có thể nhìn thấy những gì được đăng trong nhóm.'}
+            </Typography>
             <Box display="flex" alignItems="center" gap={1} mt={1}>
-              <Icon sx={{ color:'white'}}>
-                <PublicIcon/>
+              <Icon sx={{ color: 'white' }}>
+                <PublicIcon />
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
                 Hiển thị
               </Typography>
             </Box>
-              <Typography variant="body2" color="#b0b0b0" mt={1}>
-                Ai cũng có thể tìm thấy nhóm này.
-              </Typography>
+            <Typography variant="body2" color="#b0b0b0" mt={1}>
+              Ai cũng có thể tìm thấy nhóm này.
+            </Typography>
           </Box>
         </Grid>
       </Grid>

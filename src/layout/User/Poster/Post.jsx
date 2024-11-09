@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -10,18 +10,20 @@ import {
   Select,
   MenuItem,
   TextField,
-} from '@mui/material'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import CommentIcon from '@mui/icons-material/Comment'
-import SendIcon from '@mui/icons-material/Send'
-import StarBorderIcon from '@mui/icons-material/StarBorder'
-import StarIcon from '@mui/icons-material/Star'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { formatDistanceToNow } from 'date-fns'
-import '../../../css/post.css'
+} from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import SendIcon from '@mui/icons-material/Send';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { parseISO, formatDistanceToNow } from 'date-fns';
+import '../../../css/post.css';
+import { Link } from 'react-router-dom';
 
 const Post = ({
+  userId,
   userAvatar,
   userName,
   bookImg,
@@ -30,49 +32,43 @@ const Post = ({
   bookLink,
   timeStamp,
 }) => {
-  const [status, setStatus] = useState('Want to Read')
-  const [liked, setLiked] = useState(false)
-  const [countLike, setCountLike] = useState(0)
-  const [showComment, setShowComment] = useState(false)
-  const [comment, setComment] = useState('')
-  const [rating, setRating] = useState(0)
+  const [status, setStatus] = useState('Want to Read');
+  const [liked, setLiked] = useState(false);
+  const [countLike, setCountLike] = useState(0);
+  const [showComment, setShowComment] = useState(false);
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(0);
 
-  const handleChange = (event) => {
-    setStatus(event.target.value)
-  }
+  const dateObj = timeStamp ? parseISO(timeStamp) : null;
+  const timeAgo = dateObj ? formatDistanceToNow(dateObj, { addSuffix: true }) : 'Invalid time';
+
+  const handleChange = (event) => setStatus(event.target.value);
 
   const toggleLike = () => {
-    if (liked) {
-      setCountLike(countLike - 1)
-    } else {
-      setCountLike(countLike + 1)
-    }
-    setLiked(!liked)
-  }
+    setLiked((prevLiked) => !prevLiked);
+    setCountLike((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
+  };
 
-  const toggleCommentSection = () => {
-    setShowComment(!showComment)
-  }
+  const toggleCommentSection = () => setShowComment((prev) => !prev);
 
-  const handleCommentChange = (event) => {
-    setComment(event.target.value)
-  }
+  const handleCommentChange = (event) => setComment(event.target.value);
 
   const handleCommentSubmit = () => {
     if (comment.trim()) {
-      console.log('Comment submitted:', comment)
-      setComment('')
+      console.log('Comment submitted:', comment);
+      alert('Comment submitted!');
+      setComment('');
     }
-  }
-  const timeParts = timeStamp.split(' ')
-  const formattedTimeStamp = `${timeParts[0]}T${timeParts[1]}`
-  const dateObject = new Date(formattedTimeStamp)
-  const timeAgo = formatDistanceToNow(dateObject, { addSuffix: true })
+  };
 
   return (
     <Card className="post-container">
       <CardHeader
-        avatar={<Avatar src={userAvatar} alt="User Avatar" />}
+        avatar={
+          <Link to={`/detail-user/${userId}`}>
+            <Avatar src={userAvatar} alt="User Avatar" />
+          </Link>
+        }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -109,8 +105,6 @@ const Post = ({
             <MenuItem value="Reading">Reading</MenuItem>
             <MenuItem value="Read">Read</MenuItem>
           </Select>
-
-          {/* Conditionally render the rating section based on status */}
           {(status === 'Reading' || status === 'Read') && (
             <div className="rating-section">
               <Typography variant="body2">Rate it:</Typography>
@@ -139,15 +133,11 @@ const Post = ({
         <IconButton onClick={toggleLike}>
           {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
         </IconButton>
-        <Typography variant="body2" onClick={toggleLike}>
-          {countLike}
-        </Typography>
+        <Typography variant="body2">{countLike}</Typography>
         <IconButton onClick={toggleCommentSection}>
           <CommentIcon />
         </IconButton>
-        <Typography variant="body2" onClick={toggleCommentSection}>
-          Comment
-        </Typography>
+        <Typography variant="body2">Comment</Typography>
       </CardActions>
       {showComment && (
         <CardContent className="comment-section">
@@ -177,7 +167,7 @@ const Post = ({
         </CardContent>
       )}
     </Card>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;

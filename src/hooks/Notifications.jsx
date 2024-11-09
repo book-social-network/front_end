@@ -1,35 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import Paper from '@mui/material/Paper';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
+import React, { useState, useEffect, useRef } from 'react'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import BottomNavigation from '@mui/material/BottomNavigation'
+import BottomNavigationAction from '@mui/material/BottomNavigationAction'
+import RestoreIcon from '@mui/icons-material/Restore'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import ArchiveIcon from '@mui/icons-material/Archive'
+import Paper from '@mui/material/Paper'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
+import Avatar from '@mui/material/Avatar'
 
 function refreshMessages() {
-  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
 
   return Array.from(new Array(50)).map(
     () => messageExamples[getRandomInt(messageExamples.length)],
-  );
+  )
 }
 
 const Notifications = ({ handleClickNotification }) => {
-  const [value, setValue] = useState(0);
-  const ref = useRef(null);
-  const [messages, setMessages] = useState(() => refreshMessages());
+  const [value, setValue] = useState(0)
+  const ref = useRef(null)
+  const [messages, setMessages] = useState(() => refreshMessages())
 
   useEffect(() => {
-    ref.current.ownerDocument.body.scrollTop = 0;
-    setMessages(refreshMessages());
-  }, [value, setMessages]);
+    ref.current.ownerDocument.body.scrollTop = 0
+    setMessages(refreshMessages())
+  }, [value, setMessages])
 
   return (
     <Box sx={{ pb: 7, width: '350px' }} ref={ref}>
@@ -44,12 +44,15 @@ const Notifications = ({ handleClickNotification }) => {
           </ListItemButton>
         ))}
       </List>
-      <Paper sx={{ position: 'fixed', bottom: 0, width: '350px' }} elevation={3}>
+      <Paper
+        sx={{ position: 'fixed', bottom: 0, width: '350px' }}
+        elevation={3}
+      >
         <BottomNavigation
           showLabels
           value={value}
           onChange={(event, newValue) => {
-            setValue(newValue);
+            setValue(newValue)
           }}
         >
           <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
@@ -58,15 +61,16 @@ const Notifications = ({ handleClickNotification }) => {
         </BottomNavigation>
       </Paper>
     </Box>
-  );
+  )
 }
 
-export default Notifications;
+export default Notifications
 
 const messageExamples = [
   {
     primary: 'Brunch this week?',
-    secondary: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
+    secondary:
+      "I'll be in the neighbourhood this week. Let's grab a bite to eat",
     person: '/static/images/avatar/5.jpg',
   },
   {
@@ -77,7 +81,8 @@ const messageExamples = [
   },
   {
     primary: 'Recipe to try',
-    secondary: 'I am trying out this new BBQ recipe, I think this might be amazing',
+    secondary:
+      'I am trying out this new BBQ recipe, I think this might be amazing',
     person: '/static/images/avatar/2.jpg',
   },
   {
@@ -87,7 +92,8 @@ const messageExamples = [
   },
   {
     primary: "Doctor's Appointment",
-    secondary: 'My appointment for the doctor was rescheduled for next Saturday.',
+    secondary:
+      'My appointment for the doctor was rescheduled for next Saturday.',
     person: '/static/images/avatar/4.jpg',
   },
   {
@@ -103,4 +109,4 @@ const messageExamples = [
       for my backyard and would love to fire up the grill.`,
     person: '/static/images/avatar/1.jpg',
   },
-];
+]

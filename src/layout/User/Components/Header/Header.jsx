@@ -38,7 +38,7 @@ import axios from 'axios'
 const settings = [
   {
     label: 'Profile',
-    path: '/Profile',
+    path: '/my-profile',
   },
   {
     label: 'Logout',
@@ -108,9 +108,9 @@ const Header = () => {
     setNotificationDrawerOpen(open)
   }
 
-  const homeIcon = useIconInHeader(<HomeIcon />, 'Home Page', '/Home')
-  const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/Mybooks')
-  const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/Groups')
+  const homeIcon = useIconInHeader(<HomeIcon />, 'Home Page', '/home')
+  const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/mybooks')
+  const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/groups')
   const books = useIconInHeader(<LocalLibraryIcon />, 'Books', '/Books')
 
   const drawer = (
@@ -154,11 +154,13 @@ const Header = () => {
     >
       <Typography variant="h6">Notifications</Typography>
       <List>
-        {['Notification 1', 'Notification 2', 'Notification 3'].map((text, index) => (
-          <ListItem key={index}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {['Notification 1', 'Notification 2', 'Notification 3'].map(
+          (text, index) => (
+            <ListItem key={index}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ),
+        )}
       </List>
     </Box>
   )
@@ -198,25 +200,48 @@ const Header = () => {
 
             {!isMobile && (
               <Container sx={{ flexGrow: 1 }}>
-                <Grid container sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
+                <Grid
+                  container
+                  sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}
+                >
                   <Link to="/">
-                    <Grid item xs={1}>{homeIcon}</Grid>
+                    <Grid item xs={1}>
+                      {homeIcon}
+                    </Grid>
                   </Link>
                   <Link to="/my-books">
-                    <Grid item xs={1}>{myBooks}</Grid>
+                    <Grid item xs={1}>
+                      {myBooks}
+                    </Grid>
                   </Link>
                   <Link to="/groups">
-                    <Grid item xs={1}>{groups}</Grid>
+                    <Grid item xs={1}>
+                      {groups}
+                    </Grid>
                   </Link>
                   <Link to="/books">
-                    <Grid item xs={1}>{books}</Grid>
+                    <Grid item xs={1}>
+                      {books}
+                    </Grid>
                   </Link>
                 </Grid>
               </Container>
             )}
-            
-            <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', color: '#000', marginLeft: 'auto' }}>
-              <IconButton size="large" aria-label="show new mails" color="inherit">
+
+            <Box
+              sx={{
+                flexGrow: 0,
+                display: 'flex',
+                alignItems: 'center',
+                color: '#000',
+                marginLeft: 'auto',
+              }}
+            >
+              <IconButton
+                size="large"
+                aria-label="show new mails"
+                color="inherit"
+              >
                 <Badge badgeContent={4} color="error">
                   <MailIcon />
                 </Badge>
@@ -264,10 +289,14 @@ const Header = () => {
                     }}
                   >
                     {setting.label === 'Logout' ? (
-                      <Typography textAlign="center">{setting.label}</Typography>
+                      <Typography textAlign="center">
+                        {setting.label}
+                      </Typography>
                     ) : (
                       <Link to={setting.path}>
-                        <Typography textAlign="center">{setting.label}</Typography>
+                        <Typography textAlign="center">
+                          {setting.label}
+                        </Typography>
                       </Link>
                     )}
                   </MenuItem>

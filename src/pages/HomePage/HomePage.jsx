@@ -4,7 +4,6 @@ import CenterContainer from '../../layout/User/Components/CenterContainer/Center
 import RighContainer from '../../layout/User/Components/RightContainer/RightContainer'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import Post from '../../layout/User/Poster/Post'
-import avatarU from '../../assets/images/MeoAnhLongNgan.webp'
 import { Box, Grid } from '@mui/material'
 import '../../css/HomePage.css'
 import axios from 'axios'
@@ -36,9 +35,11 @@ const HomePage = () => {
   }, [])
   const postElements = []
   for (let i = 0; i < post.length; i++) {
+    console.log(post[i].user);
     postElements.push(
       <Post
         key={i}
+        userId={post[i].user[0].user_id}
         userAvatar={post[i].user[0].image_url}
         bookDescription={post[i].books[0].name}
         bookImg={post[i].books[0].image}

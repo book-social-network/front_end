@@ -1,86 +1,85 @@
 .post-container {
-    max-width: 700px;
-    
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out;
+  max-width: 700px;
+
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0;
+}
+
+.post-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.post-description {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+.post-image {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1px;
+  border-top: 1px solid #e0e0e0;
+  padding: 8px 16px;
+  background-color: #fafafa;
+}
+
+.post-icon-button {
+  color: #666;
+  transition: color 0.2s;
+}
+
+.comment-section {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.comment-avatar {
+  width: 36px;
+  height: 36px;
+}
+
+.comment-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-textfield {
+  flex-grow: 1;
+}
+
+.comment-send-button {
+  padding: 6px;
+}
+
+@media (max-width: 600px) {
+  .post-container {
+    max-width: 100%;
+    margin: 0 8px;
   }
-  
-  .post-header {
-    display: flex;
-    align-items: center;
-    padding-bottom: 0;
-  }
-  
-  .post-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-  }
-  
-  .post-description {
-    color: #666;
-    font-size: 1rem;
-    margin-bottom: 16px;
-  }
-  .post-image {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .post-actions {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 1px;
-    border-top: 1px solid #e0e0e0;
-    padding: 8px 16px;
-    background-color: #fafafa;
-  }
-  
-  .post-icon-button {
-    color: #666;
-    transition: color 0.2s;
-  }
-  
-  .comment-section {
-    background-color: #f9f9f9;
-    padding: 16px;
-    border-top: 1px solid #e0e0e0;
-  }
-  
+
   .comment-avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
-  
-  .comment-input-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .comment-textfield {
-    flex-grow: 1;
-  }
-  
-  .comment-send-button {
-    padding: 6px;
-  }
-  
-  @media (max-width: 600px) {
-    .post-container {
-      max-width: 100%;
-      margin: 0 8px;
-    }
-  
-    .comment-avatar {
-      width: 32px;
-      height: 32px;
-    }
-  }
-  
+}

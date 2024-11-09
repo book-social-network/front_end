@@ -40,8 +40,8 @@ export default function Profile() {
       getUser()
     }
   }, [token])
-  const openModal = ()=>setOpen(true)
-  const closeModal = ()=>setOpen(false)
+  const openModal = () => setOpen(true)
+  const closeModal = () => setOpen(false)
   return (
     <section style={{ backgroundColor: '#f4f5f7', minHeight: '100vh' }}>
       <Container sx={{ py: 5 }}>
@@ -88,7 +88,7 @@ export default function Profile() {
                       <Grid item xs={6}>
                         <Typography variant="subtitle2">Email</Typography>
                         <Typography variant="body2" color="text.secondary">
-                          {user ? user.email :''}
+                          {user ? user.email : ''}
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
@@ -153,7 +153,9 @@ export default function Profile() {
           <Typography variant="h6" component="h2" mb={2}>
             Edit Profile
           </Typography>
-          <Typography variant="body2">Here you can update your profile information.</Typography>
+          <Typography variant="body2">
+            Here you can update your profile information.
+          </Typography>
         </Box>
       </Modal>
     </section>
