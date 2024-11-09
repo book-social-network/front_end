@@ -10,12 +10,14 @@ import {
   Divider,
   Box,
   IconButton,
+  Modal,
 } from '@mui/material'
 import { Facebook, Twitter, Instagram, Edit } from '@mui/icons-material'
 
 export default function Profile() {
   const [token, setToken] = useState('')
   const [user, setUser] = useState(null)
+  const [open, setOpen] = useState(false)
   useEffect(() => {
     setToken(localStorage.getItem('access_token'))
     const getUser = async () => {
@@ -38,9 +40,8 @@ export default function Profile() {
       getUser()
     }
   }, [token])
-
-  console.log(localStorage.getItem('access_token'))
-
+  const openModal = ()=>setOpen(true)
+  const closeModal = ()=>setOpen(false)
   return (
     <section style={{ backgroundColor: '#f4f5f7', minHeight: '100vh' }}>
       <Container sx={{ py: 5 }}>
@@ -75,7 +76,7 @@ export default function Profile() {
                     sx={{ width: 80, height: 80, mb: 2 }}
                   />
                   <Typography variant="h5">{user ? user.name : ''}</Typography>
-                  <IconButton sx={{ color: '#fff', mt: 2 }}>
+                  <IconButton sx={{ color: '#fff', mt: 2 }} onClick={openModal}>
                     <Edit />
                   </IconButton>
                 </Grid>
@@ -135,6 +136,26 @@ export default function Profile() {
           </Grid>
         </Grid>
       </Container>
+      <Modal open={open} onClose={closeModal}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography variant="h6" component="h2" mb={2}>
+            Edit Profile
+          </Typography>
+          <Typography variant="body2">Here you can update your profile information.</Typography>
+        </Box>
+      </Modal>
     </section>
   )
 }

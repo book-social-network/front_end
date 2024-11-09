@@ -32,6 +32,7 @@ const Post = ({
 }) => {
   const [status, setStatus] = useState('Want to Read')
   const [liked, setLiked] = useState(false)
+  const [countLike, setCountLike] = useState(0)
   const [showComment, setShowComment] = useState(false)
   const [comment, setComment] = useState('')
   const [rating, setRating] = useState(0)
@@ -41,6 +42,11 @@ const Post = ({
   }
 
   const toggleLike = () => {
+    if (liked) {
+      setCountLike(countLike - 1)
+    } else {
+      setCountLike(countLike + 1)
+    }
     setLiked(!liked)
   }
 
@@ -58,18 +64,9 @@ const Post = ({
       setComment('')
     }
   }
-
   const timeParts = timeStamp.split(' ')
-  const time = timeParts[0].split(':')
-  const date = timeParts[1].split('/')
-  const dateObject = new Date(
-    date[2],
-    date[1] - 1,
-    date[0],
-    time[0],
-    time[1],
-    time[2],
-  )
+  const formattedTimeStamp = `${timeParts[0]}T${timeParts[1]}`
+  const dateObject = new Date(formattedTimeStamp)
   const timeAgo = formatDistanceToNow(dateObject, { addSuffix: true })
 
   return (
@@ -110,24 +107,29 @@ const Post = ({
           >
             <MenuItem value="Want to Read">Want to Read</MenuItem>
             <MenuItem value="Reading">Reading</MenuItem>
-            <MenuItem value="Finished Reading">Finished Reading</MenuItem>
+            <MenuItem value="Read">Read</MenuItem>
           </Select>
-          <div className="rating-section">
-            <Typography variant="body2">Rate it:</Typography>
-            {Array.from({ length: 5 }, (_, index) => (
-              <IconButton
-                key={index}
-                aria-label="rate"
-                onClick={() => setRating(index + 1)}
-              >
-                {rating > index ? (
-                  <StarIcon style={{ color: 'gold' }} />
-                ) : (
-                  <StarBorderIcon />
-                )}
-              </IconButton>
-            ))}
-          </div>
+
+          {/* Conditionally render the rating section based on status */}
+          {(status === 'Reading' || status === 'Read') && (
+            <div className="rating-section">
+              <Typography variant="body2">Rate it:</Typography>
+              {Array.from({ length: 5 }, (_, index) => (
+                <IconButton
+                  key={index}
+                  aria-label="rate"
+                  onClick={() => setRating(index + 1)}
+                >
+                  {rating > index ? (
+                    <StarIcon style={{ color: 'gold' }} />
+                  ) : (
+                    <StarBorderIcon />
+                  )}
+                </IconButton>
+              ))}
+            </div>
+          )}
+
           <Typography variant="body2" className="post-description">
             {bookDescription}
           </Typography>
@@ -138,7 +140,7 @@ const Post = ({
           {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
         </IconButton>
         <Typography variant="body2" onClick={toggleLike}>
-          {liked ? 'Liked' : 'Like'}
+          {countLike}
         </Typography>
         <IconButton onClick={toggleCommentSection}>
           <CommentIcon />

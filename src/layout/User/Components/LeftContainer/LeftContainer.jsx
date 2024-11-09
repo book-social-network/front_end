@@ -107,7 +107,7 @@ const LeftContainer = () => {
           </Grid>
           <Grid item xs={10}>
             <Link href="#" underline="none" className="custom-link">
-              Muốn đọc
+              Want to read
             </Link>
           </Grid>
         </Grid>
@@ -117,7 +117,7 @@ const LeftContainer = () => {
           </Grid>
           <Grid item xs={10}>
             <Link href="#" underline="none" className="custom-link">
-              Muốn đọc
+              Reading
             </Link>
           </Grid>
         </Grid>
@@ -127,7 +127,7 @@ const LeftContainer = () => {
           </Grid>
           <Grid item xs={10}>
             <Link href="#" underline="none" className="custom-link">
-              Muốn đọc
+              Read
             </Link>
           </Grid>
         </Grid>

@@ -20,6 +20,7 @@ import {
   Container,
   Stack,
   useMediaQuery,
+  SwipeableDrawer,
 } from '@mui/material'
 import {
   MenuBook as MenuBookIcon,
@@ -49,8 +50,10 @@ const Header = () => {
   const navigate = useNavigate()
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -73,11 +76,13 @@ const Header = () => {
       getUser()
     }
   }, [token])
+
   const handleLogout = () => {
     localStorage.removeItem('access_token')
     setToken(null)
     navigate('/')
   }
+
   const isMobile = useMediaQuery('(max-width:600px)')
 
   const handleOpenUserMenu = (event) => {
@@ -91,10 +96,23 @@ const Header = () => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
+
+  const toggleNotificationDrawer = (open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return
+    }
+    setNotificationDrawerOpen(open)
+  }
+
   const homeIcon = useIconInHeader(<HomeIcon />, 'Home Page', '/Home')
   const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/Mybooks')
   const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/Groups')
   const books = useIconInHeader(<LocalLibraryIcon />, 'Books', '/Books')
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -123,6 +141,24 @@ const Header = () => {
             </ListItem>
           </>
         )}
+      </List>
+    </Box>
+  )
+
+  const notifications = (
+    <Box
+      sx={{ width: 250, padding: 2 }}
+      role="presentation"
+      onClick={toggleNotificationDrawer(false)}
+      onKeyDown={toggleNotificationDrawer(false)}
+    >
+      <Typography variant="h6">Notifications</Typography>
+      <List>
+        {['Notification 1', 'Notification 2', 'Notification 3'].map((text, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
       </List>
     </Box>
   )
@@ -162,47 +198,25 @@ const Header = () => {
 
             {!isMobile && (
               <Container sx={{ flexGrow: 1 }}>
-                <Grid
-                  container
-                  sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}
-                >
+                <Grid container sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}>
                   <Link to="/">
-                    <Grid item xs={1}>
-                      {homeIcon}
-                    </Grid>
+                    <Grid item xs={1}>{homeIcon}</Grid>
                   </Link>
                   <Link to="/my-books">
-                    <Grid item xs={1}>
-                      {myBooks}
-                    </Grid>
+                    <Grid item xs={1}>{myBooks}</Grid>
                   </Link>
                   <Link to="/groups">
-                    <Grid item xs={1}>
-                      {groups}
-                    </Grid>
+                    <Grid item xs={1}>{groups}</Grid>
                   </Link>
                   <Link to="/books">
-                    <Grid item xs={1}>
-                      {books}
-                    </Grid>
+                    <Grid item xs={1}>{books}</Grid>
                   </Link>
                 </Grid>
               </Container>
             )}
-            <Box
-              sx={{
-                flexGrow: 0,
-                display: 'flex',
-                alignItems: 'center',
-                color: '#000',
-                marginLeft: 'auto',
-              }}
-            >
-              <IconButton
-                size="large"
-                aria-label="show new mails"
-                color="inherit"
-              >
+            
+            <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', color: '#000', marginLeft: 'auto' }}>
+              <IconButton size="large" aria-label="show new mails" color="inherit">
                 <Badge badgeContent={4} color="error">
                   <MailIcon />
                 </Badge>
@@ -211,6 +225,7 @@ const Header = () => {
                 size="large"
                 aria-label="show new notifications"
                 color="inherit"
+                onClick={toggleNotificationDrawer(true)}
               >
                 <Badge badgeContent={17} color="error">
                   <NotificationsIcon />
@@ -249,14 +264,10 @@ const Header = () => {
                     }}
                   >
                     {setting.label === 'Logout' ? (
-                      <Typography textAlign="center">
-                        {setting.label}
-                      </Typography>
+                      <Typography textAlign="center">{setting.label}</Typography>
                     ) : (
                       <Link to={setting.path}>
-                        <Typography textAlign="center">
-                          {setting.label}
-                        </Typography>
+                        <Typography textAlign="center">{setting.label}</Typography>
                       </Link>
                     )}
                   </MenuItem>
@@ -268,6 +279,14 @@ const Header = () => {
           <Drawer anchor="left" open={mobileOpen} onClose={handleDrawerToggle}>
             {drawer}
           </Drawer>
+          <SwipeableDrawer
+            anchor="right"
+            open={notificationDrawerOpen}
+            onClose={toggleNotificationDrawer(false)}
+            onOpen={toggleNotificationDrawer(true)}
+          >
+            {notifications}
+          </SwipeableDrawer>
         </AppBar>
       ) : (
         <div>Loading....</div>
