@@ -13,33 +13,12 @@ import {
   Modal,
 } from '@mui/material'
 import { Facebook, Twitter, Instagram, Edit } from '@mui/icons-material'
+import { useUserProfile } from '../../hooks/useUserProfile'
+import Footer from '../../layout/User/Components/Footer/Footer'
 
 export default function Profile() {
-  const [token, setToken] = useState('')
-  const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false)
-  useEffect(() => {
-    setToken(localStorage.getItem('access_token'))
-    const getUser = async () => {
-      try {
-        const respon = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/auth/user-profile`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        )
-        setUser(respon.data)
-        console.log(respon.data)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    if (token === localStorage.getItem('access_token')) {
-      getUser()
-    }
-  }, [token])
+  const { user, token, setToken } = useUserProfile()
   const openModal = () => setOpen(true)
   const closeModal = () => setOpen(false)
   return (
@@ -136,6 +115,7 @@ export default function Profile() {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
       <Modal open={open} onClose={closeModal}>
         <Box
           sx={{

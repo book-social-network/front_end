@@ -1,55 +1,72 @@
-import React, { useEffect, useState } from 'react'
-import LeftContainer from '../../layout/User/Components/LeftContainer/LeftContainer'
-import CenterContainer from '../../layout/User/Components/CenterContainer/CenterContainer'
-import RighContainer from '../../layout/User/Components/RightContainer/RightContainer'
-import Footer from '../../layout/User/Components/Footer/Footer'
-import Post from '../../layout/User/Poster/Post'
-import { Box, Grid } from '@mui/material'
-import '../../css/HomePage.css'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import LeftContainer from '../../layout/User/Components/LeftContainer/LeftContainer';
+import CenterContainer from '../../layout/User/Components/CenterContainer/CenterContainer';
+import RighContainer from '../../layout/User/Components/RightContainer/RightContainer';
+import Footer from '../../layout/User/Components/Footer/Footer';
+import Post from '../../layout/User/Poster/Post';
+import { Box, Grid } from '@mui/material';
+import '../../css/HomePage.css';
+import axios from 'axios';
+import { useUserProfile } from '../../hooks/useUserProfile';
 
 const HomePage = () => {
-  const [allPost, setListPost] = useState([])
-  const [post, setPost] = useState([])
+  const [allPost, setListPost] = useState([]);
+  const [post, setPost] = useState([]);
+  const { user, token, setToken } = useUserProfile(); // Assuming token is in the userProfile
 
   useEffect(() => {
     const getPost = async () => {
       try {
+        // Fetching posts with Authorization header using the token
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/post/get-all`
-        )
-        setListPost(response.data)
+          `${process.env.REACT_APP_BACKEND}/api/post/get-all`, 
+          {
+            headers: {
+              'Authorization': `Bearer ${token}` // Pass token in header
+            }
+          }
+        );
+
+        setListPost(response.data);
+
         const postRequests = response.data.map((item) =>
           axios.get(
-            `${process.env.REACT_APP_BACKEND}/api/post/get/${item.post.id}`
+            `${process.env.REACT_APP_BACKEND}/api/post/get/${item.post.id}`, 
+            {
+              headers: {
+                'Authorization': `Bearer ${token}` // Pass token in header for each post
+              }
+            }
           )
-        )
-        const postsData = await Promise.all(postRequests)
-        setPost(postsData.map((res) => res.data))
-      } catch (e) {
-        console.log(e)
-      }
-    }
+        );
 
-    getPost()
-  }, [])
-  const postElements = []
-  for (let i = 0; i < post.length; i++) {
-    console.log(post[i].user);
-    postElements.push(
-      <Post
-        key={i}
-        userId={post[i].user[0].user_id}
-        userAvatar={post[i].user[0].image_url}
-        bookDescription={post[i].books[0].name}
-        bookImg={post[i].books[0].image}
-        bookLink={post[i].books.link_book}
-        bookTitle={post[i].books.name}
-        timeStamp="2024-10-30 20:22:44"
-        userName={post[i].user[0].name}
-      />
-    )
-  }
+        const postsData = await Promise.all(postRequests);
+        setPost(postsData.map((res) => res.data));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getPost();
+  }, [token]);
+
+  const postElements = post.map((postData, index) => (
+    <Post
+      key={index}
+      postId={postData.post.id}
+      userId={postData.user[0].user_id} 
+      userAvatar={postData.user[0].image_url}
+      bookDescription={postData.books[0].name}
+      bookImg={postData.books[0].image}
+      bookLink={postData.books.link_book}
+      bookTitle={postData.books.name}
+      timeStamp="2024-10-30 20:22:44"
+      userName={postData.user[0].name}
+      likes={postData.likes.length}
+      state_like={postData["state-like"]}
+    />
+  ));
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -61,14 +78,14 @@ const HomePage = () => {
         <Grid item xs={12} sm={6} sx={{ paddingRight: '24px' }}>
           <CenterContainer />
           {postElements}
-                 </Grid>
+        </Grid>
         <Grid className="RightContainer container" item xs={0} sm={3}>
           <RighContainer />
           <Footer classname="sm" />
         </Grid>
       </Grid>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
