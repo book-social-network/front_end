@@ -55,7 +55,8 @@ export default function Group() {
             {recommendedGroup === true ? (
               <Grid container>
                 <RecommendedGroup
-                  NameGroup="Group mới tạo"
+                idGroup={1}
+                  NameGroup="Group mới tạo" 
                   DetailGroup="Đây là Group vừa được tạo"
                   imgGroup={Img}
                   StateGroup="1"

@@ -12,17 +12,16 @@ import { useUserProfile } from '../../hooks/useUserProfile';
 const HomePage = () => {
   const [allPost, setListPost] = useState([]);
   const [post, setPost] = useState([]);
-  const { user, token, setToken } = useUserProfile(); // Assuming token is in the userProfile
+  const { user, token, setToken } = useUserProfile();
 
   useEffect(() => {
     const getPost = async () => {
       try {
-        // Fetching posts with Authorization header using the token
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND}/api/post/get-all`, 
           {
             headers: {
-              'Authorization': `Bearer ${token}` // Pass token in header
+              'Authorization': `Bearer ${token}`
             }
           }
         );
@@ -34,7 +33,7 @@ const HomePage = () => {
             `${process.env.REACT_APP_BACKEND}/api/post/get/${item.post.id}`, 
             {
               headers: {
-                'Authorization': `Bearer ${token}` // Pass token in header for each post
+                'Authorization': `Bearer ${token}`
               }
             }
           )
@@ -54,7 +53,7 @@ const HomePage = () => {
     <Post
       key={index}
       postId={postData.post.id}
-      userId={postData.user[0].user_id} 
+      userId={postData.user[0].id} 
       userAvatar={postData.user[0].image_url}
       bookDescription={postData.books[0].name}
       bookImg={postData.books[0].image}

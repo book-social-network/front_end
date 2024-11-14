@@ -13,7 +13,7 @@ import '../css/RecommendedGroup.css'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Link } from 'react-router-dom'
 
-function RecommendedGroup({ NameGroup, imgGroup, DetailGroup, StateGroup }) {
+function RecommendedGroup({idGroup, NameGroup, imgGroup, DetailGroup, StateGroup }) {
   return (
     <Grid sm={4} xs={6} item>
       <Card
@@ -32,7 +32,7 @@ function RecommendedGroup({ NameGroup, imgGroup, DetailGroup, StateGroup }) {
           sx={{ width: '100%' }}
         />
         <CardContent>
-          <Link to="/group/1" style={{ textDecoration: 'none', color: '#000' }}>
+          <Link to={`/detail-group/${idGroup}`} style={{ textDecoration: 'none', color: '#000' }}>
             <Typography
               gutterBottom
               variant="h6"

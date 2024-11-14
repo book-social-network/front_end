@@ -35,15 +35,15 @@ const Post = ({
   bookLink,
   timeStamp,
   likes,
-  state_like // This is the initial like state (true for liked, false for not liked)
+  state_like,
 }) => {
   const [status, setStatus] = useState('Want to Read')
-  const [liked, setLiked] = useState(state_like) // Initialize liked state with state_like prop
+  const [liked, setLiked] = useState(state_like)
   const [countLike, setCountLike] = useState(likes)
   const [showComment, setShowComment] = useState(false)
   const [comment, setComment] = useState('')
   const [rating, setRating] = useState(0)
-  const {user} = useUserProfile();
+  const { user } = useUserProfile()
 
   const dateObj = timeStamp ? parseISO(timeStamp) : null
   const timeAgo = dateObj
@@ -53,30 +53,34 @@ const Post = ({
   const handleChange = (event) => setStatus(event.target.value)
 
   const toggleLike = useCallback(async () => {
-    setLiked((prevLiked) => !prevLiked); // Toggle the liked state
-    setCountLike((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
+    setLiked((prevLiked) => !prevLiked)
+    setCountLike((prevCount) => (liked ? prevCount - 1 : prevCount + 1))
 
-    const UserId = user.id;
-    const PostId = postId;
+    const UserId = user.id
+    const PostId = postId
 
     try {
       if (!liked) {
-        // Like the post
-        await axios.post(`${process.env.REACT_APP_BACKEND}/api/post/insert-like`, {
-          'post_id': PostId,
-          'user_id': UserId
-        });
+        await axios.post(
+          `${process.env.REACT_APP_BACKEND}/api/post/insert-like`,
+          {
+            post_id: PostId,
+            user_id: UserId,
+          },
+        )
       } else {
-        // Remove like from post
-        await axios.post(`${process.env.REACT_APP_BACKEND}/api/post/remove-like`, {
-          UserId: user.id,
-          PostId: postId,
-        });
+        await axios.post(
+          `${process.env.REACT_APP_BACKEND}/api/post/remove-like`,
+          {
+            UserId: user.id,
+            PostId: postId,
+          },
+        )
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  }, [liked, countLike, user, postId]);
+  }, [liked, countLike, user, postId])
 
   const toggleCommentSection = () => setShowComment((prev) => !prev)
 
@@ -103,9 +107,17 @@ const Post = ({
             <MoreVertIcon />
           </IconButton>
         }
-        title={userName}
+        title={
+          <Link
+            to={`/detail-user/${userId}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {userName}
+          </Link>
+        }
         subheader={timeAgo}
       />
+
       <CardContent className="post-content">
         <div className="post-content-left">
           <a href={bookLink} target="_blank" rel="noopener noreferrer">
