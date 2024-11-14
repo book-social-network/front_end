@@ -57,7 +57,7 @@ function RecommendedGroup({idGroup, NameGroup, imgGroup, DetailGroup, StateGroup
           >
             {DetailGroup}
           </Typography>
-          {StateGroup === '1' ? (
+          {StateGroup === 1 ? (
             <div style={{ display: 'flex', margin: '0.5rem' }}>
               <RemoveRedEyeIcon
                 style={{ marginRight: '4px', fontSize: '1rem' }}
