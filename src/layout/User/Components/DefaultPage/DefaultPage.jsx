@@ -1,15 +1,18 @@
 import React from 'react'
 import Header from '../Header/Header'
 import { UserProvider } from '../../../../hooks/UseContext'
+import { ModalProvider } from '../../../../hooks/ModalContext'
 
 export const DefaultPage = ({ children }) => {
   return (
-    <UserProvider>
-      <div>
-        <Header />
-        {children}
-      </div>
-    </UserProvider>
+    <ModalProvider>
+      <UserProvider>
+        <div>
+          <Header />
+          {children}
+        </div>
+      </UserProvider>
+    </ModalProvider>
   )
 }
 

@@ -1,43 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import '../../css/group.css';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
-import Footer from '../../layout/User/Components/Footer/Footer';
-import RecommendedGroup from '../../hooks/RecommendedGroup';
-import MyGroups from '../../hooks/MyGroups';
-import Img from '../../assets/images/MeoAnhLongNgan.webp';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import '../../css/group.css'
+import { Box, Button, Container, Grid, Typography } from '@mui/material'
+import Footer from '../../layout/User/Components/Footer/Footer'
+import RecommendedGroup from '../../hooks/RecommendedGroup'
+import MyGroupItem from '../../hooks/MyGroupItem'
+import MyGroups from '../../layout/User/Components/MyGroups/MyGroups'
+import { useUserProfile } from '../../hooks/useUserProfile'
+import axios from 'axios'
 
 export default function Group() {
-  const [recommendedGroup, setRecommendedGroup] = useState(true);
-  const [allGroups, setAllGroups] = useState([]);  // Lưu trữ tất cả các nhóm
-  const [randomGroups, setRandomGroups] = useState([]);  // Lưu trữ 6 nhóm ngẫu nhiên
-
-  // Lấy tất cả nhóm từ API và chọn ngẫu nhiên 6 nhóm
-  const fetchGroups = async () => {
+  const [recommendedGroup, setRecommendedGroup] = useState(true)
+  const [allGroups, setAllGroups] = useState([])
+  const [joinedGroups, setJoinedGroups] = useState([])
+  const [randomGroups, setRandomGroups] = useState([])
+  const { user, token } = useUserProfile()
+  const fetchGroupsRecommented = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/group/get-all`);
-      setAllGroups(response.data);  // Giả sử API trả về dữ liệu nhóm
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/api/group/get-all`,
+      )
+      setAllGroups(response.data)
     } catch (error) {
-      console.log('Error fetching groups:', error);
+      console.log('Error fetching groups:', error)
     }
-  };
+  }
+  const fetchGroupJoined = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/api/post/get-post-in-group`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      setJoinedGroups(response.data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
-  // Chọn ngẫu nhiên 6 nhóm từ tất cả nhóm
   const getRandomGroups = () => {
-    const shuffled = [...allGroups].sort(() => 0.5 - Math.random()); // Trộn tất cả nhóm
-    const selectedGroups = shuffled.slice(0, 6);  // Chọn 6 nhóm đầu tiên
-    setRandomGroups(selectedGroups);
-  };
+    if (user) {
+      const notInGroup = allGroups.filter(
+        (group) => !group.users.some((user1) => user1.id === user.id),
+      )
+      const shuffled = [...notInGroup].sort(() => 0.5 - Math.random())
+      const sixGroup = shuffled.slice(0, 6)
+
+      setRandomGroups(sixGroup)
+    }
+  }
+  useEffect(() => {
+    fetchGroupJoined()
+  }, [recommendedGroup])
 
   useEffect(() => {
-    fetchGroups();
-  }, []);
+    fetchGroupsRecommented()
+  }, [])
 
   useEffect(() => {
     if (allGroups.length > 0) {
-      getRandomGroups();  // Chọn 6 nhóm ngẫu nhiên khi có dữ liệu nhóm
+      getRandomGroups()
     }
-  }, [allGroups]);
+  }, [allGroups])
 
   return (
     <div>
@@ -52,8 +78,8 @@ export default function Group() {
               <Button
                 variant={recommendedGroup === true ? 'contained' : 'outlined'}
                 onClick={() => {
-                  setRecommendedGroup(true);
-                  getRandomGroups();  // Khi nhấn "Recommend Groups", sẽ chọn lại 6 nhóm ngẫu nhiên
+                  setRecommendedGroup(true)
+                  getRandomGroups()
                 }}
               >
                 <Typography
@@ -69,7 +95,7 @@ export default function Group() {
               <Button
                 variant={recommendedGroup === false ? 'contained' : 'outlined'}
                 onClick={() => {
-                  setRecommendedGroup(false);
+                  setRecommendedGroup(false)
                 }}
               >
                 <Typography
@@ -86,7 +112,7 @@ export default function Group() {
           <Grid container>
             {recommendedGroup === true ? (
               <Grid container spacing={2}>
-                {randomGroups.map(group => (
+                {randomGroups.map((group) => (
                   <RecommendedGroup
                     key={group.group.id}
                     idGroup={group.group.id}
@@ -98,14 +124,15 @@ export default function Group() {
                 ))}
               </Grid>
             ) : (
-              <div>
-                <MyGroups />
-              </div>
+              <Grid container spacing={2}>
+                <MyGroups groups={joinedGroups}/>
+              </Grid>
             )}
           </Grid>
         </Container>
       </Box>
       <Footer />
     </div>
-  );
+  )
 }
+

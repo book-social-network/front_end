@@ -28,10 +28,11 @@ import {
   Groups as GroupsIcon,
   LocalLibrary as LocalLibraryIcon,
   Notifications as NotificationsIcon,
-  Mail as MailIcon,
+  Add as AddIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material'
 import useIconInHeader from '../../../../hooks/HeaderIcon'
+import { useModal } from '../../../../hooks/ModalContext'
 import '../../../../css/header.css'
 import axios from 'axios'
 
@@ -53,6 +54,7 @@ const Header = () => {
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
+  const {openModal} = useModal();
 
   useEffect(() => {
     const getUser = async () => {
@@ -237,14 +239,12 @@ const Header = () => {
                 marginLeft: 'auto',
               }}
             >
-              <IconButton
+              <IconButton onClick={openModal}
                 size="large"
                 aria-label="show new mails"
                 color="inherit"
               >
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
-                </Badge>
+                  <AddIcon />
               </IconButton>
               <IconButton
                 size="large"

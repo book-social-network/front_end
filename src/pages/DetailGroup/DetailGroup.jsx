@@ -11,7 +11,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import LockIcon from '@mui/icons-material/Lock'
 import PublicIcon from '@mui/icons-material/Public'
-import MyGroups from '../../hooks/MyGroups'
+import MyGroupItem from '../../hooks/MyGroupItem'
 
 export default function DetailGroup() {
   const isPublic = true
@@ -55,7 +55,7 @@ export default function DetailGroup() {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9}>
-          <MyGroups />
+          <MyGroupItem />
         </Grid>
         <Grid item xs={12} sm={3}>
           <Box sx={{ padding: 2, backgroundColor: '#252728', borderRadius: 2 }}>

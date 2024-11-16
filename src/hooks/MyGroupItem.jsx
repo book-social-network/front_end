@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   CardHeader,
@@ -17,12 +17,33 @@ import SendIcon from '@mui/icons-material/Send'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import '../css/mygroup.css'
 import Image from '../assets/images/MeoAnhLongNgan.webp'
+import axios from 'axios'
 
-export default function MyGroups() {
-  const [countLike, setCountLike] = useState(10)
+export default function MyGroupItem({user_id, post_id, group_name, group_description}) {
+  const [countLike, setCountLike] = useState(0)
+  const [userItem, setUserItem] = useState()
   const [liked, setLiked] = useState(false)
   const [showComment, setShowComment] = useState(false)
   const [comment, setComment] = useState('')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data_user = await axios.get(
+          `${process.env.REACT_APP_BACKEND}/api/user/get/${user_id}`
+        )
+        const data = await data_user.data;
+        setUserItem(data)
+      } catch (e) {
+        console.log('Error fetching user data:', e)
+      }
+    }
+  
+      fetchData()
+  }, [])
+  
+  console.log(userItem);
+  
 
   const toggleLike = () => {
     setLiked(!liked)
@@ -44,25 +65,18 @@ export default function MyGroups() {
     <Card className="post-container">
       <CardHeader
         className="post-header"
-        avatar={<IconToIcon icon1={Image} icon2={Image} />}
+        avatar={<IconToIcon icon1={userItem.avatar} icon2={userItem.avatar} />}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title="Đảo mèo"
-        subheader="Mèo rừng châu phi"
+        title={group_name}
+        subheader={userItem.name}
       />
       <CardContent>
         <Typography variant="h5" component="h2" className="post-title">
-          Book Title
-        </Typography>
-        <Typography
-          variant="body1"
-          color="textSecondary"
-          className="post-description"
-        >
-          Book Description
+        {group_description}
         </Typography>
         <a
           href="{bookLink}"

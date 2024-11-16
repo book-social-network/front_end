@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react';
 import {
   Card,
   CardHeader,
@@ -10,19 +10,19 @@ import {
   Select,
   MenuItem,
   TextField,
-} from '@mui/material'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import CommentIcon from '@mui/icons-material/Comment'
-import SendIcon from '@mui/icons-material/Send'
-import StarBorderIcon from '@mui/icons-material/StarBorder'
-import StarIcon from '@mui/icons-material/Star'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { parseISO, formatDistanceToNow } from 'date-fns'
-import '../../../css/post.css'
-import { Link } from 'react-router-dom'
-import { useUserProfile } from '../../../hooks/useUserProfile'
-import axios from 'axios'
+} from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import SendIcon from '@mui/icons-material/Send';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { parseISO, formatDistanceToNow } from 'date-fns';
+import '../../../css/post.css';
+import { Link } from 'react-router-dom';
+import { useUserProfile } from '../../../hooks/useUserProfile';
+import axios from 'axios';
 
 const Post = ({
   postId,
@@ -33,31 +33,32 @@ const Post = ({
   bookTitle,
   bookDescription,
   bookLink,
-  timeStamp,
+  timeStamp, // The created_at value from the database
   likes,
   state_like,
 }) => {
-  const [status, setStatus] = useState('Want to Read')
-  const [liked, setLiked] = useState(state_like)
-  const [countLike, setCountLike] = useState(likes)
-  const [showComment, setShowComment] = useState(false)
-  const [comment, setComment] = useState('')
-  const [rating, setRating] = useState(0)
-  const { user } = useUserProfile()
+  const [status, setStatus] = useState('Want to Read');
+  const [liked, setLiked] = useState(state_like);
+  const [countLike, setCountLike] = useState(likes);
+  const [showComment, setShowComment] = useState(false);
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(0);
+  const { user } = useUserProfile();
 
-  const dateObj = timeStamp ? parseISO(timeStamp) : null
+  // Convert timestamp to "time ago" format
+  const dateObj = timeStamp ? parseISO(timeStamp) : null;
   const timeAgo = dateObj
     ? formatDistanceToNow(dateObj, { addSuffix: true })
-    : 'Invalid time'
+    : 'Invalid time';
 
-  const handleChange = (event) => setStatus(event.target.value)
+  const handleChange = (event) => setStatus(event.target.value);
 
   const toggleLike = useCallback(async () => {
-    setLiked((prevLiked) => !prevLiked)
-    setCountLike((prevCount) => (liked ? prevCount - 1 : prevCount + 1))
+    setLiked((prevLiked) => !prevLiked);
+    setCountLike((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
 
-    const UserId = user.id
-    const PostId = postId
+    const UserId = user.id;
+    const PostId = postId;
 
     try {
       if (!liked) {
@@ -66,33 +67,33 @@ const Post = ({
           {
             post_id: PostId,
             user_id: UserId,
-          },
-        )
+          }
+        );
       } else {
         await axios.post(
           `${process.env.REACT_APP_BACKEND}/api/post/remove-like`,
           {
             UserId: user.id,
             PostId: postId,
-          },
-        )
+          }
+        );
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }, [liked, countLike, user, postId])
+  }, [liked, countLike, user, postId]);
 
-  const toggleCommentSection = () => setShowComment((prev) => !prev)
+  const toggleCommentSection = () => setShowComment((prev) => !prev);
 
-  const handleCommentChange = (event) => setComment(event.target.value)
+  const handleCommentChange = (event) => setComment(event.target.value);
 
   const handleCommentSubmit = () => {
     if (comment.trim()) {
-      console.log('Comment submitted:', comment)
-      alert('Comment submitted!')
-      setComment('')
+      console.log('Comment submitted:', comment);
+      alert('Comment submitted!');
+      setComment('');
     }
-  }
+  };
 
   return (
     <Card className="post-container">
@@ -115,9 +116,8 @@ const Post = ({
             {userName}
           </Link>
         }
-        subheader={timeAgo}
+        subheader={timeAgo} // Display "time ago" here
       />
-
       <CardContent className="post-content">
         <div className="post-content-left">
           <a href={bookLink} target="_blank" rel="noopener noreferrer">
@@ -164,7 +164,6 @@ const Post = ({
               ))}
             </div>
           )}
-
           <Typography variant="body2" className="post-description">
             {bookDescription}
           </Typography>
@@ -208,7 +207,7 @@ const Post = ({
         </CardContent>
       )}
     </Card>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;

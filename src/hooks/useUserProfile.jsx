@@ -26,6 +26,5 @@ export const useUserProfile = () => {
       getUser();
     }
   }, [token]);
-
   return { user, token, setToken };
 };

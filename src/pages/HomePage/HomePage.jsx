@@ -1,70 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import LeftContainer from '../../layout/User/Components/LeftContainer/LeftContainer';
-import CenterContainer from '../../layout/User/Components/CenterContainer/CenterContainer';
-import RighContainer from '../../layout/User/Components/RightContainer/RightContainer';
-import Footer from '../../layout/User/Components/Footer/Footer';
-import Post from '../../layout/User/Poster/Post';
-import { Box, Grid } from '@mui/material';
-import '../../css/HomePage.css';
-import axios from 'axios';
-import { useUserProfile } from '../../hooks/useUserProfile';
+import React, { useEffect, useState } from 'react'
+import LeftContainer from '../../layout/User/Components/LeftContainer/LeftContainer'
+import CenterContainer from '../../layout/User/Components/CenterContainer/CenterContainer'
+import RighContainer from '../../layout/User/Components/RightContainer/RightContainer'
+import Footer from '../../layout/User/Components/Footer/Footer'
+import Post from '../../layout/User/Poster/Post'
+import { Box, Grid } from '@mui/material'
+import '../../css/HomePage.css'
+import axios from 'axios'
+import { useUserProfile } from '../../hooks/useUserProfile'
 
 const HomePage = () => {
-  const [allPost, setListPost] = useState([]);
-  const [post, setPost] = useState([]);
-  const { user, token, setToken } = useUserProfile();
+  const [allPost, setListPost] = useState([])
+  const [post, setPost] = useState([])
+  const { token } = useUserProfile()
 
   useEffect(() => {
     const getPost = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/post/get-all`, 
+          `${process.env.REACT_APP_BACKEND}/api/post/get-all`,
           {
             headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
 
-        setListPost(response.data);
+        setListPost(response.data)
+        console.log(allPost);
 
-        const postRequests = response.data.map((item) =>
+        const postRequests = allPost.map((item) =>
           axios.get(
-            `${process.env.REACT_APP_BACKEND}/api/post/get/${item.post.id}`, 
+            `${process.env.REACT_APP_BACKEND}/api/post/get/${item.post.id}`,
             {
               headers: {
-                'Authorization': `Bearer ${token}`
-              }
-            }
-          )
-        );
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          ),
+        )
 
-        const postsData = await Promise.all(postRequests);
-        setPost(postsData.map((res) => res.data));
+        const postsData = await Promise.all(postRequests)
+        setPost(postsData.map((res) => res.data))
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
-    };
+    }
 
-    getPost();
-  }, [token]);
+    getPost()
+  }, [token])
 
   const postElements = post.map((postData, index) => (
     <Post
       key={index}
       postId={postData.post.id}
-      userId={postData.user[0].id} 
+      userId={postData.user[0].id}
       userAvatar={postData.user[0].image_url}
       bookDescription={postData.books[0].name}
       bookImg={postData.books[0].image}
       bookLink={postData.books.link_book}
       bookTitle={postData.books.name}
-      timeStamp="2024-10-30 20:22:44"
+      timeStamp={postData.post.created_at}
       userName={postData.user[0].name}
       likes={postData.likes.length}
-      state_like={postData["state-like"]}
+      state_like={postData['state-like']}
     />
-  ));
+  ))
 
   return (
     <div>
@@ -83,8 +84,9 @@ const HomePage = () => {
           <Footer classname="sm" />
         </Grid>
       </Grid>
+      
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

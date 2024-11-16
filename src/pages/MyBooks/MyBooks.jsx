@@ -33,7 +33,7 @@ const MyBooks = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      if (user && user.id) {
+      if (user) {
         try {
           const response = await axios.get(
             `${process.env.REACT_APP_BACKEND}/api/assessment/get-assessment-user/${user.id}`
@@ -48,7 +48,7 @@ const MyBooks = () => {
                 );
 
           setBooks(filteredBooks);
-          setRatings(Array(filteredBooks.length).fill(0)); // Initialize the ratings array
+          setRatings(Array(filteredBooks.length).fill(0));
         } catch (e) {
           console.log(e);
         }
@@ -71,10 +71,7 @@ const MyBooks = () => {
   };
 
   const handleRatingChange = async (rowIndex, rating) => {
-    // Toggle rating or set the rating to the selected value
     const updatedRating = rating === ratings[rowIndex] ? 0 : rating;
-
-    // Optimistically update the rating in the UI immediately
     setRatings((prevRatings) => {
       const newRatings = [...prevRatings];
       newRatings[rowIndex] = updatedRating;
@@ -83,8 +80,6 @@ const MyBooks = () => {
 
     const book = books[rowIndex];
     const assessmentId = book.assessment.id;
-
-    // Perform the asynchronous update to the backend
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND}/api/assessment/update/${assessmentId}`, {
         star: updatedRating,
@@ -100,7 +95,7 @@ const MyBooks = () => {
       stars.push(
         <IconButton
           key={i}
-          onClick={() => handleRatingChange(rowIndex, i)} // Handle star click
+          onClick={() => handleRatingChange(rowIndex, i)}
           style={{ padding: 0 }}
         >
           {i <= starRating ? (
@@ -207,7 +202,7 @@ const MyBooks = () => {
                         </TableCell>
                         <TableCell>{item.book[0].name}</TableCell>
                         <TableCell>
-                          {item.book[0].author || 'Unknown'}
+                          {item.authors[0].name || 'Unknown'}
                         </TableCell>
                         <TableCell>
                           {renderStars(ratings[rowIndex] || item.assessment.star, rowIndex)}
