@@ -13,6 +13,10 @@ export default function MyGroups({ groups }) {
             post_id={group.post.id}
             group_name={group.group.name}
             group_description={group.post.description}
+            group_avatar = {group.group.image_group}
+            name_book={group.books.name}
+            image_book={group.books[0].image}
+            group_id={group.group.id}
           />
         </Grid>
       ))}

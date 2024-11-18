@@ -35,6 +35,7 @@ export default function Group() {
         },
       )
       setJoinedGroups(response.data)
+      console.log(joinedGroups);
     } catch (e) {
       console.log(e)
     }

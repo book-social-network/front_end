@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 export const useUserProfile = () => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('access_token'));
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(localStorage.getItem('access_token'))
 
   useEffect(() => {
     const getUser = async () => {
@@ -14,17 +14,17 @@ export const useUserProfile = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
-        );
-        setUser(response.data);
+          },
+        )
+        setUser(response.data)
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
-    };
+    }
 
     if (token) {
-      getUser();
+      getUser()
     }
-  }, [token]);
-  return { user, token, setToken };
-};
+  }, [token])
+  return { user, token, setToken }
+}

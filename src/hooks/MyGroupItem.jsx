@@ -18,9 +18,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import '../css/mygroup.css'
 import Image from '../assets/images/MeoAnhLongNgan.webp'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
-export default function MyGroupItem({user_id, post_id, group_name, group_description}) {
+export default function MyGroupItem({user_id, post_id, group_name, group_description, group_avatar, name_book, image_book, book_link, group_id}) {
   const [countLike, setCountLike] = useState(0)
+  const [postItem, setPostItem] = useState()
   const [userItem, setUserItem] = useState()
   const [liked, setLiked] = useState(false)
   const [showComment, setShowComment] = useState(false)
@@ -42,7 +44,6 @@ export default function MyGroupItem({user_id, post_id, group_name, group_descrip
       fetchData()
   }, [])
   
-  console.log(userItem);
   
 
   const toggleLike = () => {
@@ -65,14 +66,15 @@ export default function MyGroupItem({user_id, post_id, group_name, group_descrip
     <Card className="post-container">
       <CardHeader
         className="post-header"
-        avatar={<IconToIcon icon1={userItem.avatar} icon2={userItem.avatar} />}
+        avatar={<IconToIcon icon1={group_avatar} icon2={userItem?userItem.avatar:''} />}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={group_name}
-        subheader={userItem.name}
+        title={<Link to={`/detail-group/${group_id}`}>{group_name}
+        </Link>}
+        subheader={<Link to={`/detail-user/${user_id}`}>{userItem?userItem.name:''}</Link>}
       />
       <CardContent>
         <Typography variant="h5" component="h2" className="post-title">
@@ -84,7 +86,7 @@ export default function MyGroupItem({user_id, post_id, group_name, group_descrip
           rel="noopener noreferrer"
           className="post-image-link"
         >
-          <img src={Image} alt="Book Title" className="post-image" />
+          <img src={image_book ? image_book :''} alt="Book Title" className="post-image" />
         </a>
       </CardContent>
       <CardActions className="post-actions">

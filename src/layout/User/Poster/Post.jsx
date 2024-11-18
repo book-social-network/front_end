@@ -33,7 +33,7 @@ const Post = ({
   bookTitle,
   bookDescription,
   bookLink,
-  timeStamp, // The created_at value from the database
+  timeStamp,
   likes,
   state_like,
 }) => {
@@ -45,7 +45,6 @@ const Post = ({
   const [rating, setRating] = useState(0);
   const { user } = useUserProfile();
 
-  // Convert timestamp to "time ago" format
   const dateObj = timeStamp ? parseISO(timeStamp) : null;
   const timeAgo = dateObj
     ? formatDistanceToNow(dateObj, { addSuffix: true })

@@ -24,7 +24,7 @@ import { useUserProfile } from '../../../../hooks/useUserProfile'
 import { useModal } from '../../../../hooks/ModalContext'
 import axios from 'axios'
 
-const CenterContainer = ({ children }) => {
+const CenterContainer = () => {
   const { user } = useUserProfile()
   const { isModalOpen, openModal, closeModal } = useModal()
   const [isAddBookModalOpen, setIsAddBookModalOpen] = useState(false)
@@ -33,16 +33,13 @@ const CenterContainer = ({ children }) => {
   const [listSearchBook, setListSearchBook] = useState([])
   const [selectedBook, setSelectedBook] = useState(null)
   const [isSearchVisible, setIsSearchVisible] = useState(false)
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState('')
+  const [posts, setPosts] = useState([])
 
   const openAddBookModal = () => setIsAddBookModalOpen(true)
   const closeAddBookModal = () => setIsAddBookModalOpen(false)
-  const handleDescription = (e) =>{
-    setDescription(e.target.value)
-  }
-  const handleChange = (e) => {
-    setValueSearch(e.target.value)
-  }
+  const handleDescription = (e) => setDescription(e.target.value)
+  const handleChange = (e) => setValueSearch(e.target.value)
 
   const handleSearchBook = async () => {
     if (valueSearch.trim().length === 0) {
@@ -52,10 +49,9 @@ const CenterContainer = ({ children }) => {
     } else {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND}/api/profession/search?type=book&search=${valueSearch}`,
+          `${process.env.REACT_APP_BACKEND}/api/profession/search?type=book&search=${valueSearch}`
         )
-        const data = await response.data
-        setListSearchBook(data)
+        setListSearchBook(response.data)
         setIsSearchVisible(true)
       } catch (error) {
         console.log(error)
@@ -68,28 +64,44 @@ const CenterContainer = ({ children }) => {
     closeAddBookModal()
     setIsSearchVisible(false)
   }
-  
-  const handleSubmitPost = async()=>{
-    try{
+
+  const handleSubmitPost = async () => {
+    try {
       const response1 = await axios.post(
         `${process.env.REACT_APP_BACKEND}/api/post/insert`,
         {
-          'description': description,
-          'user_id': user.id
+          description,
+          user_id: user.id,
         }
       )
-      const response2 = await axios.post(
-        `${process.env.REACT_APP_BACKEND}/api/post/insert-Book`,
-        {
-          'post_id': response1.data.id,
-          'book_id': selectedBook.id
-        }
-      )
-      console.log(response2);
-    }catch(e){
-      console.log(e);
+      console.log(response1);
+  
+      if (selectedBook) {
+        const response2 = await axios.post(`${process.env.REACT_APP_BACKEND}/api/post/insert-book`, {
+          post_id: response1.data.id,
+          book_id: selectedBook.id,
+        })
+        console.log(response2);
+      }
+  
+      const newPost = {
+        ...response1.data,
+        user: { name: user.name, image_url: user.image_url },
+        book: { name: selectedBook ? selectedBook.name : 'No Book' },
+        description,
+      }
+  
+      setPosts([newPost, ...posts])
+      toast.success('Post created successfully!')
+      setDescription('')
+      setSelectedBook(null)
+      closeModal()
+    } catch (e) {
+      console.log(e)
+      toast.error('Failed to create post')
     }
   }
+  
 
   return (
     <>
@@ -104,21 +116,12 @@ const CenterContainer = ({ children }) => {
           marginTop: '20px',
         }}
       >
-        <img
-          src={Banner}
-          alt=""
-          style={{ width: '100%', borderRadius: '8px' }}
-        />
-        <Typography
-          variant="h4"
-          className="banner-title"
-          sx={{ marginTop: '20px' }}
-        >
+        <img src={Banner} alt="" style={{ width: '100%', borderRadius: '8px' }} />
+        <Typography variant="h4" className="banner-title" sx={{ marginTop: '20px' }}>
           Mừng tháng đọc sách
         </Typography>
         <Typography variant="body1" sx={{ marginTop: '10px' }}>
-          Khám phá những cuốn sách mới tuyệt vời để đọc trong tháng này và cả
-          năm!
+          Khám phá những cuốn sách mới tuyệt vời để đọc trong tháng này và cả năm!
         </Typography>
       </Box>
 
@@ -138,11 +141,7 @@ const CenterContainer = ({ children }) => {
             <img
               src={user ? user.image_url : ''}
               alt=""
-              style={{
-                width: '100%',
-                borderRadius: '50%',
-                maxWidth: '50px',
-              }}
+              style={{ width: '100%', borderRadius: '50%', maxWidth: '50px' }}
             />
           </Grid>
           <Grid item sm={10} xs={12}>
@@ -190,17 +189,9 @@ const CenterContainer = ({ children }) => {
             borderRadius: '8px',
           }}
         >
-          <Grid
-            container
-            spacing={3}
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Grid container spacing={3} alignItems="center" justifyContent="space-between">
             <Grid item sm={6}>
-              <Typography
-                sx={{ textAlign: 'center', fontWeight: 'bold' }}
-                variant="h6"
-              >
+              <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }} variant="h6">
                 Add new post
               </Typography>
             </Grid>
@@ -213,15 +204,11 @@ const CenterContainer = ({ children }) => {
           </Grid>
 
           <CardHeader
-            avatar={
-              <Avatar src={user ? user.image_url : ''} alt="User Avatar" />
-            }
+            avatar={<Avatar src={user ? user.image_url : ''} alt="User Avatar" />}
             title={user ? user.name : ''}
             subheader={
               <Button onClick={openAddBookModal}>
-                {selectedBook
-                  ? `Change Book: ${selectedBook.name}`
-                  : 'Add book'}
+                {selectedBook ? `Change Book: ${selectedBook.name}` : 'Add book'}
               </Button>
             }
           />
@@ -231,6 +218,7 @@ const CenterContainer = ({ children }) => {
             placeholder="Type something…"
             sx={{ width: '100%', marginTop: 2 }}
             onChange={handleDescription}
+            value={description}
           />
         </Box>
       </Modal>
@@ -257,14 +245,7 @@ const CenterContainer = ({ children }) => {
               </IconButton>
             </Grid>
             <Grid item xs={10}>
-              <Typography
-                sx={{
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  marginLeft: '-30px',
-                }}
-                variant="h6"
-              >
+              <Typography sx={{ textAlign: 'center', fontWeight: 'bold', marginLeft: '-30px' }} variant="h6">
                 Select a Book
               </Typography>
             </Grid>
@@ -314,9 +295,7 @@ const CenterContainer = ({ children }) => {
                       </ListItem>
                     ))
                   ) : (
-                    <Typography sx={{ textAlign: 'center' }}>
-                      No books found
-                    </Typography>
+                    <Typography sx={{ textAlign: 'center' }}>No books found</Typography>
                   )}
                 </List>
               )}
@@ -324,7 +303,6 @@ const CenterContainer = ({ children }) => {
           </Grid>
         </Box>
       </Modal>
-      {children}
     </>
   )
 }

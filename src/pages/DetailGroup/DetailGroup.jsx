@@ -55,7 +55,7 @@ export default function DetailGroup() {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9}>
-          <MyGroupItem />
+          {/* <MyGroupItem /> */}
         </Grid>
         <Grid item xs={12} sm={3}>
           <Box sx={{ padding: 2, backgroundColor: '#252728', borderRadius: 2 }}>
