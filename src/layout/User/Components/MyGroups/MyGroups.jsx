@@ -7,7 +7,7 @@ export default function MyGroups({ groups }) {
   return (
     <>
       {joinedGroups.map((group, index) => (
-        <Grid item key={index} xs={4}>
+        <Grid item key={index} xs={12} sm={6} md={4}>
           <MyGroupItem
             user_id={group.post.user_id}
             post_id={group.post.id}

@@ -25,9 +25,9 @@ export const DefaultPageNoHeader = ({ children }) => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: '#F4F1EA',
+        backgroundColor: '#f4f1ea',
         overflowY: 'auto',
-        padding: '20px',
+        paddingBottom: '20px',
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   AppBar,
   Box,
@@ -33,8 +33,8 @@ import {
 } from '@mui/icons-material'
 import useIconInHeader from '../../../../hooks/HeaderIcon'
 import { useModal } from '../../../../hooks/ModalContext'
+import { useUserProfile } from '../../../../hooks/useUserProfile'
 import '../../../../css/header.css'
-import axios from 'axios'
 
 const settings = [
   {
@@ -52,32 +52,8 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
-  const {openModal} = useModal();
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const respon = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/auth/user-profile`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        )
-        setUser(respon.data)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    setToken(localStorage.getItem('access_token'))
-    if (token === localStorage.getItem('access_token')) {
-      getUser()
-    }
-  }, [token])
+  const { openModal } = useModal()
+  const { user, token, setToken } = useUserProfile()
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
@@ -239,12 +215,13 @@ const Header = () => {
                 marginLeft: 'auto',
               }}
             >
-              <IconButton onClick={openModal}
+              <IconButton
+                onClick={openModal}
                 size="large"
                 aria-label="show new mails"
                 color="inherit"
               >
-                  <AddIcon />
+                <AddIcon />
               </IconButton>
               <IconButton
                 size="large"
@@ -259,7 +236,10 @@ const Header = () => {
 
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={user.image_url} />
+                  <Avatar
+                    alt={user ? user.user.name : ''}
+                    src={user ? user.user.avatar : ''}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

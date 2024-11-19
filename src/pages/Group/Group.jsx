@@ -44,7 +44,7 @@ export default function Group() {
   const getRandomGroups = () => {
     if (user) {
       const notInGroup = allGroups.filter(
-        (group) => !group.users.some((user1) => user1.id === user.id),
+        (group) => !group.users.some((user1) => user1.id === user.user.id),
       )
       const shuffled = [...notInGroup].sort(() => 0.5 - Math.random())
       const sixGroup = shuffled.slice(0, 6)

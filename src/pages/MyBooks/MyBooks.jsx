@@ -36,7 +36,7 @@ const MyBooks = () => {
       if (user) {
         try {
           const response = await axios.get(
-            `${process.env.REACT_APP_BACKEND}/api/assessment/get-assessment-user/${user.id}`
+            `${process.env.REACT_APP_BACKEND}/api/assessment/get-assessment-user/${user.user.id}`
           );
           const fetchedBooks = response.data;
           const filteredBooks =

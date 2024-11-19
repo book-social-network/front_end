@@ -21,7 +21,7 @@ const HomePage = () => {
       postId={postData.post.id}
       userId={postData.user[0].id}
       userAvatar={postData.user[0].image_url}
-      bookDescription={postData.books[0].name}
+      bookDescription={postData.post.description}
       bookImg={postData.books[0].image}
       bookLink={postData.books.link_book}
       bookTitle={postData.books[0].name}

@@ -1,5 +1,3 @@
-/* post.css */
-
 .post-container {
   margin: 16px;
 }
@@ -11,11 +9,15 @@
 
 .post-content-left {
   flex: 1;
+  max-width: 150px;
 }
 
 .book-image {
   width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
   border-radius: 8px;
+  display: block;
 }
 
 .post-content-right {
