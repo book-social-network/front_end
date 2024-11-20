@@ -8,7 +8,10 @@ const Profile = lazy(() => import('../pages/Profile/Profile'))
 const DetailBook = lazy(() => import('../pages/DetailBook/DetailBook'))
 const DetailGroup = lazy(() => import('../pages/DetailGroup/DetailGroup'))
 const DetailUser = lazy(() => import('../pages/DetailUser/DetailUser'))
-const HomePageAdmin = lazy(()=> import('../layout/Admin/Pages/HomePageAdmin/HomePageAdmin'))
+const HomePageAdmin = lazy(
+  () => import('../layout/Admin/Pages/HomePageAdmin/HomePageAdmin'),
+)
+const TestPage = lazy(() => import('../pages/testpage'))
 
 export const routes = [
   { path: '/', page: <Login />, isShowHeader: false },
@@ -21,4 +24,5 @@ export const routes = [
   { path: '/detail-group/:id', page: <DetailGroup />, isShowHeader: true },
   { path: '/detail-user/:id', page: <DetailUser />, isShowHeader: true },
   { path: '/admin/home', page: <HomePageAdmin />, isShowHeader: false },
+  { path: '/test', page: <TestPage />, isShowHeader: false },
 ]

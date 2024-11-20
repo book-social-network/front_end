@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Container,
   Typography,
@@ -16,8 +16,8 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import '../../css/Login.css'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useUserContext } from '../../hooks/UseContext'
+import AuthorizationAxios from '../../hooks/Request'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -28,10 +28,6 @@ const Login = () => {
   const navigate = useNavigate()
   const { setToken } = useUserContext()
 
-  useEffect(() => {
-    document.title = 'Login'
-  }, [])
-
   const handleLogin = async () => {
     if (!email || !pass) {
       setPasswordHelperText('Bạn phải nhập đủ các trường')
@@ -40,16 +36,11 @@ const Login = () => {
     }
 
     try {
-      // Send the email and password to the server for verification
-      const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND}/api/login`,
-        {
-          email: email,
-          password: pass,
-        },
-      )
+      const res = await AuthorizationAxios.post('/api/login', {
+        email: email,
+        password: pass,
+      })
 
-      // Handle response and store token
       if (res.data.access_token) {
         const access_token = res.data.access_token
         localStorage.setItem('access_token', access_token)

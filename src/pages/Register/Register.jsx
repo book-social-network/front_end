@@ -11,8 +11,8 @@ import {
 } from '@mui/material'
 import GoogleIcon from '@mui/icons-material/Google'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
 import '../../css/Register.css'
+import AuthorizationAxios from '../../hooks/Request'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -34,8 +34,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND}/api/register`, data)
-      console.log(data)
+      await AuthorizationAxios.post('/api/register',data)
       navigate('/login')
     } catch (err) {
       console.log(err)

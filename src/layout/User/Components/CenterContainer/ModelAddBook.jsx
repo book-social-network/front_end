@@ -12,7 +12,7 @@ import {
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import SearchIcon from '@mui/icons-material/Search'
 import { toast } from 'react-toastify'
-import axios from 'axios'
+import AuthorizationAxios from '../../../../hooks/Request'
 
 export default function ModelAddBook({ selectedBook, setSelectedBook, isAddBookModalOpen, closeAddBookModal }) {
   const [listSearchBook, setListSearchBook] = useState([])
@@ -24,9 +24,7 @@ export default function ModelAddBook({ selectedBook, setSelectedBook, isAddBookM
       return
     }
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND}/api/profession/search?type=book&search=${valueSearch}`
-      )
+      const response =await AuthorizationAxios.post(`/api/profession/search?type=book&search=${valueSearch}`)
       setListSearchBook(response.data)
     } catch (error) {
       console.log(error)

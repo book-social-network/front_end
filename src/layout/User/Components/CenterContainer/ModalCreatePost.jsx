@@ -14,9 +14,9 @@ import SendIcon from '@mui/icons-material/Send'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ModelAddBook from './ModelAddBook'
-import axios from 'axios'
+import AuthorizationAxios from '../../../../hooks/Request'
 
-export default function ModalCreatePost({ user }) {
+export default function ModalCreatePost({ user, idGroup, token }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalOpenBook, setIsModalOpenBook] = useState(false)
   const [description, setDescription] = useState('')
@@ -30,16 +30,14 @@ export default function ModalCreatePost({ user }) {
 
   const handleSubmitPost = async () => {
     try {
-      const response1 = await axios.post(
-        `${process.env.REACT_APP_BACKEND}/api/post/insert`,
-        {
-          description,
-          user_id: user.user.id,
-        }
-      )
+      const response1 = await AuthorizationAxios.post('/api/post/insert',{
+        description,
+        user_id: user.user.id,
+        group_id: idGroup,
+      })
 
       if (selectedBook) {
-        await axios.post(`${process.env.REACT_APP_BACKEND}/api/post/insert-book`, {
+        await AuthorizationAxios.post('/api/post/insert-book', {
           post_id: response1.data.id,
           book_id: selectedBook.id,
         })
@@ -65,7 +63,6 @@ export default function ModalCreatePost({ user }) {
 
   return (
     <>
-      {/* Add New Post */}
       <Grid item sm={10} xs={12}>
         <div
           style={{

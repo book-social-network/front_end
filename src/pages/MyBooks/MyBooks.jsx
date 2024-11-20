@@ -23,7 +23,7 @@ import '../../css/MyBooks.css';
 import Image from '../../assets/images/MeoAnhLongNgan.webp';
 import Footer from '../../layout/User/Components/Footer/Footer';
 import { useUserProfile } from '../../hooks/useUserProfile';
-import axios from 'axios';
+import AuthorizationAxios from '../../hooks/Request';
 
 const MyBooks = () => {
   const [books, setBooks] = useState([]);
@@ -35,9 +35,7 @@ const MyBooks = () => {
     const fetchBooks = async () => {
       if (user) {
         try {
-          const response = await axios.get(
-            `${process.env.REACT_APP_BACKEND}/api/assessment/get-assessment-user/${user.user.id}`
-          );
+          const response = await AuthorizationAxios.get(`/api/assessment/get-assessment-user/${user.user.id}`)
           const fetchedBooks = response.data;
           const filteredBooks =
             filter === "all"
@@ -81,9 +79,7 @@ const MyBooks = () => {
     const book = books[rowIndex];
     const assessmentId = book.assessment.id;
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND}/api/assessment/update/${assessmentId}`, {
-        star: updatedRating,
-      });
+      await AuthorizationAxios.post(`/api/assessment/update/${assessmentId}`,{star: updatedRating,})
     } catch (error) {
       console.error('Error updating rating:', error);
     }

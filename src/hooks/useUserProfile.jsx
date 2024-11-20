@@ -1,30 +1,20 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import AuthorizationAxios from './Request'
 
 export const useUserProfile = () => {
+  const token = localStorage.getItem('access_token')
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState(localStorage.getItem('access_token'))
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/auth/user-profile`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        )
-        setUser(response.data)
-      } catch (e) {
-        console.log(e)
-      }
+    const fetch = async () => {
+      const response = await AuthorizationAxios.get('/api/auth/user-profile')
+      setUser(response.data)
     }
 
     if (token) {
-      getUser()
+      fetch()
     }
   }, [token])
-  return { user, token, setToken }
+
+  return { user, token }
 }

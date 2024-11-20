@@ -53,11 +53,10 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
   const { openModal } = useModal()
-  const { user, token, setToken } = useUserProfile()
+  const { user } = useUserProfile()
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
-    setToken(null)
     navigate('/')
   }
 
@@ -238,7 +237,7 @@ const Header = () => {
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={user ? user.user.name : ''}
-                    src={user ? user.user.avatar : ''}
+                    src={user ? user.user.image_url : ''}
                   />
                 </IconButton>
               </Tooltip>

@@ -9,52 +9,28 @@ import {
   Divider,
   Box,
   IconButton,
-  Modal,
-  Button,
 } from '@mui/material'
 import { Facebook, Twitter, Instagram, Edit } from '@mui/icons-material'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import Footer from '../../layout/User/Components/Footer/Footer'
+import ModalInfo from './ModalInfo'
 
 export default function Profile() {
-  const [open, setOpen] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [previewImage, setPreviewImage] = useState(null)
-
   const { user } = useUserProfile()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const openModal = () => setOpen(true)
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
   const closeModal = () => {
-    setOpen(false)
-    setSelectedImage(null)
-    setPreviewImage(null)
-  }
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      setSelectedImage(file)
-      setPreviewImage(URL.createObjectURL(file))
-    }
-  }
-
-  const handleSave = () => {
-    if (selectedImage) {
-      // Perform save action, e.g., uploading image to the server
-      console.log('Image saved:', selectedImage)
-      closeModal()
-    }
+    setIsModalOpen(false)
   }
 
   return (
     <section style={{ backgroundColor: '#f4f5f7', minHeight: '100vh' }}>
       <Container sx={{ py: 5 }}>
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          sx={{ height: '100%' }}
-        >
+        <Grid container justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
           <Grid item lg={6} mb={4}>
             <Card sx={{ borderRadius: '.5rem' }}>
               <Grid container spacing={0}>
@@ -83,35 +59,35 @@ export default function Profile() {
                         width: 80,
                         height: 80,
                         mb: 2,
-                        borderRadius: '50%', // Ensures the avatar is round
+                        borderRadius: '50%',
                       }}
                     />
-                    <IconButton
-                      sx={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        backgroundColor: '#fff',
-                        color: '#6a1b9a',
-                        width: 24,
-                        height: 24,
-                        p: 0.5,
-                        '&:hover': {
-                          backgroundColor: '#f0f0f0',
-                        },
-                      }}
-                      onClick={openModal}
-                    >
-                      <Edit fontSize="small" />
-                    </IconButton>
                   </Box>
-                  <Typography variant="h5">
-                    {user ? user.user.name : ''}
-                  </Typography>
+                  <Typography variant="h5">{user ? user.user.name : ''}</Typography>
                 </Grid>
                 <Grid item md={8}>
                   <CardContent sx={{ p: 4 }}>
-                    <Typography variant="h6">Information</Typography>
+                    <Grid container justifyContent="space-between">
+                      <Grid item>
+                        <Typography variant="h6">Information</Typography>
+                      </Grid>
+                      <Grid item>
+                        <IconButton onClick={openModal}>
+                          <Edit />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                    <Typography
+                      sx={{
+                        cursor: 'pointer',
+                        '&:hover': {
+                          color: 'primary.main',
+                          textDecoration: 'underline',
+                        },
+                      }}
+                    >
+                      Change password
+                    </Typography>
                     <Divider sx={{ my: 2 }} />
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
@@ -127,11 +103,15 @@ export default function Profile() {
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography variant="subtitle2">
-                          Date of Birth
-                        </Typography>
+                        <Typography variant="subtitle2">Date of Birth</Typography>
                         <Typography variant="body2" color="text.secondary">
                           {user ? user.user.dob : ''}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Typography variant="subtitle2">Point</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {user ? user.user.point : ''}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -141,15 +121,15 @@ export default function Profile() {
                     <Divider sx={{ my: 2 }} />
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
-                        <Typography variant="subtitle2">Email</Typography>
+                        <Typography variant="subtitle2">Following</Typography>
                         <Typography variant="body2" color="text.secondary">
-                          info@example.com
+                          {user ? user.follows.quantity : ''}
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography variant="subtitle2">Phone</Typography>
+                        <Typography variant="subtitle2">Followers</Typography>
                         <Typography variant="body2" color="text.secondary">
-                          123 456 789
+                          {user ? user.followers.quantity : ''}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -172,90 +152,7 @@ export default function Profile() {
         </Grid>
       </Container>
       <Footer />
-      
-      {/* Modal to Edit Image */}
-      <Modal
-        open={open}
-        onClose={closeModal}
-        aria-labelledby="edit-image-modal"
-        aria-describedby="edit-image-description"
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            maxWidth: 600, // Max width to prevent modal from growing too wide
-            width: '100%',
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
-            borderRadius: '8px',
-          }}
-        >
-          <Typography id="edit-image-modal" variant="h6" mb={2}>
-            Edit Profile Image
-          </Typography>
-
-          <Grid container spacing={4} alignItems="center">
-            {/* Old Image (Current Image) */}
-            <Grid item xs={5} display="flex" justifyContent="center">
-              <Box
-                component="img"
-                src={user ? user.user.image_url : ''}
-                alt="Current Avatar"
-                sx={{
-                  width: 150, // Fixed size for circular avatar
-                  height: 150,
-                  borderRadius: '50%',
-                  objectFit: 'cover', // Ensure the current image stays inside the circle
-                }}
-              />
-            </Grid>
-
-            {/* Arrow Icon */}
-            <Grid item xs={2} display="flex" justifyContent="center">
-              <Typography variant="h5" sx={{ color: '#6a1b9a' }}>
-                → {/* Arrow icon or symbol */}
-              </Typography>
-            </Grid>
-
-            {/* New Image (Preview Image) */}
-            <Grid item xs={5} display="flex" justifyContent="center">
-              {previewImage && (
-                <Box
-                  component="img"
-                  src={previewImage}
-                  alt="Preview"
-                  sx={{
-                    width: 150, // Fixed size for circular avatar
-                    height: 150,
-                    borderRadius: '50%',
-                    objectFit: 'cover', // Ensure the preview image stays inside the circle
-                  }}
-                />
-              )}
-            </Grid>
-          </Grid>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            style={{ marginBottom: '1rem', display: 'block', width: '100%' }}
-          />
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button onClick={closeModal} variant="outlined">
-              Cancel
-            </Button>
-            <Button onClick={handleSave} variant="contained" color="primary">
-              Save
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
+      <ModalInfo open={isModalOpen} onClose={closeModal} user={user} />
     </section>
   )
 }

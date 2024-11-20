@@ -1,16 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 
+// Create UserContext to manage the user token
 export const UserContext = createContext({
   token: '',
   setToken: () => {},
-})
-
-export const PostContext = createContext({
-  posts: [],
-  setPosts: () => {},
-  loading: false,
-  addNewPost: () => {},
 })
 
 export const useUserContext = () => {
@@ -18,61 +12,37 @@ export const useUserContext = () => {
   return context
 }
 
-export const usePostContext = () => {
-  const context = useContext(PostContext)
-  return context
-}
-
 export const ContextProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('access_token') || '')
-
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  const getPosts = async () => {
-    if (!token) return
-
-    setLoading(true)
+  const refreshToken = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND}/api/post/get-all`,
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/api/auth/refresh`,
+        {},
         {
-          headers: { Authorization: `Bearer ${token}` },
-        },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
-
-      const postsData = await Promise.all(
-        response.data.map((item) =>
-          axios.get(
-            `${process.env.REACT_APP_BACKEND}/api/post/get/${item.post.id}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            },
-          ),
-        ),
-      )
-
-      setPosts(postsData.map((res) => res.data))
+      const newToken = response.data.access_token
+      localStorage.setItem('access_token', newToken)
+      setToken(newToken)
     } catch (error) {
-      console.error('Error fetching posts:', error)
-    } finally {
-      setLoading(false)
+      console.error('Error refreshing token:', error)
     }
   }
 
   useEffect(() => {
-    getPosts()
+    if (token) {
+      // Optionally, you could call refreshToken or any other function when token changes
+      console.log('Token updated:', token)
+    }
   }, [token])
-
-  const addNewPost = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts])
-  }
 
   return (
     <UserContext.Provider value={{ token, setToken }}>
-      <PostContext.Provider value={{ posts, setPosts, loading, addNewPost }}>
-        {children}
-      </PostContext.Provider>
+      {children}
     </UserContext.Provider>
   )
 }

@@ -17,12 +17,20 @@ import SendIcon from '@mui/icons-material/Send'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import '../css/mygroup.css'
 import Image from '../assets/images/MeoAnhLongNgan.webp'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
+import AuthorizationAxios from './Request'
 
-export default function MyGroupItem({user_id, post_id, group_name, group_description, group_avatar, name_book, image_book, book_link, group_id}) {
+export default function MyGroupItem({
+  user_id,
+  group_name,
+  group_description,
+  group_avatar,
+  name_book,
+  image_book,
+  book_link,
+  group_id,
+}) {
   const [countLike, setCountLike] = useState(0)
-  const [postItem, setPostItem] = useState()
   const [userItem, setUserItem] = useState()
   const [liked, setLiked] = useState(false)
   const [showComment, setShowComment] = useState(false)
@@ -30,21 +38,12 @@ export default function MyGroupItem({user_id, post_id, group_name, group_descrip
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const data_user = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/user/get/${user_id}`
-        )
-        const data = await data_user.data;
-        setUserItem(data)
-      } catch (e) {
-        console.log('Error fetching user data:', e)
-      }
+      const data_user = await AuthorizationAxios.get(`/api/user/get/${user_id}`)
+      setUserItem(data_user.data)
     }
-  
-      fetchData()
+
+    fetchData()
   }, [])
-  
-  
 
   const toggleLike = () => {
     setLiked(!liked)
@@ -66,19 +65,27 @@ export default function MyGroupItem({user_id, post_id, group_name, group_descrip
     <Card className="post-container">
       <CardHeader
         className="post-header"
-        avatar={<IconToIcon icon1={group_avatar} icon2={userItem?userItem.avatar:''} />}
+        avatar={
+          <IconToIcon
+            icon1={group_avatar}
+            icon2={userItem ? userItem.avatar : ''}
+          />
+        }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={<Link to={`/detail-group/${group_id}`}>{group_name}
-        </Link>}
-        subheader={<Link to={`/detail-user/${user_id}`}>{userItem?userItem.name:''}</Link>}
+        title={<Link to={`/detail-group/${group_id}`}>{group_name}</Link>}
+        subheader={
+          <Link to={`/detail-user/${user_id}`}>
+            {userItem ? userItem.name : ''}
+          </Link>
+        }
       />
       <CardContent>
         <Typography variant="h5" component="h2" className="post-title">
-        {group_description}
+          {group_description}
         </Typography>
         <a
           href="{bookLink}"
@@ -86,7 +93,11 @@ export default function MyGroupItem({user_id, post_id, group_name, group_descrip
           rel="noopener noreferrer"
           className="post-image-link"
         >
-          <img src={image_book ? image_book :''} alt="Book Title" className="post-image" />
+          <img
+            src={image_book ? image_book : ''}
+            alt="Book Title"
+            className="post-image"
+          />
         </a>
       </CardContent>
       <CardActions className="post-actions">

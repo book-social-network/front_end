@@ -3,10 +3,9 @@ import '../../css/group.css'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import RecommendedGroup from '../../hooks/RecommendedGroup'
-import MyGroupItem from '../../hooks/MyGroupItem'
 import MyGroups from '../../layout/User/Components/MyGroups/MyGroups'
 import { useUserProfile } from '../../hooks/useUserProfile'
-import axios from 'axios'
+import AuthorizationAxios from '../../hooks/Request'
 
 export default function Group() {
   const [recommendedGroup, setRecommendedGroup] = useState(true)
@@ -16,9 +15,7 @@ export default function Group() {
   const { user, token } = useUserProfile()
   const fetchGroupsRecommented = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND}/api/group/get-all`,
-      )
+      const response = await AuthorizationAxios.get('/api/group/get-all')
       setAllGroups(response.data)
     } catch (error) {
       console.log('Error fetching groups:', error)
@@ -26,16 +23,8 @@ export default function Group() {
   }
   const fetchGroupJoined = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND}/api/post/get-post-in-group`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
+      const response = await AuthorizationAxios.get('/api/post/get-post-in-group')
       setJoinedGroups(response.data)
-      console.log(joinedGroups);
     } catch (e) {
       console.log(e)
     }

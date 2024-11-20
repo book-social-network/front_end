@@ -13,7 +13,7 @@ import ModalCreatePost from './ModalCreatePost'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 
 const CenterContainer = () => {
-  const { user } = useUserProfile()
+  const { user, token } = useUserProfile()
   return (
     <>
       <Box
@@ -52,14 +52,12 @@ const CenterContainer = () => {
             <img
               src={user ? user.user.image_url : ''}
               alt=""
-              style={{ width: '100%', borderRadius: '50%', maxWidth: '50px' }}
+              style={{ width: '50px', height:'50px', borderRadius: '50%', maxWidth: '50px' }}
             />
           </Grid>
-          <ModalCreatePost user={user} />
+          <ModalCreatePost user={user} id_group={null} token={token}/>
         </Grid>
       </Box>
-
-              {/* UPDATES */}
       <Grid container sx={{ marginTop: '20px' }}>
         <Grid item xs={6} container justifyContent="flex-start">
           <Typography variant="body2">UPDATES</Typography>
