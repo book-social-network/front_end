@@ -31,10 +31,12 @@ export default function ModalCreatePost({ user, idGroup, token }) {
   const handleSubmitPost = async () => {
     try {
       const response1 = await AuthorizationAxios.post('/api/post/insert',{
+        id: 1000,
         description,
         user_id: user.user.id,
         group_id: idGroup,
       })
+      console.log(description)
 
       if (selectedBook) {
         await AuthorizationAxios.post('/api/post/insert-book', {
@@ -43,14 +45,14 @@ export default function ModalCreatePost({ user, idGroup, token }) {
         })
       }
 
-      const newPost = {
-        ...response1.data,
-        user: { name: user.name, image_url: user.image_url },
-        book: selectedBook ? { name: selectedBook.name } : null,
-        description,
-      }
+      // const newPost = {
+      //   ...response1.data,
+      //   user: { name: user.name, image_url: user.image_url },
+      //   book: selectedBook ? { name: selectedBook.name } : null,
+      //   description,
+      // }
 
-      setPosts([newPost, ...posts])
+      // setPosts([newPost, ...posts])
       toast.success('Post created successfully!')
       setDescription('')
       setSelectedBook(null)

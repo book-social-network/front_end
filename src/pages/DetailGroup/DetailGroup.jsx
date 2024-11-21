@@ -169,7 +169,7 @@ export default function DetailGroup() {
                   }}
                 />
               </Grid>
-              <ModalCreatePost user={user} id_group={id} token={token}/>
+              <ModalCreatePost user={user} idGroup={id} token={token}/>
             </Grid>
           </Box>
           {postGroup && postGroup.posts.length > 0 ? (
