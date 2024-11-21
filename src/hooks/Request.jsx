@@ -15,8 +15,8 @@ export const post =  async(path, data)=>{
         )
         return res;
     }catch(err){
-        console.log("error api rest");
-
+        // console.log("error api rest");
+        console.log(err)
     }
 }
 export const get = async(path)=>{
