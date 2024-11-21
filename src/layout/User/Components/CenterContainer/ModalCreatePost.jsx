@@ -35,7 +35,6 @@ export default function ModalCreatePost({ user, idGroup, token }) {
         user_id: user.user.id,
         group_id: idGroup,
       })
-
       if (selectedBook) {
         await AuthorizationAxios.post('/api/post/insert-book', {
           post_id: response1.data.id,

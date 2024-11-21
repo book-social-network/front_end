@@ -8,6 +8,7 @@ export const useUserProfile = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await AuthorizationAxios.get('/api/auth/user-profile')
+      console.log(response);
       setUser(response.data)
     }
 
