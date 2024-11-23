@@ -15,7 +15,6 @@ export const post =  async(path, data)=>{
         )
         return res;
     }catch(err){
-        // console.log("error api rest");
         console.log(err)
     }
 }
@@ -34,9 +33,24 @@ export const get = async(path)=>{
         console.log("error fetch api");
     }
 }
+export const remove = async(path)=>{
+    try{
+        const res = await axios.delete(
+            `${process.env.REACT_APP_BACKEND}${path}`,
+            {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        )
+        return res;
+    }catch(e){
+        console.log("delete error");
+    }
+}
 
  const AuthorizationAxios = {
-    post, get
+    post, get, remove
 }
 
 export default AuthorizationAxios;

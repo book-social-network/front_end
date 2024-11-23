@@ -7,15 +7,14 @@ import Footer from '../../layout/User/Components/Footer/Footer'
 import Post from '../../layout/User/Poster/Post'
 import { Box, Grid } from '@mui/material'
 import '../../css/HomePage.css'
-import axios from 'axios'
+import MyGroupItem from '../../hooks/MyGroupItem'
 import AuthorizationAxios from '../../hooks/Request'
 
 const HomePage = () => {
-  const { token } = useUserContext()  
-  const [posts, setPosts] = useState([])  
-  const [loading, setLoading] = useState(true)  
+  const { token } = useUserContext()
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  
   useEffect(() => {
     if (!token) return
 
@@ -23,14 +22,7 @@ const HomePage = () => {
       setLoading(true)
       try {
         const response = await AuthorizationAxios.get('/api/post/get-all')
-
-        const postsData = await Promise.all(
-          response.data.map((item) =>
-            AuthorizationAxios.get(`/api/post/get/${item.post.id}`)
-          )
-        )
-
-        setPosts(postsData.map((res) => res.data))
+        setPosts(response.data)
       } catch (error) {
         console.error('Error fetching posts:', error)
       } finally {
@@ -40,23 +32,6 @@ const HomePage = () => {
 
     getPosts()
   }, [token])
-
-  const postElements = posts.map((postData, index) => (
-    <Post
-      key={index}
-      postId={postData.post.id}
-      userId={postData.user[0].id}
-      userAvatar={postData.user[0].image_url}
-      bookDescription={postData.post.description}
-      bookImg={postData.books[0].image}
-      bookLink={postData.books.link_book}
-      bookTitle={postData.books[0].name}
-      timeStamp={postData.post.created_at}
-      userName={postData.user[0].name}
-      likes={postData.likes.length}
-      state_like={postData['state-like']}
-    />
-  ))
 
   return (
     <div>
@@ -71,11 +46,47 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} sx={{ paddingRight: '24px' }}>
             <CenterContainer />
-            {postElements}
+            {posts.map((item, index) => {
+              if (!item.group) {
+                return (
+                  <Post
+                    key={index}
+                    postId={item.post.id}
+                    userId={item.user.id}
+                    userAvatar={item.user.image_url}
+                    bookDescription={item.post.description}
+                    bookImg={item.books[0].image}
+                    bookLink={item.books[0].link_book}
+                    bookTitle={item.books[0].name}
+                    likes={item.likes.length}
+                    state_like={item['state-like']}
+                    timeStamp={item.post.created_at}
+                    userName={item.user.name}
+                  />
+                )
+              } else {
+                return (
+                  <MyGroupItem
+                    key={index}
+                    book_link={item.books[0].link_book}
+                    group_avatar={item.group.image_group}
+                    group_description={item.group.description}
+                    group_id={item.group.id}
+                    group_name={item.group.name}
+                    image_book={item.books[0].image}
+                    name_book={item.books[0].name}
+                    user_id={item.user.id}
+                    post_id={item.post.id}
+                    likes = {item.likes.length}
+                    state_like={item['state-like']}
+                  />
+                )
+              }
+            })}
           </Grid>
           <Grid className="RightContainer container" item xs={0} sm={3}>
             <RightContainer />
-            <Footer classname="sm" />
+            <Footer size="sm" />
           </Grid>
         </Grid>
       )}

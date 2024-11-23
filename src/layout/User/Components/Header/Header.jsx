@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import {
   AppBar,
@@ -31,6 +30,8 @@ import {
   Add as AddIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material'
+import { FaUserFriends } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
 import useIconInHeader from '../../../../hooks/HeaderIcon'
 import { useModal } from '../../../../hooks/ModalContext'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
@@ -52,6 +53,7 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
+  const [anchorElAdd, setAnchorElAdd] = useState(null)
   const { openModal } = useModal()
   const { user } = useUserProfile()
 
@@ -68,6 +70,14 @@ const Header = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleOpenAddMenu = (event) => {
+    setAnchorElAdd(event.currentTarget)
+  }
+
+  const handleCloseAddMenu = () => {
+    setAnchorElAdd(null)
   }
 
   const handleDrawerToggle = () => {
@@ -88,7 +98,7 @@ const Header = () => {
   const homeIcon = useIconInHeader(<HomeIcon />, 'Home Page', '/home')
   const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/mybooks')
   const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/groups')
-  const books = useIconInHeader(<LocalLibraryIcon />, 'Books', '/Books')
+  const books = useIconInHeader(<FaUserFriends />, 'Friends', '/friends')
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -112,7 +122,7 @@ const Header = () => {
             </ListItem>
             <ListItem button>
               <Link to="/books">
-                <LocalLibraryIcon />
+                <FaUserFriends />
                 <ListItemText primary="Books" />
               </Link>
             </ListItem>
@@ -181,7 +191,7 @@ const Header = () => {
                   container
                   sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}
                 >
-                  <Link to="/">
+                  <Link to="/home">
                     <Grid item xs={1}>
                       {homeIcon}
                     </Grid>
@@ -215,13 +225,37 @@ const Header = () => {
               }}
             >
               <IconButton
-                onClick={openModal}
+                onClick={handleOpenAddMenu}
                 size="large"
-                aria-label="show new mails"
+                aria-label="add menu"
                 color="inherit"
               >
                 <AddIcon />
               </IconButton>
+              <Menu
+                anchorEl={anchorElAdd}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElAdd)}
+                onClose={handleCloseAddMenu}
+              >
+                <MenuItem >
+                  <Link onClick={handleCloseAddMenu} to="/upload-type">Upload Type</Link>
+                </MenuItem>
+                <MenuItem >
+                  <Link onClick={handleCloseAddMenu} to='/upload-book'>Upload Book</Link>
+                </MenuItem>
+                <MenuItem >
+                  <Link to='/upload-author' onClick={handleCloseAddMenu}>Upload Author</Link>
+                </MenuItem>
+              </Menu>
+
               <IconButton
                 size="large"
                 aria-label="show new notifications"

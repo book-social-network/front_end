@@ -17,6 +17,8 @@ export default function MyGroups({ groups }) {
             name_book={group.books.name}
             image_book={group.books[0].image}
             group_id={group.group.id}
+            likes={group.likes.length}
+            state_like={group['state-like']}
           />
         </Grid>
       ))}

@@ -16,7 +16,7 @@ export default function Group() {
   const fetchGroupsRecommented = async () => {
     try {
       const response = await AuthorizationAxios.get('/api/group/get-all')
-      setAllGroups(response.data)
+      setAllGroups(response?.data)
     } catch (error) {
       console.log('Error fetching groups:', error)
     }

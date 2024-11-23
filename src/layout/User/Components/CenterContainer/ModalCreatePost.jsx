@@ -44,14 +44,14 @@ export default function ModalCreatePost({ user, idGroup, token }) {
         })
       }
 
-      // const newPost = {
-      //   ...response1.data,
-      //   user: { name: user.name, image_url: user.image_url },
-      //   book: selectedBook ? { name: selectedBook.name } : null,
-      //   description,
-      // }
+      const newPost = {
+        ...response1.data,
+        user: { name: user.name, image_url: user.image_url },
+        book: selectedBook ? { name: selectedBook.name } : null,
+        description,
+      }
 
-      // setPosts([newPost, ...posts])
+      setPosts([newPost, ...posts])
       toast.success('Post created successfully!')
       setDescription('')
       setSelectedBook(null)

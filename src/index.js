@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { ToastContainer } from 'react-toastify'
 import App from './App'
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <App />
-    <ToastContainer/>
+    <QueryClientProvider client={queryClient}>
+      <App />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+    <ToastContainer />
   </React.StrictMode>,
 )

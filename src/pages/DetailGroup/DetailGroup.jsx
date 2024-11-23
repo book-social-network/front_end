@@ -24,14 +24,16 @@ export default function DetailGroup() {
   const [postGroup, setPostGroup] = useState(null)
   const [joinedGroups, setJoinedGroups] = useState([])
   const [isJoined, setIsJoined] = useState(false)
-  const [userInGroup, setUserInGroup] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const { id } = useParams()
   const { token, user } = useUserProfile()
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
-        const response = await AuthorizationAxios.get(`/api/group/get-all-post-group/${id}`)
+        const response = await AuthorizationAxios.get(
+          `/api/group/get-all-post-group/${id}`,
+        )
         setPostGroup(response.data)
       } catch (e) {
         console.log(e)
@@ -40,12 +42,10 @@ export default function DetailGroup() {
 
     const fetchRoleData = async () => {
       try {
-        const response = await AuthorizationAxios.get(`/api/detail-group-user/get-all-user/${id}`)
+        const response = await AuthorizationAxios.get(
+          `/api/detail-group-user/get-all-user/${id}`,
+        )
         setJoinedGroups(response.data.users)
-
-        joinedGroups.forEach((item) => {
-          if (item.id === user.user.id) return setIsJoined(true)
-        })
       } catch (e) {
         console.log(e)
       }
@@ -54,7 +54,14 @@ export default function DetailGroup() {
     fetchGroupData()
     fetchRoleData()
   }, [id, token, user])
-
+  useEffect(() => {
+    joinedGroups.forEach((item) => {
+      if (item.id === user.user.id) {
+        setIsJoined(true)
+        if (item.role_in_group === 'admin') setIsAdmin(true)
+      }
+    })
+  }, [joinedGroups])
   return (
     <Container maxWidth="lg">
       <Box sx={{ background: '#252728', padding: 2, mb: 2 }}>
@@ -169,7 +176,7 @@ export default function DetailGroup() {
                   }}
                 />
               </Grid>
-              <ModalCreatePost user={user} idGroup={id} token={token}/>
+              <ModalCreatePost user={user} idGroup={id} token={token} />
             </Grid>
           </Box>
           {postGroup && postGroup.posts.length > 0 ? (

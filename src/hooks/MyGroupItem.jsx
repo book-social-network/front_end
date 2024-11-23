@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   Card,
   CardHeader,
@@ -15,10 +15,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import CommentIcon from '@mui/icons-material/Comment'
 import SendIcon from '@mui/icons-material/Send'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import '../css/mygroup.css'
-import Image from '../assets/images/MeoAnhLongNgan.webp'
 import { Link } from 'react-router-dom'
 import AuthorizationAxios from './Request'
+import '../css/post.css'
 
 export default function MyGroupItem({
   user_id,
@@ -29,30 +28,53 @@ export default function MyGroupItem({
   image_book,
   book_link,
   group_id,
+  post_id,
+  state_like,
+  likes
 }) {
-  const [countLike, setCountLike] = useState(0)
-  const [userItem, setUserItem] = useState()
-  const [liked, setLiked] = useState(false)
+  const [countLike, setCountLike] = useState(likes)
+  const [userItem, setUserItem] = useState(null)
+  const [liked, setLiked] = useState(state_like)
   const [showComment, setShowComment] = useState(false)
   const [comment, setComment] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
-      const data_user = await AuthorizationAxios.get(`/api/user/get/${user_id}`)
-      setUserItem(data_user.data)
+      try {
+        const data_user = await AuthorizationAxios.get(`/api/user/get/${user_id}`)
+        setUserItem(data_user.data)
+      } catch (error) {
+        console.error('Failed to fetch user data:', error)
+      }
     }
 
     fetchData()
-  }, [])
+  }, [user_id])
 
-  const toggleLike = () => {
-    setLiked(!liked)
-    setCountLike(liked ? countLike - 1 : countLike + 1)
-  }
+  const toggleLike = useCallback(async () => {
+    setLiked((prevLiked) => !prevLiked)
+    setCountLike((prevCount) => (liked ? prevCount - 1 : prevCount + 1))
 
-  const toggleShowComment = () => {
-    setShowComment(!showComment)
-  }
+    const UserId = user_id
+    const PostId = post_id
+
+    try {
+      if (!liked) {
+        const data = await AuthorizationAxios.post('/api/post/insert-like', {
+          post_id: PostId,
+          user_id: UserId,
+        })
+      } else {
+        await AuthorizationAxios.remove(`/api/post/delete-like/${PostId}`)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }, [liked, countLike, post_id])
+
+  const toggleCommentSection = () => setShowComment((prev) => !prev)
+
+  const toggleShowComment = () => setShowComment(!showComment)
 
   const handleCommentSubmit = () => {
     if (comment.trim()) {
@@ -64,7 +86,6 @@ export default function MyGroupItem({
   return (
     <Card className="post-container">
       <CardHeader
-        className="post-header"
         avatar={
           <IconToIcon
             icon1={group_avatar}
@@ -76,52 +97,64 @@ export default function MyGroupItem({
             <MoreVertIcon />
           </IconButton>
         }
-        title={<Link to={`/detail-group/${group_id}`}>{group_name}</Link>}
+        title={
+          <Link
+            to={`/detail-group/${group_id}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {group_name}
+          </Link>
+        }
         subheader={
-          <Link to={`/detail-user/${user_id}`}>
+          <Link
+            to={`/detail-user/${user_id}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
             {userItem ? userItem.name : ''}
           </Link>
         }
       />
-      <CardContent>
-        <Typography variant="h5" component="h2" className="post-title">
-          {group_description}
-        </Typography>
-        <a
-          href="{bookLink}"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="post-image-link"
-        >
-          <img
-            src={image_book ? image_book : ''}
-            alt="Book Title"
-            className="post-image"
-          />
-        </a>
+      <CardContent className="post-content">
+        <div className="post-content-left">
+          <a
+            href={book_link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              className="book-image"
+              src={image_book || ''}
+              alt={name_book || 'Book'}
+            />
+          </a>
+        </div>
+        <div className="post-content-right">
+          <Typography variant="h6" className="post-title">
+            {group_description}
+          </Typography>
+          <Typography variant="body2" className="post-description">
+            {name_book}
+          </Typography>
+        </div>
       </CardContent>
       <CardActions className="post-actions">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton
-            onClick={toggleLike}
-            className="post-icon-button"
-            sx={{ color: liked ? 'error.main' : 'inherit' }}
-          >
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
-          <Typography variant="body2">{countLike}</Typography>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton onClick={toggleShowComment} className="post-icon-button">
-            <CommentIcon />
-          </IconButton>
-          <Typography variant="body2">Comment</Typography>
-        </div>
+        <IconButton onClick={toggleLike}>
+          {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+        </IconButton>
+        <Typography variant="body2">{countLike} người đã thích</Typography>
+        <IconButton onClick={toggleShowComment}>
+          <CommentIcon />
+        </IconButton>
+        <Typography variant="body2">Comment</Typography>
       </CardActions>
       {showComment && (
         <CardContent className="comment-section">
           <div className="comment-input-container">
-            <Avatar src={Image} alt="User Avatar" className="comment-avatar" />
+            <Avatar
+              src={userItem ? userItem.avatar : ''}
+              alt="User Avatar"
+              className="comment-avatar"
+            />
             <TextField
               variant="outlined"
               size="small"
@@ -129,13 +162,12 @@ export default function MyGroupItem({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               fullWidth
-              className="comment-textfield"
+              className="comment-input"
             />
             <IconButton
               onClick={handleCommentSubmit}
               color="primary"
               aria-label="send comment"
-              className="comment-send-button"
             >
               <SendIcon />
             </IconButton>

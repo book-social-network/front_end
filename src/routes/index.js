@@ -11,7 +11,11 @@ const DetailUser = lazy(() => import('../pages/DetailUser/DetailUser'))
 const HomePageAdmin = lazy(
   () => import('../layout/Admin/Pages/HomePageAdmin/HomePageAdmin'),
 )
+const DetailPost = lazy(() => import('../pages/DetailPost/DetailPost'))
 const TestPage = lazy(() => import('../pages/testpage'))
+const UploadAuthor = lazy(() => import('../pages/UploadAuthor/UploadAuthor'))
+const UploadType = lazy(() => import('../pages/UploadType/UploadType'))
+const UploadBook = lazy(() => import('../pages/UploadBook/UploadBook'))
 
 export const routes = [
   { path: '/', page: <Login />, isShowHeader: false },
@@ -23,6 +27,10 @@ export const routes = [
   { path: '/detail-book/:id', page: <DetailBook />, isShowHeader: true },
   { path: '/detail-group/:id', page: <DetailGroup />, isShowHeader: true },
   { path: '/detail-user/:id', page: <DetailUser />, isShowHeader: true },
+  { path: '/detail-post/:id', page: <DetailPost />, isShowHeader: true },
+  { path: '/upload-author', page: <UploadAuthor />, isShowHeader: true },
+  { path: '/upload-type', page: <UploadType />, isShowHeader: true },
+  { path: 'upload-book', page: <UploadBook />, isShowHeader: true },
   { path: '/admin/home', page: <HomePageAdmin />, isShowHeader: false },
   { path: '/test', page: <TestPage />, isShowHeader: false },
 ]

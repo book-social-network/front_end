@@ -6,10 +6,10 @@ import InstagramIcon from '@mui/icons-material/Instagram'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import '../../../../css/footer.css'
 
-export default function Footer({ classname = '' }) {
+export default function Footer({ size = '' }) {
   const footerContent = (
-    <Grid container className={`${classname}`}>
-      <Grid item xs={6} sm={classname === 'sm' ? 6 : 4} paddingLeft={1}>
+    <Grid container className={`${size}`}>
+      <Grid item xs={6} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
         <Typography variant="h6">COMPANY</Typography>
         <ul>
           <li>
@@ -49,7 +49,7 @@ export default function Footer({ classname = '' }) {
           </li>
         </ul>
       </Grid>
-      <Grid item xs={6} sm={classname === 'sm' ? 6 : 4} paddingLeft={1}>
+      <Grid item xs={6} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
         <Typography variant="h6">WORK WITH US</Typography>
         <ul>
           <li>
@@ -74,7 +74,7 @@ export default function Footer({ classname = '' }) {
           </li>
         </ul>
       </Grid>
-      <Grid item xs={12} sm={classname === 'sm' ? 12 : 4} paddingLeft={1}>
+      <Grid item xs={12} sm={size === 'sm' ? 12 : 4} paddingLeft={1}>
         <Typography variant="h6">CONNECT</Typography>
         <div>
           <IconButton aria-label="facebook" href="#" className="icon-facebook">
@@ -100,7 +100,7 @@ export default function Footer({ classname = '' }) {
 
   return (
     <div className="footer">
-      {classname === 'sm' ? (
+      {size === 'sm' ? (
         footerContent
       ) : (
         <Grid

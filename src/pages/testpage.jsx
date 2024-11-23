@@ -1,7 +1,5 @@
 import React, { useEffect,useState } from 'react'
 import AuthorizationAxios from '../hooks/Request'
-import { data } from 'autoprefixer'
-
 export default function Testpage() {
     const [suggestedFriends, setSuggestedFriends] = useState(null);
     const token = localStorage.getItem('access_token'); // Lấy token từ localStorage
