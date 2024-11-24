@@ -6,7 +6,7 @@ ul {
 }
 .footer {
   background-color: #f4f1ea;
-  margin-top: 5px;
+  padding: 10px 0;
 }
 .footer-link {
   text-decoration: none !important;

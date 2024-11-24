@@ -1,16 +1,19 @@
-import React from 'react'
-import { Grid, Typography, Link, IconButton, Container } from '@mui/material'
-import FacebookIcon from '@mui/icons-material/Facebook'
-import XIcon from '@mui/icons-material/X'
-import InstagramIcon from '@mui/icons-material/Instagram'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import '../../../../css/footer.css'
+import React from 'react';
+import { Grid, Typography, Link, IconButton, Container } from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import XIcon from '@mui/icons-material/X';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import '../../../../css/footer.css';
 
 export default function Footer({ size = '' }) {
   const footerContent = (
-    <Grid container className={`${size}`}>
-      <Grid item xs={6} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
-        <Typography variant="h6">COMPANY</Typography>
+    <Grid container className={`${size}`} spacing={2}>
+      {/* Company Section */}
+      <Grid item xs={12} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
+        <Typography variant="h6" gutterBottom>
+          COMPANY
+        </Typography>
         <ul>
           <li>
             <Link className="footer-link" href="#">
@@ -49,8 +52,12 @@ export default function Footer({ size = '' }) {
           </li>
         </ul>
       </Grid>
-      <Grid item xs={6} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
-        <Typography variant="h6">WORK WITH US</Typography>
+
+      {/* Work With Us Section */}
+      <Grid item xs={12} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
+        <Typography variant="h6" gutterBottom>
+          WORK WITH US
+        </Typography>
         <ul>
           <li>
             <Link className="footer-link" href="#">
@@ -74,8 +81,12 @@ export default function Footer({ size = '' }) {
           </li>
         </ul>
       </Grid>
+
+      {/* Connect Section */}
       <Grid item xs={12} sm={size === 'sm' ? 12 : 4} paddingLeft={1}>
-        <Typography variant="h6">CONNECT</Typography>
+        <Typography variant="h6" gutterBottom>
+          CONNECT
+        </Typography>
         <div>
           <IconButton aria-label="facebook" href="#" className="icon-facebook">
             <FacebookIcon />
@@ -96,7 +107,7 @@ export default function Footer({ size = '' }) {
         </div>
       </Grid>
     </Grid>
-  )
+  );
 
   return (
     <div className="footer">
@@ -109,7 +120,8 @@ export default function Footer({ size = '' }) {
             left: 0,
             right: 0,
             backgroundColor: '#f4f1ea',
-            marginTop: '250px',
+            marginTop: '100px',
+            py: 4,
           }}
           className="footer-container"
         >
@@ -117,5 +129,5 @@ export default function Footer({ size = '' }) {
         </Grid>
       )}
     </div>
-  )
+  );
 }

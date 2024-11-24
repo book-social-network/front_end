@@ -16,6 +16,7 @@ const TestPage = lazy(() => import('../pages/testpage'))
 const UploadAuthor = lazy(() => import('../pages/UploadAuthor/UploadAuthor'))
 const UploadType = lazy(() => import('../pages/UploadType/UploadType'))
 const UploadBook = lazy(() => import('../pages/UploadBook/UploadBook'))
+const EditProfile = lazy(()=>import('../pages/Profile/EditProfile'))
 
 export const routes = [
   { path: '/', page: <Login />, isShowHeader: false },
@@ -30,7 +31,8 @@ export const routes = [
   { path: '/detail-post/:id', page: <DetailPost />, isShowHeader: true },
   { path: '/upload-author', page: <UploadAuthor />, isShowHeader: true },
   { path: '/upload-type', page: <UploadType />, isShowHeader: true },
-  { path: 'upload-book', page: <UploadBook />, isShowHeader: true },
+  { path: '/upload-book', page: <UploadBook />, isShowHeader: true },
+  { path: '/my-profile/edit', page:<EditProfile/>, isShowHeader:true},
   { path: '/admin/home', page: <HomePageAdmin />, isShowHeader: false },
   { path: '/test', page: <TestPage />, isShowHeader: false },
 ]
