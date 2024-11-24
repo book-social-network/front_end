@@ -11,6 +11,7 @@ import {
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useUserProfile } from '../../hooks/useUserProfile'
+import ModalEditAvatar from './ModalEditAvatar'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import AuthorizationAxios from '../../hooks/Request'
 import dayjs from 'dayjs'
@@ -20,6 +21,10 @@ function EditProfile() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [dob, setDob] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (user?.user) {
@@ -108,6 +113,7 @@ function EditProfile() {
                 boxShadow: 'none',
                 ':hover': { bgcolor: '#0056b3' },
               }}
+              onClick={handleOpenModal}
             >
               Đổi ảnh
             </Button>
@@ -222,6 +228,7 @@ function EditProfile() {
           </Grid>
         </Card>
       </Box>
+      <ModalEditAvatar open={isModalOpen} onClose={handleCloseModal} userId={user?.user.id} />
       <Footer />
     </>
   )
