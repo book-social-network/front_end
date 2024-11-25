@@ -35,7 +35,7 @@ const Register = () => {
 
     try {
       await AuthorizationAxios.post('/api/register',data)
-      navigate('/login')
+      navigate('/')
     } catch (err) {
       console.log(err)
     }

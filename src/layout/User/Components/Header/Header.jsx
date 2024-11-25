@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   AppBar,
   Box,
@@ -20,12 +19,12 @@ import {
   Stack,
   useMediaQuery,
   SwipeableDrawer,
+  Skeleton,
 } from '@mui/material'
 import {
   MenuBook as MenuBookIcon,
   Home as HomeIcon,
   Groups as GroupsIcon,
-  LocalLibrary as LocalLibraryIcon,
   Notifications as NotificationsIcon,
   Add as AddIcon,
   Menu as MenuIcon,
@@ -56,6 +55,13 @@ const Header = () => {
   const [anchorElAdd, setAnchorElAdd] = useState(null)
   const { openModal } = useModal()
   const { user } = useUserProfile()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if (user) {
+      setIsLoading(false) // Chỉ khi user có dữ liệu
+    }
+  }, [user])
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
@@ -152,203 +158,212 @@ const Header = () => {
     </Box>
   )
 
+  // Nếu đang tải dữ liệu, hiển thị Skeleton
+  if (isLoading) {
+    return (
+      <Box sx={{ padding: 2 }}>
+        <Skeleton variant="text" width={200} />
+        <Skeleton variant="circular" width={40} height={40} />
+      </Box>
+    )
+  }
+
   return (
-    <>
-      {user ? (
-        <AppBar position="sticky" sx={{ backgroundColor: '#F4F1EA' }}>
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
+    <AppBar position="sticky" sx={{ backgroundColor: '#F4F1EA' }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { sm: 'none' } }}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <Stack>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', sm: 'block' },
+              fontWeight: 700,
+              textDecoration: 'none',
+              color: '#000',
+            }}
+          >
+            Social Book Network
+          </Typography>
+        </Stack>
+
+        {!isMobile && (
+          <Container sx={{ flexGrow: 1 }}>
+            <Grid
+              container
+              sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}
             >
-              <MenuIcon />
-            </IconButton>
-
-            <Stack>
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                href="#"
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', sm: 'block' },
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  color: '#000',
-                }}
-              >
-                Social Book Network
-              </Typography>
-            </Stack>
-
-            {!isMobile && (
-              <Container sx={{ flexGrow: 1 }}>
-                <Grid
-                  container
-                  sx={{ alignItems: 'center', justifyContent: 'space-evenly' }}
-                >
-                  <Link to="/home">
-                    <Grid item xs={1}>
-                      {homeIcon}
-                    </Grid>
-                  </Link>
-                  <Link to="/my-books">
-                    <Grid item xs={1}>
-                      {myBooks}
-                    </Grid>
-                  </Link>
-                  <Link to="/groups">
-                    <Grid item xs={1}>
-                      {groups}
-                    </Grid>
-                  </Link>
-                  <Link to="/books">
-                    <Grid item xs={1}>
-                      {books}
-                    </Grid>
-                  </Link>
+              <Link to="/home">
+                <Grid item xs={1}>
+                  {homeIcon}
                 </Grid>
-              </Container>
-            )}
+              </Link>
+              <Link to="/my-books">
+                <Grid item xs={1}>
+                  {myBooks}
+                </Grid>
+              </Link>
+              <Link to="/groups">
+                <Grid item xs={1}>
+                  {groups}
+                </Grid>
+              </Link>
+              <Link to="/books">
+                <Grid item xs={1}>
+                  {books}
+                </Grid>
+              </Link>
+            </Grid>
+          </Container>
+        )}
 
-            <Box
-              sx={{
-                flexGrow: 0,
-                display: 'flex',
-                alignItems: 'center',
-                color: '#000',
-                marginLeft: 'auto',
+        <Box
+          sx={{
+            flexGrow: 0,
+            display: 'flex',
+            alignItems: 'center',
+            color: '#000',
+            marginLeft: 'auto',
+          }}
+        >
+          <IconButton
+            onClick={handleOpenAddMenu}
+            size="large"
+            aria-label="add menu"
+            color="inherit"
+          >
+            <AddIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorElAdd}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElAdd)}
+            onClose={handleCloseAddMenu}
+          >
+            <MenuItem
+              onClick={() => {
+                navigate('/upload-type')
+                handleCloseAddMenu()
               }}
             >
-              <IconButton
-                onClick={handleOpenAddMenu}
-                size="large"
-                aria-label="add menu"
-                color="inherit"
-              >
-                <AddIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorElAdd}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElAdd)}
-                onClose={handleCloseAddMenu}
-              >
-                <MenuItem
-                  onClick={() => {
-                    navigate('/upload-type')
-                    handleCloseAddMenu()
-                  }}
-                >
-                  Upload Type
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    navigate('/upload-book')
-                    handleCloseAddMenu()
-                  }}
-                >
-                  Upload Book
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    navigate('/upload-author')
-                    handleCloseAddMenu()
-                  }}
-                >
-                  Upload Author
-                </MenuItem>
-              </Menu>
+              Upload Type
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                navigate('/upload-book')
+                handleCloseAddMenu()
+              }}
+            >
+              Upload Book
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                navigate('/upload-author')
+                handleCloseAddMenu()
+              }}
+            >
+              Upload Author
+            </MenuItem>
+          </Menu>
 
-              <IconButton
-                size="large"
-                aria-label="show new notifications"
-                color="inherit"
-                onClick={toggleNotificationDrawer(true)}
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt={user ? user.user.name : ''}
-                    src={user ? user.user.image_url : ''}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting.label}
-                    onClick={() => {
-                      handleCloseUserMenu()
-                      if (setting.label === 'Logout') {
-                        handleLogout()
-                      }
-                    }}
-                  >
-                    {setting.label === 'Logout' ? (
-                      <Typography textAlign="center">
-                        {setting.label}
-                      </Typography>
-                    ) : (
-                      <Link to={setting.path}>
-                        <Typography textAlign="center">
-                          {setting.label}
-                        </Typography>
-                      </Link>
-                    )}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-
-          <Drawer anchor="left" open={mobileOpen} onClose={handleDrawerToggle}>
-            {drawer}
-          </Drawer>
-          <SwipeableDrawer
-            anchor="right"
-            open={notificationDrawerOpen}
-            onClose={toggleNotificationDrawer(false)}
-            onOpen={toggleNotificationDrawer(true)}
+          <IconButton
+            size="large"
+            aria-label="show new notifications"
+            color="inherit"
+            onClick={toggleNotificationDrawer(true)}
           >
-            {notifications}
-          </SwipeableDrawer>
-        </AppBar>
-      ) : (
-        <div>Loading...</div>
-      )}
-    </>
+            <Badge badgeContent={17} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar
+                alt={user ? user.user.name : ''}
+                src={user ? user.user.image_url : ''}
+              />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: '45px' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((setting) => (
+              <MenuItem
+              key={setting.label}
+              onClick={() => {
+                handleCloseUserMenu()
+                if (setting.label === 'Logout') {
+                  handleLogout()
+                } else {
+                  navigate(setting.path)
+                }
+              }}
+            >
+              <Typography textAlign="center">{setting.label}</Typography>
+            </MenuItem>
+            
+            ))}
+          </Menu>
+        </Box>
+      </Toolbar>
+
+      <SwipeableDrawer
+        anchor="right"
+        open={notificationDrawerOpen}
+        onClose={toggleNotificationDrawer(false)}
+        onOpen={toggleNotificationDrawer(true)}
+      >
+        {notifications}
+      </SwipeableDrawer>
+
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+        }}
+      >
+        {drawer}
+      </Drawer>
+    </AppBar>
   )
 }
 
