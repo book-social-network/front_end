@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AuthorizationAxios from '../../hooks/Request'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Post from '../../layout/User/Poster/Post'
 import { toast } from 'react-toastify'
 import {
@@ -58,6 +58,7 @@ export default function DetailPost() {
             data.group == null ? (
               <div>
                 <Post
+                bookId={data?.books[0].id}
                   bookDescription={data?.post.description}
                   bookImg={data?.books[0].image}
                   bookLink={data?.books[0].link_book}
@@ -69,6 +70,7 @@ export default function DetailPost() {
                   userAvatar={data?.user[0].image_url}
                   userId={data?.user[0].id}
                   userName={data?.user[0].name}
+                  isDetailPostPage={true}
                 />
                 <div
                   className="comment-input-container"
@@ -100,7 +102,6 @@ export default function DetailPost() {
                 </div>
                 {listComment?.length > 0 ? (
                   listComment.map((item, index) => (
-                    console.log(item.comment),
                     <CommentItem
                       key={index}
                       userId={item.comment.user_id}

@@ -62,6 +62,7 @@ const HomePage = () => {
                     state_like={item['state-like']}
                     timeStamp={item.post.created_at}
                     userName={item.user.name}
+                    isDetailPostPage={false}
                   />
                 )
               } else {
@@ -81,6 +82,7 @@ const HomePage = () => {
                     state_like={item['state-like']}
                     user_avatar={item.user.image_url}
                     user_name={item.user.name}
+
                   />
                 )
               }

@@ -42,7 +42,7 @@ const MyBooks = () => {
               ? fetchedBooks
               : fetchedBooks.filter(
                   (item) => item.assessment.state_read ===
-                  (filter === "read" ? 1 : filter === "wantToRead" ? 2 : 3)
+                  (filter === "read" ? 0 : filter === "wantToRead" ? 1 : 2)
                 );
 
           setBooks(filteredBooks);
@@ -57,11 +57,11 @@ const MyBooks = () => {
 
   const getStatusText = (stateRead) => {
     switch (stateRead) {
-      case 1:
+      case 0:
         return 'Read';
-      case 2:
+      case 1:
         return 'Want to read';
-      case 3:
+      case 2:
         return 'Currently reading';
       default:
         return 'Unknown';
