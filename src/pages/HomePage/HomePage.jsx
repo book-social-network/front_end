@@ -79,6 +79,8 @@ const HomePage = () => {
                     post_id={item.post.id}
                     likes = {item.likes.length}
                     state_like={item['state-like']}
+                    user_avatar={item.user.image_url}
+                    user_name={item.user.name}
                   />
                 )
               }

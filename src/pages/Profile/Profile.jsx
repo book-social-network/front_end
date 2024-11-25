@@ -23,6 +23,7 @@ export default function Profile() {
     if (user?.posts) {
       setPost(user.posts)
     }
+    console.log(user);
   }, [user])
 
   const [post, setPost] = useState([])
@@ -58,7 +59,7 @@ export default function Profile() {
             </Grid>
             <Grid item paddingLeft={1}>
               <Typography variant="body2" color="#fff">
-                {user?.follows?.user?.length || 0} Following
+                {user?.following?.user?.length || 0} Following
               </Typography>
             </Grid>
           </Grid>

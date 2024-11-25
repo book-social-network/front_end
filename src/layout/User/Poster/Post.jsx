@@ -10,9 +10,8 @@ import {
   Select,
   MenuItem,
   Grid,
-  TextField,
-  Button,
   Container,
+  Menu,
 } from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -27,6 +26,7 @@ import AuthorizationAxios from '../../../hooks/Request'
 import '../../../css/post.css'
 import 'react-toastify/dist/ReactToastify.css'
 import ShareButton from '../Components/DialogShare/ShareButton'
+
 const Post = ({
   postId,
   userId,
@@ -46,13 +46,16 @@ const Post = ({
   const [rating, setRating] = useState(0)
   const { user } = useUserProfile()
 
+  const [anchorEl, setAnchorEl] = useState(null)
+  const openMenu = Boolean(anchorEl)
+
   const dateObj = timeStamp ? parseISO(timeStamp) : null
   const timeAgo = dateObj
     ? formatDistanceToNow(dateObj, { addSuffix: true })
     : 'Invalid time'
 
   const handleChange = (event) => setStatus(event.target.value)
-  const handleShare =()=>{}
+  const handleShare = () => {}
 
   const toggleLike = useCallback(async () => {
     setLiked((prevLiked) => !prevLiked)
@@ -75,8 +78,26 @@ const Post = ({
     }
   }, [liked, countLike, user, postId])
 
+  // Handle opening the menu
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
 
- 
+  // Handle closing the menu
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  // Handle deleting the post
+  const handleDelete = async () => {
+    try {
+      await AuthorizationAxios.delete(`/api/post/delete/${postId}`)
+      // Optionally, handle post-deletion behavior, e.g., redirect or show confirmation
+    } catch (e) {
+      console.log(e)
+    }
+    handleClose()
+  }
 
   return (
     <Container>
@@ -95,7 +116,7 @@ const Post = ({
               </Link>
             }
             action={
-              <IconButton aria-label="settings">
+              <IconButton aria-label="settings" onClick={handleClick}>
                 <MoreVertIcon />
               </IconButton>
             }
@@ -165,25 +186,26 @@ const Post = ({
             <IconButton onClick={toggleLike}>
               {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
               <Typography paddingLeft={1}>
-              {countLike > 0
-                ? countLike + ' người đã thích'
-                : 'Hãy thích bài viết'}
-            </Typography>
+                {countLike > 0 ? countLike + ' người đã thích' : 'Hãy thích bài viết'}
+              </Typography>
             </IconButton>
             <Link to={`/detail-post/${postId}`}>
               <IconButton>
                 <CommentIcon />
-              <Typography paddingLeft={1}>Comment</Typography>
+                <Typography paddingLeft={1}>Comment</Typography>
               </IconButton>
             </Link>
-            {/* <IconButton onClick={handleShare}>
-              <FaShare />
-              <Typography paddingLeft={1}>Share</Typography>
-            </IconButton> */}
-            <ShareButton/>
+            <ShareButton />
           </CardActions>
         </Card>
       </Grid>
+      <Menu
+        anchorEl={anchorEl}
+        open={openMenu}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleDelete}>Delete Post</MenuItem>
+      </Menu>
     </Container>
   )
 }

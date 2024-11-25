@@ -245,14 +245,29 @@ const Header = () => {
                 open={Boolean(anchorElAdd)}
                 onClose={handleCloseAddMenu}
               >
-                <MenuItem >
-                  <Link onClick={handleCloseAddMenu} to="/upload-type">Upload Type</Link>
+                <MenuItem
+                  onClick={() => {
+                    navigate('/upload-type')
+                    handleCloseAddMenu()
+                  }}
+                >
+                  Upload Type
                 </MenuItem>
-                <MenuItem >
-                  <Link onClick={handleCloseAddMenu} to='/upload-book'>Upload Book</Link>
+                <MenuItem
+                  onClick={() => {
+                    navigate('/upload-book')
+                    handleCloseAddMenu()
+                  }}
+                >
+                  Upload Book
                 </MenuItem>
-                <MenuItem >
-                  <Link to='/upload-author' onClick={handleCloseAddMenu}>Upload Author</Link>
+                <MenuItem
+                  onClick={() => {
+                    navigate('/upload-author')
+                    handleCloseAddMenu()
+                  }}
+                >
+                  Upload Author
                 </MenuItem>
               </Menu>
 
@@ -331,7 +346,7 @@ const Header = () => {
           </SwipeableDrawer>
         </AppBar>
       ) : (
-        <div>Loading....</div>
+        <div>Loading...</div>
       )}
     </>
   )

@@ -7,10 +7,13 @@ export default function MyGroups({ groups }) {
   return (
     <>
       {joinedGroups.map((group, index) => (
+        console.log(group),
         <Grid item key={index} xs={12} sm={6} md={4}>
           <MyGroupItem
             user_id={group.post.user_id}
             post_id={group.post.id}
+            user_avatar={group.user.image_url}
+            user_name={group.user.name}
             group_name={group.group.name}
             group_description={group.post.description}
             group_avatar = {group.group.image_group}

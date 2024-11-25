@@ -27,8 +27,7 @@ export default function DetailUser() {
         const resUser = await axios.get(
           `${process.env.REACT_APP_BACKEND}/api/user/get/${id}`
         );
-        setUserDetails(resUser.data);
-  
+        setUserDetails(resUser.data);  
         const resFollows = await axios.get(
           `${process.env.REACT_APP_BACKEND}/api/follow/get-all`,
           {
@@ -41,6 +40,7 @@ export default function DetailUser() {
         const isUserFollowed = followers.some(
           follow => follow.user_id === loggedInUser && follow.follower === parseInt(id)
         );
+        console.log(isUserFollowed);
 
         setIsFollowing(isUserFollowed);
       } catch (e) {
@@ -89,12 +89,12 @@ export default function DetailUser() {
               <Card>
                 <CardContent style={{ textAlign: 'center' }}>
                   <Avatar
-                    src={userDetails.avatar}
+                    src={userDetails.user.image_url}
                     alt="avatar"
                     style={{ width: 150, height: 150, margin: '0 auto' }}
                   />
                   <Typography variant="h5" style={{ marginTop: '20px' }}>
-                    {userDetails.name}
+                    {userDetails.user.name}
                   </Typography>
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
@@ -114,35 +114,35 @@ export default function DetailUser() {
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2">Full Name</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {userDetails.name}
+                      {userDetails.user.name}
                     </Typography>
                   </div>
                   <Divider style={{ margin: '10px 0' }} />
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2">Email</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {userDetails.email}
+                      {userDetails.user.email}
                     </Typography>
                   </div>
                   <Divider style={{ margin: '10px 0' }} />
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2">Phone</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {userDetails.phone}
+                      {userDetails.user.phone}
                     </Typography>
                   </div>
                   <Divider style={{ margin: '10px 0' }} />
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="body2">Mobile</Typography>
+                    <Typography variant="body2">Point</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {userDetails.mobile}
+                      {userDetails.user.point}
                     </Typography>
                   </div>
                   <Divider style={{ margin: '10px 0' }} />
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="body2">Address</Typography>
+                    <Typography variant="body2">Date of birth</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {userDetails.address}
+                      {userDetails.user.dob}
                     </Typography>
                   </div>
                 </CardContent>

@@ -13,22 +13,40 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import LockIcon from '@mui/icons-material/Lock'
 import PublicIcon from '@mui/icons-material/Public'
+import { FaUsers } from 'react-icons/fa'
+import { BsFileEarmarkPostFill } from 'react-icons/bs'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import { FaPlus } from 'react-icons/fa6'
 import { MdLogout } from 'react-icons/md'
 import Post from '../../layout/User/Poster/Post'
 import ModalCreatePost from '../../layout/User/Components/CenterContainer/ModalCreatePost'
 import AuthorizationAxios from '../../hooks/Request'
+import ModalInvite from './ModalInvite'
+import { toast } from 'react-toastify'
+import ModalDelete from './ModalDelete'
 
 export default function DetailGroup() {
   const [postGroup, setPostGroup] = useState(null)
+  const [dataGroup, setDataGroup] = useState(null)
   const [joinedGroups, setJoinedGroups] = useState([])
   const [isJoined, setIsJoined] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isOpenModaUsers, setIsOpenModalUsers] = useState(false)
 
   const { id } = useParams()
   const { token, user } = useUserProfile()
+
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await AuthorizationAxios.get(`/api/group/get/${id}`)
+        setDataGroup(await res.data)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
     const fetchGroupData = async () => {
       try {
         const response = await AuthorizationAxios.get(
@@ -51,9 +69,13 @@ export default function DetailGroup() {
       }
     }
 
-    fetchGroupData()
+    fetchData()
     fetchRoleData()
-  }, [id, token, user])
+    if (isJoined) {
+      fetchGroupData()
+    }
+  }, [id, token, user, isJoined])
+
   useEffect(() => {
     joinedGroups.forEach((item) => {
       if (item.id === user.user.id) {
@@ -61,7 +83,26 @@ export default function DetailGroup() {
         if (item.role_in_group === 'admin') setIsAdmin(true)
       }
     })
-  }, [joinedGroups])
+  }, [joinedGroups, user])
+
+  const handleOpen = () => setIsOpenModal(true)
+  const handleClose = () => setIsOpenModal(false)
+  const handleOpenModaUsers = () => setIsOpenModalUsers(true)
+  const handleCloseModaUsers = () => setIsOpenModalUsers(false)
+  const handleJoin = async () => {
+    await AuthorizationAxios.post('/api/detail-group-user/insert', {
+      user_id: user?.user.id,
+      group_id: id,
+    })
+    toast.success('Joined group success')
+  }
+  const handleLeave = async () => {
+    await AuthorizationAxios.post('/api/detail-group-user/delete', {
+      user_id: user?.user.id,
+      group_id: id,
+    })
+    toast.warn('Leave group success')
+  }
   return (
     <Container maxWidth="lg">
       <Box sx={{ background: '#252728', padding: 2, mb: 2 }}>
@@ -77,11 +118,11 @@ export default function DetailGroup() {
             color="#fff"
             sx={{ width: '80%' }}
           >
-            {postGroup ? postGroup.group.name : ''}
+            {dataGroup ? dataGroup.group.name : ''}
           </Typography>
           <Box
             component="img"
-            src={postGroup ? postGroup.group.image_group : ''}
+            src={dataGroup ? dataGroup.group.image_group : ''}
             alt="Group Image"
             sx={{
               width: 150,
@@ -96,19 +137,27 @@ export default function DetailGroup() {
           <Grid item>
             <Box display="flex" alignItems="center" gap={1} mt={2}>
               <AvatarGroup max={4}>
-                {postGroup?.users.slice(0, 4).map((user, index) => (
-                  <Avatar key={index} alt={user.name} src={user.avatar} />
+                {dataGroup?.users.slice(0, 4).map((user, index) => (
+                  <Avatar
+                    key={index}
+                    alt={user.user.name}
+                    src={user?.user.image_url}
+                  />
                 ))}
               </AvatarGroup>
               <Typography variant="body1" color="#fff">
-                {postGroup ? postGroup.users.length : ''} thành viên
+                {dataGroup ? dataGroup?.users.length : ''} thành viên
               </Typography>
             </Box>
           </Grid>
           <Grid item>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
               {!isJoined ? (
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleJoin}
+                >
                   Tham gia nhóm
                 </Button>
               ) : (
@@ -125,6 +174,7 @@ export default function DetailGroup() {
                       },
                       padding: '10px 20px',
                     }}
+                    onClick={handleOpen}
                   >
                     <FaPlus /> Mời
                   </Button>
@@ -140,6 +190,7 @@ export default function DetailGroup() {
                       },
                       padding: '10px 20px',
                     }}
+                    onClick={handleLeave}
                   >
                     <MdLogout /> Thoát nhóm
                   </Button>
@@ -152,54 +203,60 @@ export default function DetailGroup() {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9}>
-          <Box
-            className="center-content"
-            sx={{
-              border: '2px solid #ccc',
-              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-              padding: '20px',
-              borderRadius: '8px',
-              textAlign: 'center',
-              marginTop: '20px',
-            }}
-          >
-            <Grid container>
-              <Grid item sm={2} xs={12}>
-                <img
-                  src={user ? user.user.image_url : ''}
-                  alt=""
-                  style={{
-                    width: '100%',
-                    borderRadius: '50%',
-                    maxWidth: '50px',
-                    maxHeight: '50px',
-                  }}
-                />
-              </Grid>
-              <ModalCreatePost user={user} idGroup={id} token={token} />
-            </Grid>
-          </Box>
-          {postGroup && postGroup.posts.length > 0 ? (
-            postGroup.posts.map((post, index) => (
-              <Post
-                key={index}
-                postId={post.post.id}
-                userId={post.user.id}
-                userName={post.user.name}
-                userAvatar={post.user.avatar}
-                bookImg={post.books[0]?.image}
-                bookDescription={post.post.description}
-                bookLink={post.books[0]?.link_book}
-                bookTitle={post.books[0]?.name}
-                likes={post.likes ? post.likes.length : 0}
-                state_like={post['state-like']}
-                timeStamp={post.post.created_at}
-              />
-            ))
+          {isJoined ? (
+            <>
+              <Box
+                className="center-content"
+                sx={{
+                  border: '2px solid #ccc',
+                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                  padding: '20px',
+                  borderRadius: '8px',
+                  textAlign: 'center',
+                  marginTop: '20px',
+                }}
+              >
+                <Grid container>
+                  <Grid item sm={2} xs={12}>
+                    <img
+                      src={user ? user.user.image_url : ''}
+                      alt=""
+                      style={{
+                        width: '100%',
+                        borderRadius: '50%',
+                        maxWidth: '50px',
+                        maxHeight: '50px',
+                      }}
+                    />
+                  </Grid>
+                  <ModalCreatePost user={user} idGroup={id} token={token} />
+                </Grid>
+              </Box>
+              {postGroup && postGroup.posts.length > 0 ? (
+                postGroup.posts.map((post, index) => (
+                  <Post
+                    key={index}
+                    postId={post.post.id}
+                    userId={post.user.id}
+                    userName={post.user.name}
+                    userAvatar={post.user.avatar}
+                    bookImg={post.books[0]?.image}
+                    bookDescription={post.post.description}
+                    bookLink={post.books[0]?.link_book}
+                    bookTitle={post.books[0]?.name}
+                    likes={post.likes ? post.likes.length : 0}
+                    state_like={post['state-like']}
+                    timeStamp={post.post.created_at}
+                  />
+                ))
+              ) : (
+                <Typography variant="body2" color="#b0b0b0" textAlign="center">
+                  Chưa có bài viết nào trong nhóm này.
+                </Typography>
+              )}
+            </>
           ) : (
-            <Typography variant="body2" color="#b0b0b0" textAlign="center">
-              Chưa có bài viết nào trong nhóm này.
-            </Typography>
+            <Typography>Bạn chưa tham gia group</Typography>
           )}
         </Grid>
 
@@ -209,42 +266,78 @@ export default function DetailGroup() {
               Giới thiệu
             </Typography>
             <Typography variant="body2" color="#b0b0b0" mt={1}>
-              {postGroup ? postGroup.group.description : ''}
+              {dataGroup ? dataGroup.group.description : ''}
             </Typography>
-
             <Box display="flex" alignItems="center" gap={1} mt={1}>
               <Icon sx={{ color: 'white' }}>
-                {postGroup && postGroup.group.state === 1 ? (
+                {dataGroup && dataGroup.group.state === 1 ? (
                   <VisibilityIcon />
                 ) : (
                   <LockIcon />
                 )}
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
-                {postGroup && postGroup.group.state === 1
+                {dataGroup && dataGroup.group.state === 1
                   ? 'Công khai'
                   : 'Riêng tư'}
               </Typography>
             </Box>
             <Typography variant="body2" color="#b0b0b0">
-              {postGroup && postGroup.group.state === 1
+              {dataGroup && dataGroup.group.state === 1
                 ? 'Bất kỳ ai cũng có thể nhìn thấy mọi người trong nhóm và những gì họ đăng.'
                 : 'Chỉ các thành viên mới có thể nhìn thấy những gì được đăng trong nhóm.'}
             </Typography>
             <Box display="flex" alignItems="center" gap={1} mt={1}>
               <Icon sx={{ color: 'white' }}>
-                <PublicIcon />
+                <FaUsers />
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
-                Hiển thị
+                {dataGroup ? dataGroup.users.length : ''} thành viên
               </Typography>
             </Box>
-            <Typography variant="body2" color="#b0b0b0" mt={1}>
-              Ai cũng có thể tìm thấy nhóm này.
-            </Typography>
+            <Box display="flex" alignItems="center" gap={1} mt={1}>
+              <Icon sx={{ color: 'white' }}>
+                <BsFileEarmarkPostFill />
+              </Icon>
+              <Typography variant="body2" color="#b0b0b0" mt={1}>
+                {dataGroup ? dataGroup?.['count-post'] : 0} bài viết
+              </Typography>
+            </Box>
+
+            {isJoined && isAdmin && (
+              <Box display="flex" flexDirection="column" mt={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mb: 1 }}
+                  onClick={handleOpen}
+                >
+                  Thông báo nhóm
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleOpenModaUsers}
+                >
+                  Quản lý thành viên
+                </Button>
+              </Box>
+            )}
           </Box>
         </Grid>
       </Grid>
+
+      <ModalInvite
+        openModal={isOpenModal}
+        closeModal={handleClose}
+        id_group={id}
+      />
+      <ModalDelete
+        openModal={isOpenModaUsers}
+        closeModal={handleCloseModaUsers}
+        id_group={id}
+        users={dataGroup?.users}
+      />
     </Container>
   )
 }

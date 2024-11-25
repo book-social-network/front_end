@@ -17,10 +17,12 @@ import SendIcon from '@mui/icons-material/Send'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { Link } from 'react-router-dom'
 import AuthorizationAxios from './Request'
+import { useUserProfile } from './useUserProfile'
 import '../css/post.css'
 
 export default function MyGroupItem({
   user_id,
+  user_avatar,
   group_name,
   group_description,
   group_avatar,
@@ -30,18 +32,22 @@ export default function MyGroupItem({
   group_id,
   post_id,
   state_like,
-  likes
+  likes,
+  user_name,
 }) {
   const [countLike, setCountLike] = useState(likes)
   const [userItem, setUserItem] = useState(null)
   const [liked, setLiked] = useState(state_like)
   const [showComment, setShowComment] = useState(false)
   const [comment, setComment] = useState('')
+  const { user } = useUserProfile()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data_user = await AuthorizationAxios.get(`/api/user/get/${user_id}`)
+        const data_user = await AuthorizationAxios.get(
+          `/api/user/get/${user_id}`,
+        )
         setUserItem(data_user.data)
       } catch (error) {
         console.error('Failed to fetch user data:', error)
@@ -82,16 +88,10 @@ export default function MyGroupItem({
       setComment('')
     }
   }
-
   return (
     <Card className="post-container">
       <CardHeader
-        avatar={
-          <IconToIcon
-            icon1={group_avatar}
-            icon2={userItem ? userItem.avatar : ''}
-          />
-        }
+        avatar={<IconToIcon icon1={group_avatar} icon2={user_avatar} />}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -107,20 +107,20 @@ export default function MyGroupItem({
         }
         subheader={
           <Link
-            to={`/detail-user/${user_id}`}
+            to={
+              user && user.user.id === user_id
+                ? `/my-profile`
+                : `/detail-user/${user_id}`
+            }
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            {userItem ? userItem.name : ''}
+            {user_name}
           </Link>
         }
       />
       <CardContent className="post-content">
         <div className="post-content-left">
-          <a
-            href={book_link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={book_link} target="_blank" rel="noopener noreferrer">
             <img
               className="book-image"
               src={image_book || ''}
