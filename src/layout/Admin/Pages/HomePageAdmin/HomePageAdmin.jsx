@@ -1,5 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavbarAdmin from '../../Components/NavbarAdmin/NavbarAdmin'
+import ManageAuthor from '../ManageAuthor/ManageAuthor'
+import ManageBook from '../ManageBook/ManageBook'
+import ManageUser from '../ManageUser/ManageUser'
+import ManageGroup from '../ManageGroup/ManageGroup'
+import ManageType from '../ManageType/ManageType'
+import Dashboard from '../Dashboard/Dashboard'
 import {
   AppBar,
   Box,
@@ -12,10 +18,40 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 import useAuth from '../../../../middleware/useAuth'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
+import ManagePost from '../ManagePost/ManagePost'
+import AuthorizationAxios from '../../../../hooks/Request'
 
-export default function HomePageAdmin({ children }) {
+export default function HomePageAdmin() {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [activePage, setActivePage] = useState('Dashboard')
+  const [data, setData] = useState()
   const { user } = useUserProfile()
+  useEffect(() => {
+    const fetchData = async()=>{
+      const res = await AuthorizationAxios.get('/api/view/statistical')
+      setData(res.data)
+    }
+    fetchData()
+  }, [user])
+
+  const renderContent = () => {
+    switch (activePage) {
+      case 'Books':
+        return <ManageBook />
+      case 'Authors':
+        return <ManageAuthor />
+      case 'Types of Book':
+        return <ManageType />
+      case 'Groups':
+        return <ManageGroup />
+      case 'Users':
+        return <ManageUser />
+      case 'Posts':
+        return <ManagePost />
+      default:
+        return <Dashboard data={data}/>
+    }
+  }
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
@@ -25,7 +61,7 @@ export default function HomePageAdmin({ children }) {
     <div>
       <Grid container spacing={0}>
         <Grid item sm={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <NavbarAdmin />
+          <NavbarAdmin onSelect={setActivePage} /> {/* Truyền hàm vào */}
         </Grid>
 
         <Grid item xs={12} sm={10}>
@@ -50,9 +86,8 @@ export default function HomePageAdmin({ children }) {
           </Box>
 
           <Box>
-            <Typography variant="h4" component="div" sx={{ p: 2 }}>
-              {children}
-            </Typography>
+            {/* Hiển thị nội dung tương ứng */}
+            <Box sx={{ p: 2 }}>{renderContent()}</Box>
           </Box>
         </Grid>
       </Grid>
@@ -64,7 +99,7 @@ export default function HomePageAdmin({ children }) {
           onClick={toggleDrawer}
           onKeyDown={toggleDrawer}
         >
-          <NavbarAdmin />
+          <NavbarAdmin onSelect={setActivePage} />
         </Box>
       </Drawer>
     </div>

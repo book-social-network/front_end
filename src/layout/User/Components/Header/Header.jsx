@@ -34,6 +34,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import useIconInHeader from '../../../../hooks/HeaderIcon'
 import { useModal } from '../../../../hooks/ModalContext'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
+import Notification from '../Notification/notification'
 import '../../../../css/header.css'
 
 const settings = [
@@ -346,7 +347,7 @@ const Header = () => {
         onClose={toggleNotificationDrawer(false)}
         onOpen={toggleNotificationDrawer(true)}
       >
-        {notifications}
+        <Notification/>
       </SwipeableDrawer>
 
       <Drawer
