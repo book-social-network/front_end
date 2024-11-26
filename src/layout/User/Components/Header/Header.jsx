@@ -55,14 +55,9 @@ const Header = () => {
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
   const [anchorElAdd, setAnchorElAdd] = useState(null)
   const { openModal } = useModal()
-  const { user } = useUserProfile()
-  const [isLoading, setIsLoading] = useState(true)
+  const { isLoading, user } = useUserProfile()
 
-  useEffect(() => {
-    if (user) {
-      setIsLoading(false) // Chỉ khi user có dữ liệu
-    }
-  }, [user])
+  
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')

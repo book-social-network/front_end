@@ -1,8 +1,9 @@
 import axios from 'axios'
 
-const token = localStorage.getItem('access_token');
+
 
 export const post =  async(path, data)=>{
+    const token = localStorage.getItem('access_token');
     try{
         const res = await axios.post(
             `${process.env.REACT_APP_BACKEND}${path}`,
@@ -19,6 +20,7 @@ export const post =  async(path, data)=>{
     }
 }
 export const get = async(path)=>{
+    const token = localStorage.getItem('access_token');
     try{
         const res = await axios.get(
             `${process.env.REACT_APP_BACKEND}${path}`,
@@ -34,6 +36,7 @@ export const get = async(path)=>{
     }
 }
 export const remove = async(path)=>{
+    const token = localStorage.getItem('access_token');
     try{
         const res = await axios.delete(
             `${process.env.REACT_APP_BACKEND}${path}`,
