@@ -1,20 +1,39 @@
-import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import AuthorizationAxios from './Request'
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query'
-export const useUserProfile = () => {
 
+export const useUserProfile = () => {
   const initialValue = {}
+
   const {
-    isPending,
+    isLoading,
     error,
     data = initialValue,
   } = useQuery({
     queryKey: ['user'],
-    queryFn: () => AuthorizationAxios.get('/api/auth/user-profile'),
+    queryFn: async () => {
+      try {
+        const response = await AuthorizationAxios.get('/api/auth/user-profile')
+        return response
+      } catch (err) {
+        if (err.response?.status === 401) {
+          const refreshResponse = await AuthorizationAxios.post(
+            '/api/auth/refresh',
+          )
+          localStorage.setItem(
+            'access_token',
+            refreshResponse.data.access_token,
+          )
+
+          return AuthorizationAxios.get('/api/auth/user-profile')
+        }
+        throw err
+      }
+    },
   })
-  return { user: data?.data }
+
+  return {
+    user: data?.data,
+    isLoading,
+    error,
+  }
 }

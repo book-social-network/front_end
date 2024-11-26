@@ -43,9 +43,16 @@ const Login = () => {
 
       if (res.data.access_token) {
         const access_token = res.data.access_token
+        const userRole = res.data.user?.role
+
         localStorage.setItem('access_token', access_token)
         setToken(access_token)
-        navigate('/Home')
+
+        if (userRole === 'admin') {
+          navigate('/admin')
+        } else {
+          navigate('/home')
+        }
       } else {
         setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
         setPasswordError(true)

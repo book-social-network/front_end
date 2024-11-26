@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Grid,
   Container,
@@ -15,13 +15,37 @@ import Footer from '../../layout/User/Components/Footer/Footer'
 import StarIcon from '@mui/icons-material/Star'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
+import { useParams } from 'react-router-dom'
+import AuthorizationAxios from '../../hooks/Request'
 
 export default function DetailBook() {
-  const rating = 3.5 // Example rating
-  const [status, setStatus] = useState('want to read')
+  const [dataBook, setDataBook] = useState(null)
+  const [rating, setRating] = useState(0)
+  const id = useParams()
 
-  const handleChange = (event) => {
-    setStatus(event.target.value)
+  const id_book = id.id
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await AuthorizationAxios.get(`/api/book/get/${id_book}`)
+        setDataBook(res?.data)
+        setRating(res?.data?.assessment?.star || 0)
+      } catch (error) {
+        console.error('Error fetching book details:', error)
+      }
+    }
+    fetchData()
+  }, [id_book])
+  console.log(dataBook)
+
+  const handleChange = (event) => {}
+
+  if (!dataBook) {
+    return (
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h5">Loading...</Typography>
+      </Container>
+    )
   }
 
   return (
@@ -45,7 +69,7 @@ export default function DetailBook() {
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                 transition: 'transform 0.3s ease-in-out',
               }}
-              src="https://top10tphcm.com/wp-content/uploads/2024/04/hinh-anh-gai-xinh-han-quoc-dep-nhat-42.jpg"
+              src={dataBook?.book?.image || 'default-image.jpg'}
               alt="Book"
               onMouseOver={(e) => (e.target.style.transform = 'scale(1.05)')}
               onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
@@ -57,7 +81,7 @@ export default function DetailBook() {
                 variant="h4"
                 sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}
               >
-                Tên cuốn sách
+                {dataBook?.book?.name || 'Book Title'}{' '}
               </Typography>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ mr: 1, color: '#555' }}>
@@ -77,13 +101,37 @@ export default function DetailBook() {
                   }
                 })}
               </Box>
-              <Typography
-                variant="body1"
-                sx={{ color: '#555', lineHeight: 1.6, mb: 3 }}
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 1,
+                  marginBottom: 3,
+                }}
               >
-                Đây là mô tả ngắn gọn về cuốn sách. Nó cung cấp một cái nhìn
-                tổng quan về nội dung và điểm nổi bật để thu hút người đọc.
-              </Typography>
+                {dataBook?.types && Array.isArray(dataBook?.types) ? (
+                  dataBook.types.map((type, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        backgroundColor: '#e0f7fa',
+                        color: '#006064',
+                        borderRadius: 2,
+                        padding: '4px 8px',
+                        fontSize: '0.875rem',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                      }}
+                    >
+                      {type.name}
+                    </Box>
+                  ))
+                ) : (
+                  <Typography variant="body1" sx={{ color: '#555' }}>
+                    No types available
+                  </Typography>
+                )}
+              </Box>
+
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={8}>
                   <FormControl
@@ -103,7 +151,6 @@ export default function DetailBook() {
                     <InputLabel id="status-label">Trạng thái</InputLabel>
                     <Select
                       labelId="status-label"
-                      value={status}
                       label="Trạng thái"
                       onChange={handleChange}
                       sx={{ borderRadius: 1, padding: 1 }}
@@ -151,65 +198,28 @@ export default function DetailBook() {
                 >
                   Comments
                 </Typography>
-                {/* Example comments */}
-                <Grid container spacing={2} sx={{ marginBottom: 2 }}>
-                  <Grid item>
-                    <Avatar
-                      alt="User Avatar"
-                      src="https://i.pinimg.com/originals/63/d7/80/63d7807cf6d553fa722fbddf8d4fc482.jpg"
-                      sx={{ width: 40, height: 40 }}
-                    />
+
+                {dataBook?.comments?.map((comment, index) => (
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{ marginBottom: 2 }}
+                    key={index}
+                  >
+                    <Grid item>
+                      <Avatar
+                        alt={comment.userName}
+                        src={comment.userAvatar}
+                        sx={{ width: 40, height: 40 }}
+                      />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography variant="body2" sx={{ color: '#555' }}>
+                        {comment.text}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={10}>
-                    <Typography variant="body2" sx={{ color: '#555' }}>
-                      This book looks interesting! I would love to read it soon.
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2} sx={{ marginBottom: 2 }}>
-                  <Grid item>
-                    <Avatar
-                      alt="User Avatar"
-                      src="https://i.pinimg.com/originals/63/d7/80/63d7807cf6d553fa722fbddf8d4fc482.jpg"
-                      sx={{ width: 40, height: 40 }}
-                    />
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography variant="body2" sx={{ color: '#555' }}>
-                      This book looks interesting! I would love to read it soon.
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2} sx={{ marginBottom: 2 }}>
-                  <Grid item>
-                    <Avatar
-                      alt="User Avatar"
-                      src="https://i.pinimg.com/originals/63/d7/80/63d7807cf6d553fa722fbddf8d4fc482.jpg"
-                      sx={{ width: 40, height: 40 }}
-                    />
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography variant="body2" sx={{ color: '#555' }}>
-                      Great reviews! I'm definitely adding this to my reading
-                      list.
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item>
-                    <Avatar
-                      alt="User Avatar"
-                      src="https://i.pinimg.com/originals/63/d7/80/63d7807cf6d553fa722fbddf8d4fc482.jpg"
-                      sx={{ width: 40, height: 40 }}
-                    />
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography variant="body2" sx={{ color: '#555' }}>
-                      Can't wait to get my hands on this book! Seems like a
-                      great read.
-                    </Typography>
-                  </Grid>
-                </Grid>
+                ))}
               </Box>
             </Box>
           </Grid>

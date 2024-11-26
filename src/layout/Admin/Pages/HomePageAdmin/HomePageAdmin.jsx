@@ -10,9 +10,12 @@ import {
   Drawer,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import useAuth from '../../../../middleware/useAuth'
+import { useUserProfile } from '../../../../hooks/useUserProfile'
 
-export default function HomePageAdmin({children}) {
+export default function HomePageAdmin({ children }) {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const { user } = useUserProfile()
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen)
