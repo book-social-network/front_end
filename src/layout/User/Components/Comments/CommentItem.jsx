@@ -14,12 +14,17 @@ import {
 } from '@mui/material'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { parseISO, formatDistanceToNow } from 'date-fns'
+import AuthorizationAxios from '../../../../hooks/Request'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function CommentItem({
+  commentId,
   userName,
   userImage,
   commentText,
   timestamp,
+  getData
 }) {
   const [comment, setComment] = useState(commentText)
   const [isEditor, setIsEditor] = useState(false)
@@ -34,7 +39,19 @@ export default function CommentItem({
   const handleOpen = (event) => setAnchorEl(event.currentTarget)
 
   const handleClose = () => setAnchorEl(null)
-
+  const handleUpdateComment = async () => {
+    await AuthorizationAxios.post(`/api/post/update-comment/${commentId}`, {
+      description: comment,
+    })
+    setIsEditor(false)
+    toast.success('Comment updated')
+    getData();
+  }
+  const handleDelete = async()=>{
+    await AuthorizationAxios.remove(`/api/post/delete-comment/${commentId}`)
+    toast.warn("Delete completed")
+    getData()
+  }
   const handleEditComment = () => {
     setIsEditor(!isEditor)
     handleClose()
@@ -77,6 +94,7 @@ export default function CommentItem({
                 <Button
                   sx={{ display: 'block', margin: '5px 5px 5px 0' }}
                   variant="contained"
+                  onClick={handleUpdateComment}
                 >
                   Save changes
                 </Button>
@@ -125,7 +143,7 @@ export default function CommentItem({
             onClose={handleClose}
           >
             <MenuItem onClick={handleEditComment}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
         </Grid>
       </Grid>

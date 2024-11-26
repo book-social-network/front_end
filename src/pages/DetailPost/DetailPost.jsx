@@ -21,13 +21,13 @@ export default function DetailPost() {
     const [comment, setComment] = useState('');
   
     useEffect(() => {
-      const getData = async () => {
-        const response = await AuthorizationAxios.get(`/api/post/get/${param.id}`);
-        setData(response?.data);
-      };
+   
       getData();
     }, [param]);
-  
+    const getData = async () => {
+      const response = await AuthorizationAxios.get(`/api/post/get/${param.id}`);
+      setData(response?.data);
+    };
     useEffect(() => {
       setListComment(data?.comments);
     }, [data]);
@@ -110,6 +110,7 @@ export default function DetailPost() {
                       commentId={item.comment.id}
                       commentText={item.comment.description}
                       timestamp={item.comment.created_at}
+                      getData={getData}
                     />
                   ))
                 ) : (
