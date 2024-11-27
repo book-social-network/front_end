@@ -23,7 +23,6 @@ export default function Profile() {
     if (user?.posts) {
       setPost(user.posts)
     }
-    console.log(user);
   }, [user])
 
   const [post, setPost] = useState([])

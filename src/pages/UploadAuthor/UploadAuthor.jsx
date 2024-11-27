@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthorizationAxios from '../../hooks/Request'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import { toast } from 'react-toastify'
+import SearchAuthor from './SearchAuthor'
 
 function UploadAuthor() {
   const [name, setName] = useState('')
@@ -111,37 +112,7 @@ function UploadAuthor() {
         >
           Tác giả hiện có
         </Typography>
-        <Swiper
-          spaceBetween={20}
-          slidesPerView={3}
-          navigation
-          pagination={{ clickable: true }}
-          modules={[Pagination, Navigation]}
-          style={{ padding: '10px' }}
-        >
-          {authors.map((author) => (
-            <SwiperSlide key={author.id}>
-              <Card
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  boxShadow: 3,
-                }}
-              >
-                <Avatar
-                  src={author.image}
-                  alt={author.name}
-                  sx={{ width: 80, height: 80, mb: 1 }}
-                />
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                  {author.name}
-                </Typography>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <SearchAuthor authors={authors} />
       </Box>
 
       <Card

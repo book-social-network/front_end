@@ -279,6 +279,14 @@ const Header = () => {
             >
               Upload Author
             </MenuItem>
+            <MenuItem
+              onClick={() => {
+                navigate('/create-group')
+                handleCloseAddMenu()
+              }}
+            >
+              Create Group
+            </MenuItem>
           </Menu>
 
           <IconButton
