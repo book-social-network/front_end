@@ -6,10 +6,6 @@ import {
   TextField,
   Typography,
   Button,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
 } from '@mui/material'
 import ContainerAuthors from './ContainerAuthors'
 import ContainerType from './ContainerTypes'
@@ -31,19 +27,27 @@ export default function UploadBook() {
   }, [])
 
   const handleImageChange = (e) => {
-   setImage(e.target.files[0])
+    setImage(e.target.files[0])
   }
 
-  const handleUploadBook = () =>{
-    
-    setIsUpload(true);
+  const handleUploadBook = () => {
+    setIsUpload(true)
   }
 
-  if(isUpload){
-    return <LoadingDialog  setIsUpload={setIsUpload} nameBook={name} description={description} image={image} linkBook={link} arraySelectedAuthor={selectedAuthors} arraySelectedType={selectedTypes}/>
+  if (isUpload) {
+    return (
+      <LoadingDialog
+        setIsUpload={setIsUpload}
+        nameBook={name}
+        description={description}
+        image={image}
+        linkBook={link}
+        arraySelectedAuthor={selectedAuthors}
+        arraySelectedType={selectedTypes}
+      />
+    )
   }
 
-  
   return (
     <Box
       paddingTop={1}

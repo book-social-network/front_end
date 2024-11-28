@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   Slide,
@@ -27,7 +26,6 @@ export default function AlertDialogSlide({
   const [progress, setProgress] = React.useState(0)
   const [dataBook, setDataBook] = React.useState(null)
   const [dataAuthor, setDataAuthor] = React.useState(false)
-  const [title, setTitle] = React.useState('Uploading book...')
   const totalTasks = 1 + arraySelectedAuthor.length + arraySelectedType.length
   console.log(totalTasks);
   const uploadBook = async () => {
@@ -41,7 +39,6 @@ export default function AlertDialogSlide({
       const res = await AuthorizationAxios.postUpload(
         '/api/book/insert',
         formData,
-        'upload',
       )
       const book = await res.data
       setDataBook(book)
@@ -118,7 +115,7 @@ export default function AlertDialogSlide({
         onClose={() => setOpen(false)}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>{'Uploading book...'}</DialogTitle>
         <DialogContent>
           <LinearProgress variant="determinate" value={progress} />
         </DialogContent>

@@ -51,7 +51,7 @@ export const remove = async(path)=>{
         console.log("delete error");
     }
 }
-export const postUpload = async (path, data, type = "post") => {
+export const postUpload = async (path, data) => {
     const token = localStorage.getItem("access_token");
     try {
       const res = await axios.post(
@@ -60,7 +60,7 @@ export const postUpload = async (path, data, type = "post") => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": type === "upload" ? "multipart/form-data" : "application/json",
+            "Content-Type": "multipart/form-data" 
           },
         }
       );
