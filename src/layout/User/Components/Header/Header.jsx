@@ -118,23 +118,21 @@ const Header = () => {
       <List>
         {isMobile && (
           <>
-            <ListItem button>
+            <ListItem button component={Link} to="/home">
               <HomeIcon />
               <ListItemText primary="Home Page" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/mybooks">
               <MenuBookIcon />
               <ListItemText primary="My books" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/groups">
               <GroupsIcon />
               <ListItemText primary="Groups" />
             </ListItem>
-            <ListItem button>
-              <Link to="/books">
-                <FaUserFriends />
-                <ListItemText primary="Books" />
-              </Link>
+            <ListItem button component={Link} to="/friends">
+              <FaUserFriends />
+              <ListItemText primary="Friends" />
             </ListItem>
           </>
         )}

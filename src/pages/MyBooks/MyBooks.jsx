@@ -133,7 +133,8 @@ const MyBooks = () => {
           </Typography>
           <hr />
           <Grid container spacing={2}>
-            <Grid item xs={2}>
+            {/* Sidebar filter buttons */}
+            <Grid item xs={12} sm={3}>
               <List component="ul" disablePadding>
                 <ListItem component="li">
                   <Button
@@ -193,7 +194,9 @@ const MyBooks = () => {
                 </ListItem>
               </List>
             </Grid>
-            <Grid item xs={10}>
+
+            {/* Books table or list */}
+            <Grid item xs={12} sm={9}>
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
@@ -216,14 +219,9 @@ const MyBooks = () => {
                           />
                         </TableCell>
                         <TableCell>{item.book[0].name}</TableCell>
+                        <TableCell>{item.authors[0].name || 'Unknown'}</TableCell>
                         <TableCell>
-                          {item.authors[0].name || 'Unknown'}
-                        </TableCell>
-                        <TableCell>
-                          {renderStars(
-                            ratings[rowIndex] || item.assessment.star,
-                            rowIndex,
-                          )}
+                          {renderStars(ratings[rowIndex] || item.assessment.star, rowIndex)}
                         </TableCell>
                         <TableCell>
                           <p>{getStatusText(item.assessment.state_read)}</p>

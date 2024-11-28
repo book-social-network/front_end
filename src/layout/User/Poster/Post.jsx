@@ -78,11 +78,15 @@ const Post = ({
 
   return (
     <Container>
-      <Grid sx={{ maxWidth: '850px', margin: 'auto' }}>
+      <Grid
+        container
+        justifyContent="center"
+        sx={{ maxWidth: '850px', margin: 'auto' }}
+      >
         <Card
           className="post-container"
           onClick={handleCardClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', width: '100%' }}
         >
           <CardHeader
             avatar={
@@ -121,14 +125,18 @@ const Post = ({
             subheader={timeAgo}
           />
           <CardContent className="post-content">
-           
             <Link
               to={`/detail-book/${bookId}`}
               onClick={(event) => event.stopPropagation()}
             >
               <div className="post-content-left">
                 <a href={bookLink} target="_blank" rel="noopener noreferrer">
-                  <img className="book-image" src={bookImg} alt={bookTitle} />
+                  <img
+                    className="book-image"
+                    src={bookImg}
+                    alt={bookTitle}
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
                 </a>
               </div>
             </Link>
@@ -139,11 +147,15 @@ const Post = ({
                 rel="noopener noreferrer"
                 className="book-link"
               >
-                <Typography variant="h6" className="book-title">
+                <Typography
+                  variant="h6"
+                  className="book-title"
+                  sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
+                >
                   {bookTitle}
                 </Typography>
               </a>
-              {isDetailPostPage || noLink===false && (
+              {isDetailPostPage || noLink === false ? (
                 <MenuState
                   status={status}
                   setStatus={setStatus}
@@ -152,31 +164,59 @@ const Post = ({
                   id_book={bookId}
                   id_user={userId}
                 />
-              )}
-              <Typography variant="body2" className="post-description">
+              ) : null}
+              <Typography
+                variant="body2"
+                className="post-description"
+                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+              >
                 {bookDescription}
               </Typography>
             </div>
           </CardContent>
-          <CardActions className="post-actions">
-            <IconButton onClick={toggleLike}>
-              {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
-              <Typography paddingLeft={1}>
-                {countLike > 0
-                  ? `${countLike} người đã thích`
-                  : 'Hãy thích bài viết'}
-              </Typography>
-            </IconButton>
-            <Link
-              to={`/detail-post/${postId}`}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <IconButton>
-                <CommentIcon />
-                <Typography paddingLeft={1}>Comment</Typography>
-              </IconButton>
-            </Link>
-            <ShareButton />
+          <CardActions
+            className="post-actions"
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              padding: { xs: '8px 12px', sm: '12px 16px' },
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item md={4} sm={6}>
+                <IconButton onClick={toggleLike} fullWidth>
+                  {liked ? (
+                    <FavoriteIcon color="error" />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
+                  <Typography
+                    paddingLeft={1}
+                    sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                  >
+                    {countLike > 0
+                      ? `${countLike} người đã thích`
+                      : 'Hãy thích bài viết'}
+                  </Typography>
+                </IconButton>
+              </Grid>
+
+              <Grid item md={4} sm={6}>
+                <ShareButton fullWidth />
+              </Grid>
+
+              <Grid item md={4} sm={12}>
+                <Link
+                  to={`/detail-post/${postId}`}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <IconButton fullWidth>
+                    <CommentIcon />
+                    <Typography paddingLeft={1}>Comment</Typography>
+                  </IconButton>
+                </Link>
+              </Grid>
+            </Grid>
           </CardActions>
         </Card>
       </Grid>

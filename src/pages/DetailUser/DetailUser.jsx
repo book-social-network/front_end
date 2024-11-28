@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import { useUserProfile } from '../../hooks/useUserProfile'
+import AuthorizationAxios from '../../hooks/Request'
 
 export default function DetailUser() {
   const { id } = useParams()
@@ -24,18 +25,9 @@ export default function DetailUser() {
   
     const fetchUserData = async () => {
       try {
-        const resUser = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/user/get/${id}`
-        );
+        const resUser = await AuthorizationAxios.get(`/api/user/get/${id}`)
         setUserDetails(resUser.data);  
-        const resFollows = await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/follow/get-all`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const resFollows = await AuthorizationAxios.get('/api/follow/get-all')
         const followers = resFollows.data.followers || [];
         const isUserFollowed = followers.some(
           follow => follow.user_id === loggedInUser && follow.follower === parseInt(id)
@@ -55,23 +47,9 @@ export default function DetailUser() {
   const handleFollow = async () => {
     try {
       if (isFollowing) {
-        await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/follow/unfollow/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        await AuthorizationAxios.get(`/api/follow/unfollow/${id}`)
       } else {
-        await axios.get(
-          `${process.env.REACT_APP_BACKEND}/api/follow/follow/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        )
+        await AuthorizationAxios.get(`/api/follow/follow/${id}`)
       }
       setIsFollowing(!isFollowing)
     } catch (e) {
@@ -79,12 +57,11 @@ export default function DetailUser() {
     }
   }
   if (!userDetails || !loggedInUser) return <div>Loading...</div>
-
   return (
     <div>
-      <section style={{ backgroundColor: '#eee', padding: '20px' }}>
+      <section style={{ backgroundColor: '#eee', padding: '20px', display:'flex', justifyContent:'center' }}>
         <Container>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} display='flex' justifyContent='center'>
             <Grid item lg={4}>
               <Card>
                 <CardContent style={{ textAlign: 'center' }}>
@@ -150,8 +127,9 @@ export default function DetailUser() {
             </Grid>
           </Grid>
         </Container>
-        <Footer />
       </section>
+      <Footer />
+
     </div>
   )
 }

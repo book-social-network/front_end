@@ -1,27 +1,36 @@
-import NearMeIcon from "@mui/icons-material/NearMe"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import ThumbUpIcon from "@mui/icons-material/ThumbUp"
-import ChatIcon from "@mui/icons-material/Chat"
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import NearMeIcon from '@mui/icons-material/NearMe'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import ChatIcon from '@mui/icons-material/Chat'
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle'
 const getIconNotificationType = (type) => {
-  switch (type) {
-    case "follow":
-      return <AccountCircleIcon/>
-      break
-      case "friend":
+  const mainType = type.split('-')[0]
+  switch (mainType) {
+    case 'follow':
       return <AccountCircleIcon />
       break
-    case "like":
-      return <ThumbUpIcon sx={{
-        fontSize: 12, 
-      }}/>
+    case 'user':
+      return <AccountCircleIcon />
       break
-    case "comment":
-      return <ChatIcon sx={{
-        fontSize: 12, 
-      }}/>
+    case 'post':
+      return (
+        <ThumbUpIcon
+          sx={{
+            fontSize: 12,
+          }}
+        />
+      )
       break
-      case "invited":
+    case 'comment':
+      return (
+        <ChatIcon
+          sx={{
+            fontSize: 12,
+          }}
+        />
+      )
+      break
+    case 'invited':
       return <SupervisedUserCircleIcon />
       break
 
