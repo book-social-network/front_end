@@ -15,7 +15,7 @@ export default function UploadType() {
     const fetchType = async () => {
       try {
         const response = await AuthorizationAxios.get('/api/type/get-all')
-        setTypes(response.data)
+        setTypes(response.data)  // Assuming response.data is the array you shared
       } catch (error) {
         console.error('Error fetching types:', error)
       }
@@ -25,7 +25,7 @@ export default function UploadType() {
 
   const checkDuplicateType = useCallback(() => {
     const typeExists = types.some(
-      (type) => type.name.toLowerCase() === name.toLowerCase(),
+      (typeObj) => typeObj.type.name.toLowerCase() === name.toLowerCase()  // Check within type.name
     )
     if (typeExists) {
       setError('Type đã tồn tại.')

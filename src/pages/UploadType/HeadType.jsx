@@ -10,18 +10,20 @@ function HeadType({ types }) {
   useEffect(() => {
     setFilteredTypes(types)
   }, [types])
-
-  const handleSearch = (searchValue) => {
+  // Handle filtering based on the search input
+  const handleSearch = (e) => {
+    const searchValue = e.target.value
     setValueSearch(searchValue)
-    if (!searchValue.trim()) {
-      setFilteredTypes(types)
-      return
+  
+    if (searchValue === '') {
+      setFilteredTypes(types) // If search is empty, show all types
+    } else {
+      setFilteredTypes(
+        types.filter((item) =>
+          item.type && item.type.name && item.type.name.toLowerCase().includes(searchValue.toLowerCase()) // Access type.name
+        )
+      )
     }
-
-    const matchedTypes = types.filter((type) =>
-      type.name.toLowerCase().includes(searchValue.toLowerCase())
-    )
-    setFilteredTypes(matchedTypes)
   }
 
   const handleScroll = () => {
@@ -41,7 +43,7 @@ function HeadType({ types }) {
         <Input
           placeholder="Enter type name"
           value={valueSearch}
-          onChange={(e) => handleSearch(e.target.value)}
+          onChange={handleSearch}  // Update search handler
           sx={{
             width: '100%',
             maxWidth: '400px',
@@ -85,7 +87,7 @@ function HeadType({ types }) {
         }}
       >
         {filteredTypes.length > 0 ? (
-          filteredTypes.map((type, index) => (
+          filteredTypes.map((item, index) => (
             <Button
               key={index}
               sx={{
@@ -103,7 +105,7 @@ function HeadType({ types }) {
                 },
               }}
             >
-              {type.name}
+              {item.type && item.type.name} {/* Display the name of the type */}
             </Button>
           ))
         ) : (

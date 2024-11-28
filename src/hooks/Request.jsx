@@ -51,9 +51,28 @@ export const remove = async(path)=>{
         console.log("delete error");
     }
 }
+export const postUpload = async (path, data, type = "post") => {
+    const token = localStorage.getItem("access_token");
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND}${path}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": type === "upload" ? "multipart/form-data" : "application/json",
+          },
+        }
+      );
+      return res;
+    } catch (err) {
+      console.error("Error in POST request:", err);
+      throw err;
+    }
+  };
 
  const AuthorizationAxios = {
-    post, get, remove
+    post, get, remove, postUpload
 }
 
 export default AuthorizationAxios;
