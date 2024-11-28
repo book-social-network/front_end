@@ -18,6 +18,7 @@ import '../../css/Login.css'
 import { useNavigate } from 'react-router-dom'
 import { useUserContext } from '../../hooks/UseContext'
 import AuthorizationAxios from '../../hooks/Request'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -29,17 +30,23 @@ const Login = () => {
   const { setToken } = useUserContext()
 
   const handleLogin = async () => {
-    if (!email || !pass) {
-      setPasswordHelperText('Bạn phải nhập đủ các trường')
-      setPasswordError(true)
-      return
-    }
-
     try {
+      if (!email || !pass) {
+        setPasswordHelperText('Bạn phải nhập đủ các trường')
+        setPasswordError(true)
+        return
+      }
       const res = await AuthorizationAxios.post('/api/login', {
         email: email,
         password: pass,
       })
+
+      if (res?.status === 401) {
+        toast.error('Invalid email or password')
+        setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
+        setPasswordError(true)
+        return
+      }
 
       if (res.data.access_token) {
         const access_token = res.data.access_token
@@ -58,8 +65,9 @@ const Login = () => {
         setPasswordError(true)
       }
     } catch (error) {
-      console.error('Login error:', error)
-      setPasswordHelperText('Đã xảy ra lỗi khi đăng nhập')
+      console.error(error)
+      toast.error('Có lỗi xảy ra. Vui lòng thử lại sau.')
+      setPasswordHelperText('Đã xảy ra lỗi. Vui lòng thử lại')
       setPasswordError(true)
     }
   }
