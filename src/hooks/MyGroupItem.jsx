@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Card,
   CardHeader,
@@ -41,6 +42,11 @@ export default function MyGroupItem({
   const [showComment, setShowComment] = useState(false)
   const [comment, setComment] = useState('')
   const { user } = useUserProfile()
+  const navigate = useNavigate()
+
+  const handleCardClick = ()=>{
+    navigate(`/detail-group/${group_id}`)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +124,7 @@ export default function MyGroupItem({
           </Link>
         }
       />
-      <CardContent className="post-content">
+      <CardContent onClick={handleCardClick} className="post-content">
         <div className="post-content-left">
           <a href={book_link} target="_blank" rel="noopener noreferrer">
             <img

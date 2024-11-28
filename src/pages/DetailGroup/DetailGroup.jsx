@@ -24,6 +24,7 @@ import AuthorizationAxios from '../../hooks/Request'
 import ModalInvite from './ModalInvite'
 import { toast } from 'react-toastify'
 import ModalDelete from './ModalDelete'
+import ModalUpdateGroup from './ModalUpdateGroup'
 
 export default function DetailGroup() {
   const [postGroup, setPostGroup] = useState(null)
@@ -33,6 +34,7 @@ export default function DetailGroup() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isOpenModaUsers, setIsOpenModalUsers] = useState(false)
+  const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const { id } = useParams()
   const { token, user } = useUserProfile()
@@ -89,6 +91,8 @@ export default function DetailGroup() {
   const handleClose = () => setIsOpenModal(false)
   const handleOpenModaUsers = () => setIsOpenModalUsers(true)
   const handleCloseModaUsers = () => setIsOpenModalUsers(false)
+  const handleOpenModalUpdate = () => setIsOpenModalUpdate(true)
+  const handleCloseModalUpdate = () => setIsOpenModalUpdate(false)
   const handleJoin = async () => {
     await AuthorizationAxios.post('/api/detail-group-user/insert', {
       user_id: user?.user.id,
@@ -307,19 +311,19 @@ export default function DetailGroup() {
             {isJoined && isAdmin && (
               <Box display="flex" flexDirection="column" mt={2}>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ mb: 1 }}
-                  onClick={handleOpen}
-                >
-                  Thông báo nhóm
-                </Button>
-                <Button
                   variant="outlined"
                   color="primary"
                   onClick={handleOpenModaUsers}
                 >
                   Quản lý thành viên
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mb: 1 }}
+                  onClick={handleOpenModalUpdate}
+                >
+                  Chỉnh sửa nhóm
                 </Button>
               </Box>
             )}
@@ -337,6 +341,16 @@ export default function DetailGroup() {
         closeModal={handleCloseModaUsers}
         id_group={id}
         users={dataGroup?.users}
+      />
+      <ModalUpdateGroup
+        openModal={isOpenModalUpdate}
+        closeModal={handleCloseModalUpdate}
+        id={id}
+        description={dataGroup?.group.description}
+        image={dataGroup?.group.image_group}
+        name={dataGroup?.group.name}
+        state={dataGroup?.group.state}
+        title={dataGroup?.group.title}
       />
     </Container>
   )

@@ -18,6 +18,7 @@ const UploadType = lazy(() => import('../pages/UploadType/UploadType'))
 const UploadBook = lazy(() => import('../pages/UploadBook/UploadBook'))
 const EditProfile = lazy(() => import('../pages/Profile/EditProfile'))
 const CreateGroup = lazy(() => import('../pages/CreateGroup/CreateGroup'))
+const Friends = lazy(() => import('../pages/Friends/Friends'))
 
 export const routes = [
   { path: '/', page: <Login />, isShowHeader: false },
@@ -35,6 +36,7 @@ export const routes = [
   { path: '/upload-book', page: <UploadBook />, isShowHeader: true },
   { path: '/create-group', page: <CreateGroup />, isShowHeader: true },
   { path: '/my-profile/edit', page: <EditProfile />, isShowHeader: true },
+  { path: '/friends', page: <Friends />, isShowHeader: true },
   {
     path: '/admin',
     page: <HomePageAdmin />,

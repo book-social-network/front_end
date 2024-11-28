@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import NotificationItem from "./notification-item"
 import { Typography} from '@mui/material'
+import AuthorizationAxios from "../../../../hooks/Request";
 
  
 export const mockNotifications = [
@@ -49,12 +51,23 @@ export const mockNotifications = [
   
 
 const Notification = () => {
+  // const [allNotification, setAllNotification] = useState([])
+  // useEffect(()=>{
+  //   getData()
+  // },[allNotification])
+  // const getData = async() =>{
+  //   const res = await AuthorizationAxios.get('/api/notification/get-all')
+  //   const noti = await res.data
+  //   setAllNotification(noti)
+  // }
   return (
     <div>
-      <Typography variant="h5" paddingLeft={1}>Notifications</Typography>
-    {mockNotifications.map((item, index)=>(
+      <Typography variant="h5" paddingLeft={1}>
+        Notifications
+      </Typography>
+      {mockNotifications.map((item, index) => (
         <NotificationItem key={index} notification={item} />
-    ))}
+      ))}
     </div>
   )
 }
