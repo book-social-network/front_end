@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import {
   Typography,
   IconButton,
@@ -16,77 +16,96 @@ import {
   TableBody,
   TableContainer,
   Button,
-} from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import '../../css/MyBooks.css';
-import Image from '../../assets/images/MeoAnhLongNgan.webp';
-import Footer from '../../layout/User/Components/Footer/Footer';
-import { useUserProfile } from '../../hooks/useUserProfile';
-import AuthorizationAxios from '../../hooks/Request';
+} from '@mui/material'
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
+import '../../css/MyBooks.css'
+import Image from '../../assets/images/MeoAnhLongNgan.webp'
+import Footer from '../../layout/User/Components/Footer/Footer'
+import { useUserProfile } from '../../hooks/useUserProfile'
+import AuthorizationAxios from '../../hooks/Request'
 
 const MyBooks = () => {
-  const [books, setBooks] = useState([]);
-  const [ratings, setRatings] = useState([]);
-  const [filter, setFilter] = useState("all");
-  const { user } = useUserProfile();
+  const [books, setBooks] = useState([])
+  const [ratings, setRatings] = useState([])
+  const [filter, setFilter] = useState('all')
+  const { user } = useUserProfile()
+  const location = useLocation()
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search)
+    const searchFilter = searchParams.get('filter')
+    if (searchFilter) {
+      setFilter(searchFilter)
+    }
+  }, [location.search])
 
   useEffect(() => {
     const fetchBooks = async () => {
+      let appliedFilter = filter
+
       if (user) {
         try {
-          const response = await AuthorizationAxios.get(`/api/assessment/get-assessment-user/${user.user.id}`)
-          const fetchedBooks = response.data;
+          const response = await AuthorizationAxios.get(
+            `/api/assessment/get-assessment-user/${user.user.id}`,
+          )
+          const fetchedBooks = response.data
           const filteredBooks =
-            filter === "all"
+            appliedFilter === 'all'
               ? fetchedBooks
               : fetchedBooks.filter(
-                  (item) => item.assessment.state_read ===
-                  (filter === "read" ? 0 : filter === "wantToRead" ? 1 : 2)
-                );
-
-          setBooks(filteredBooks);
-          setRatings(Array(filteredBooks.length).fill(0));
+                  (item) =>
+                    item.assessment.state_read ===
+                    (appliedFilter === 'wantToRead'
+                      ? 0
+                      : appliedFilter === 'Reading'
+                        ? 1
+                        : 2),
+                )
+          setBooks(filteredBooks)
+          setRatings(Array(filteredBooks.length).fill(0))
         } catch (e) {
-          console.log(e);
+          console.log(e)
         }
       }
-    };
-    fetchBooks();
-  }, [user, filter]);
+    }
+    fetchBooks()
+  }, [user, filter])
 
   const getStatusText = (stateRead) => {
     switch (stateRead) {
       case 0:
-        return 'Read';
+        return 'Want to read'
       case 1:
-        return 'Want to read';
+        return 'Reading'
       case 2:
-        return 'Currently reading';
+        return 'Read'
       default:
-        return 'Unknown';
+        return 'Unknown'
     }
-  };
+  }
 
   const handleRatingChange = async (rowIndex, rating) => {
-    const updatedRating = rating === ratings[rowIndex] ? 0 : rating;
+    const updatedRating = rating === ratings[rowIndex] ? 0 : rating
     setRatings((prevRatings) => {
-      const newRatings = [...prevRatings];
-      newRatings[rowIndex] = updatedRating;
-      return newRatings;
-    });
+      const newRatings = [...prevRatings]
+      newRatings[rowIndex] = updatedRating
+      return newRatings
+    })
 
-    const book = books[rowIndex];
-    const assessmentId = book.assessment.id;
+    const book = books[rowIndex]
+    const assessmentId = book.assessment.id
     try {
-      await AuthorizationAxios.post(`/api/assessment/update/${assessmentId}`,{star: updatedRating,})
+      await AuthorizationAxios.post(`/api/assessment/update/${assessmentId}`, {
+        star: updatedRating,
+      })
     } catch (error) {
-      console.error('Error updating rating:', error);
+      console.error('Error updating rating:', error)
     }
-  };
+  }
 
   const renderStars = (starRating, rowIndex) => {
-    const stars = [];
+    const stars = []
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <IconButton
@@ -100,10 +119,10 @@ const MyBooks = () => {
             <StarBorderIcon style={{ color: 'gray' }} />
           )}
         </IconButton>
-      );
+      )
     }
-    return stars;
-  };
+    return stars
+  }
 
   return (
     <div>
@@ -118,13 +137,13 @@ const MyBooks = () => {
               <List component="ul" disablePadding>
                 <ListItem component="li">
                   <Button
-                    variant={filter === "all" ? "contained" : "text"}
-                    color={filter === "all" ? "primary" : "default"}
-                    onClick={() => setFilter("all")}
+                    variant={filter === 'all' ? 'contained' : 'text'}
+                    color={filter === 'all' ? 'primary' : 'default'}
+                    onClick={() => setFilter('all')}
                     fullWidth
                     sx={{
-                      color: filter === "all" ? "#ffffff" : "#00635d",
-                      fontWeight: filter === "all" ? "bold" : "normal",
+                      color: filter === 'all' ? '#ffffff' : '#00635d',
+                      fontWeight: filter === 'all' ? 'bold' : 'normal',
                     }}
                   >
                     All
@@ -132,27 +151,13 @@ const MyBooks = () => {
                 </ListItem>
                 <ListItem component="li">
                   <Button
-                    variant={filter === "read" ? "contained" : "text"}
-                    color={filter === "read" ? "primary" : "default"}
-                    onClick={() => setFilter("read")}
+                    variant={filter === 'wantToRead' ? 'contained' : 'text'}
+                    color={filter === 'wantToRead' ? 'primary' : 'default'}
+                    onClick={() => setFilter('wantToRead')}
                     fullWidth
                     sx={{
-                      color: filter === "read" ? "#ffffff" : "#00635d",
-                      fontWeight: filter === "read" ? "bold" : "normal",
-                    }}
-                  >
-                    Read
-                  </Button>
-                </ListItem>
-                <ListItem component="li">
-                  <Button
-                    variant={filter === "wantToRead" ? "contained" : "text"}
-                    color={filter === "wantToRead" ? "primary" : "default"}
-                    onClick={() => setFilter("wantToRead")}
-                    fullWidth
-                    sx={{
-                      color: filter === "wantToRead" ? "#ffffff" : "#00635d",
-                      fontWeight: filter === "wantToRead" ? "bold" : "normal",
+                      color: filter === 'wantToRead' ? '#ffffff' : '#00635d',
+                      fontWeight: filter === 'wantToRead' ? 'bold' : 'normal',
                     }}
                   >
                     Want to read
@@ -160,16 +165,30 @@ const MyBooks = () => {
                 </ListItem>
                 <ListItem component="li">
                   <Button
-                    variant={filter === "currentlyReading" ? "contained" : "text"}
-                    color={filter === "currentlyReading" ? "primary" : "default"}
-                    onClick={() => setFilter("currentlyReading")}
+                    variant={filter === 'Reading' ? 'contained' : 'text'}
+                    color={filter === 'Reading' ? 'primary' : 'default'}
+                    onClick={() => setFilter('Reading')}
                     fullWidth
                     sx={{
-                      color: filter === "currentlyReading" ? "#ffffff" : "#00635d",
-                      fontWeight: filter === "currentlyReading" ? "bold" : "normal",
+                      color: filter === 'Reading' ? '#ffffff' : '#00635d',
+                      fontWeight: filter === 'Reading' ? 'bold' : 'normal',
                     }}
                   >
-                    Currently reading
+                    Reading
+                  </Button>
+                </ListItem>
+                <ListItem component="li">
+                  <Button
+                    variant={filter === 'Read' ? 'contained' : 'text'}
+                    color={filter === 'Read' ? 'primary' : 'default'}
+                    onClick={() => setFilter('Read')}
+                    fullWidth
+                    sx={{
+                      color: filter === 'Read' ? '#ffffff' : '#00635d',
+                      fontWeight: filter === 'Read' ? 'bold' : 'normal',
+                    }}
+                  >
+                    Read
                   </Button>
                 </ListItem>
               </List>
@@ -201,7 +220,10 @@ const MyBooks = () => {
                           {item.authors[0].name || 'Unknown'}
                         </TableCell>
                         <TableCell>
-                          {renderStars(ratings[rowIndex] || item.assessment.star, rowIndex)}
+                          {renderStars(
+                            ratings[rowIndex] || item.assessment.star,
+                            rowIndex,
+                          )}
                         </TableCell>
                         <TableCell>
                           <p>{getStatusText(item.assessment.state_read)}</p>
@@ -217,7 +239,7 @@ const MyBooks = () => {
       </Box>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default MyBooks;
+export default MyBooks

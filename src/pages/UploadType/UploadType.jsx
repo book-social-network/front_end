@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Box, Card, Typography, Grid, TextField, Button } from '@mui/material'
+import { Box, Card, Typography, Grid, TextField, Button, IconButton } from '@mui/material'
 import HeadType from './HeadType.jsx'
 import AuthorizationAxios from '../../hooks/Request.jsx'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { IoMdReturnLeft } from 'react-icons/io'
 
-export default function UploadType() {
+export default function UploadType({ onBack }) {
   const [types, setTypes] = useState([])
   const [name, setName] = useState('')
   const [error, setError] = useState('')
@@ -15,17 +16,19 @@ export default function UploadType() {
     const fetchType = async () => {
       try {
         const response = await AuthorizationAxios.get('/api/type/get-all')
-        setTypes(response.data)  // Assuming response.data is the array you shared
+        setTypes(response.data)
       } catch (error) {
         console.error('Error fetching types:', error)
       }
     }
     fetchType()
   }, [])
-
+  const handleClose = () => {
+    onBack()
+  }
   const checkDuplicateType = useCallback(() => {
     const typeExists = types.some(
-      (typeObj) => typeObj.type.name.toLowerCase() === name.toLowerCase()  // Check within type.name
+      (typeObj) => typeObj.type.name.toLowerCase() === name.toLowerCase(),
     )
     if (typeExists) {
       setError('Type đã tồn tại.')
@@ -59,6 +62,14 @@ export default function UploadType() {
 
   return (
     <Box padding={1}>
+      {onBack ? (
+        <IconButton onClick={handleClose}>
+          <IoMdReturnLeft />
+        </IconButton>
+      ) : (
+        <></>
+      )}
+
       <HeadType types={types} />
       <Box
         paddingTop={1}

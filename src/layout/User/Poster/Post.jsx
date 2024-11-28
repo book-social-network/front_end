@@ -37,6 +37,7 @@ const Post = ({
   likes,
   state_like,
   isDetailPostPage,
+  noLink,
 }) => {
   const [status, setStatus] = useState('Choose state')
   const [liked, setLiked] = useState(state_like)
@@ -44,7 +45,6 @@ const Post = ({
   const [rating, setRating] = useState(0)
   const { user } = useUserProfile()
   const navigate = useNavigate()
-
   const dateObj = timeStamp ? parseISO(timeStamp) : null
   const timeAgo = dateObj
     ? formatDistanceToNow(dateObj, { addSuffix: true })
@@ -72,7 +72,8 @@ const Post = ({
   }, [liked, countLike, user, postId])
 
   const handleCardClick = () => {
-    navigate(`/detail-post/${postId}`)
+    if (!noLink) return
+    else navigate(`/detail-post/${postId}`)
   }
 
   return (
@@ -120,7 +121,7 @@ const Post = ({
             subheader={timeAgo}
           />
           <CardContent className="post-content">
-            {/* Make the image clickable by wrapping it directly with the Link */}
+           
             <Link
               to={`/detail-book/${bookId}`}
               onClick={(event) => event.stopPropagation()}
@@ -142,7 +143,7 @@ const Post = ({
                   {bookTitle}
                 </Typography>
               </a>
-              {isDetailPostPage && (
+              {isDetailPostPage || noLink===false && (
                 <MenuState
                   status={status}
                   setStatus={setStatus}

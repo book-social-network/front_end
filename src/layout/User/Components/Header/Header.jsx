@@ -36,6 +36,7 @@ import { useModal } from '../../../../hooks/ModalContext'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import Notification from '../Notification/notification'
 import '../../../../css/header.css'
+import AuthorizationAxios from '../../../../hooks/Request'
 
 const settings = [
   {
@@ -56,8 +57,15 @@ const Header = () => {
   const [anchorElAdd, setAnchorElAdd] = useState(null)
   const { openModal } = useModal()
   const { isLoading, user } = useUserProfile()
-
-  
+  const [noti, setNoti] = useState()
+  const getNoti = async () => {
+    const res = await AuthorizationAxios.get('/api/notification/get-all')
+    const notification = await res.data
+    setNoti(notification)
+  }
+  useEffect(() => {
+    getNoti()
+  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
@@ -134,27 +142,6 @@ const Header = () => {
     </Box>
   )
 
-  const notifications = (
-    <Box
-      sx={{ width: 250, padding: 2 }}
-      role="presentation"
-      onClick={toggleNotificationDrawer(false)}
-      onKeyDown={toggleNotificationDrawer(false)}
-    >
-      <Typography variant="h6">Notifications</Typography>
-      <List>
-        {['Notification 1', 'Notification 2', 'Notification 3'].map(
-          (text, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ),
-        )}
-      </List>
-    </Box>
-  )
-
-  // Nếu đang tải dữ liệu, hiển thị Skeleton
   if (isLoading) {
     return (
       <Box sx={{ padding: 2 }}>
@@ -295,7 +282,7 @@ const Header = () => {
             color="inherit"
             onClick={toggleNotificationDrawer(true)}
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={noti?.notifications.length} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -326,19 +313,18 @@ const Header = () => {
           >
             {settings.map((setting) => (
               <MenuItem
-              key={setting.label}
-              onClick={() => {
-                handleCloseUserMenu()
-                if (setting.label === 'Logout') {
-                  handleLogout()
-                } else {
-                  navigate(setting.path)
-                }
-              }}
-            >
-              <Typography textAlign="center">{setting.label}</Typography>
-            </MenuItem>
-            
+                key={setting.label}
+                onClick={() => {
+                  handleCloseUserMenu()
+                  if (setting.label === 'Logout') {
+                    handleLogout()
+                  } else {
+                    navigate(setting.path)
+                  }
+                }}
+              >
+                <Typography textAlign="center">{setting.label}</Typography>
+              </MenuItem>
             ))}
           </Menu>
         </Box>
@@ -350,7 +336,7 @@ const Header = () => {
         onClose={toggleNotificationDrawer(false)}
         onOpen={toggleNotificationDrawer(true)}
       >
-        <Notification/>
+        <Notification />
       </SwipeableDrawer>
 
       <Drawer

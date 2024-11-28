@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 import BlockReview from '../../Components/BlockReview/BlockReview'
 import AuthorizationAxios from '../../../../hooks/Request'
+import Chart from '../Chart/Chart'
 
 export default function Dashboard({ data }) {
   const [totalView, setTotalView] = useState(0)
 
-  // Fetch the total views when the component mounts
   useEffect(() => {
     const fetchTotalView = async () => {
       try {
@@ -18,7 +18,7 @@ export default function Dashboard({ data }) {
     }
 
     fetchTotalView()
-  }, []) // Empty dependency array means this will run once on mount
+  }, [])
 
   if (!data || typeof data !== 'object') {
     return (
@@ -64,6 +64,7 @@ export default function Dashboard({ data }) {
       <Typography variant="h6" color="#00635d" align="start">
         Total Views: {totalView.total_views}
       </Typography>
+      <Chart />
     </div>
   )
 }

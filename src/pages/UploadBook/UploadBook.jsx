@@ -6,12 +6,14 @@ import {
   TextField,
   Typography,
   Button,
+  IconButton,
 } from '@mui/material'
 import ContainerAuthors from './ContainerAuthors'
 import ContainerType from './ContainerTypes'
 import LoadingDialog from './LoadingUpload'
+import { IoMdReturnLeft } from "react-icons/io";
 
-export default function UploadBook() {
+export default function UploadBook({onBack}) {
   const [name, setName] = useState('')
   const [image, setImage] = useState(null)
   const [link, setLink] = useState('')
@@ -25,7 +27,9 @@ export default function UploadBook() {
     const fetchData = async () => {}
     fetchData()
   }, [])
-
+  const handleClose = ()=>{
+    onBack()
+  }
   const handleImageChange = (e) => {
     setImage(e.target.files[0])
   }
@@ -54,6 +58,7 @@ export default function UploadBook() {
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <Box>
+        {onBack ? <IconButton onClick={handleClose}><IoMdReturnLeft /></IconButton> : <></>}
         <Card
           sx={{
             maxWidth: 600,

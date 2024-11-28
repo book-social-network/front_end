@@ -15,22 +15,20 @@ const MenuState = ({
   const handleChange = async (event) => {
     const newStatus = event.target.value
 
-    // Update the status state
     setStatus(newStatus)
 
-    // Send the updated state to the server
-    const res = await AuthorizationAxios.post(`/api/assessment/update-state-read/${id_book}`, {
-      user_id: id_user,
-      book_id: id_book,
-      state_read: newStatus,
-    })
-
-    // Optionally handle the response (e.g., show a success message or error)
+    const res = await AuthorizationAxios.post(
+      `/api/assessment/update-state-read/${id_book}`,
+      {
+        user_id: id_user,
+        book_id: id_book,
+        state_read: newStatus,
+      },
+    )
+    console.log(res);
     if (res.status === 200) {
-      // Successfully updated state
       console.log('State updated successfully!')
     } else {
-      // Handle error in case the request fails
       console.log('Failed to update state')
     }
   }
@@ -50,7 +48,6 @@ const MenuState = ({
         <MenuItem value="2">Read</MenuItem>
       </Select>
 
-      {/* Show the rating section only when the status is 'Reading' (1) or 'Read' (2) */}
       {(status === '1' || status === '2') && (
         <div className="rating-section">
           <Typography variant="body2">Rate it:</Typography>

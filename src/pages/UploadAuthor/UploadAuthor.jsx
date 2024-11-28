@@ -7,11 +7,10 @@ import {
   Card,
   TextField,
   Grid,
+  IconButton,
 } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
@@ -20,8 +19,9 @@ import AuthorizationAxios from '../../hooks/Request'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import { toast } from 'react-toastify'
 import SearchAuthor from './SearchAuthor'
+import { IoMdReturnLeft } from "react-icons/io";
 
-function UploadAuthor() {
+function UploadAuthor({onBack}) {
   const [name, setName] = useState('')
   const [born, setBorn] = useState('')
   const [dob, setDob] = useState(null)
@@ -30,7 +30,9 @@ function UploadAuthor() {
   const [image, setImage] = useState('')
   const [imagePreview, setImagePreview] = useState(null)
   const [authors, setAuthors] = useState([])
-
+  const handleClose = ()=>{
+    onBack()
+  }
   useEffect(() => {
     const fetchAuthors = async () => {
       try {
@@ -43,7 +45,7 @@ function UploadAuthor() {
 
     fetchAuthors()
   }, [])
-
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -106,6 +108,8 @@ function UploadAuthor() {
       }}
     >
       <Box sx={{ width: '100%', maxWidth: 800, marginBottom: 4 }}>
+       {onBack ? <IconButton onClick={handleClose}><IoMdReturnLeft /></IconButton> : <></>}
+
         <Typography
           variant="h6"
           sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center', color: '#333' }}

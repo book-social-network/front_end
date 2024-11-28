@@ -251,6 +251,8 @@ export default function DetailGroup() {
                     likes={post.likes ? post.likes.length : 0}
                     state_like={post['state-like']}
                     timeStamp={post.post.created_at}
+                    noLink={false}
+                    bookId={post.books[0].id}
                   />
                 ))
               ) : (

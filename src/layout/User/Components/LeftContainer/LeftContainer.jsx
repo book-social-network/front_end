@@ -1,5 +1,4 @@
-// LeftContent.jsx
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Typography,
@@ -10,6 +9,7 @@ import {
   InputAdornment,
   Link,
 } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import BookSVG from '../../../../assets/images/book-open-svgrepo-com.svg'
 import book1 from '../../../../assets/images/book_read/book1.jpg'
 import book2 from '../../../../assets/images/book_read/book2.jpg'
@@ -17,8 +17,31 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories'
 import SearchIcon from '@mui/icons-material/Search'
 import LinearProgessLabel from '../../../../hooks/LinearProgessLabel'
 import '../../../../css/leftContainer.css'
+import AuthorizationAxios from '../../../../hooks/Request'
+import { useUserProfile } from '../../../../hooks/useUserProfile'
 
 const LeftContainer = () => {
+  const [data, setData] = useState()
+  const navigate = useNavigate()
+  const { user } = useUserProfile()
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await AuthorizationAxios.get(
+        `/api/assessment/get-assessment-user/${user.user.id}`,
+      )
+      const resP = await res.data
+      setData(resP)
+    }
+    fetchData()
+  }, [])
+
+  const wantToReadCount =
+    data?.filter((item) => item.assessment.state_read === 0).length || 0
+  const readingCount =
+    data?.filter((item) => item.assessment.state_read === 1).length || 0
+  const readCount =
+    data?.filter((item) => item.assessment.state_read === 2).length || 0
+
   return (
     <Container>
       <Box className="left-content">
@@ -103,32 +126,44 @@ const LeftContainer = () => {
         <Typography variant="h6">KỆ SÁCH CỦA TÔI</Typography>
         <Grid container>
           <Grid item xs={2}>
-            2
+            {wantToReadCount}
           </Grid>
-          <Grid item xs={10}>
-            <Link href="#" underline="none" className="custom-link">
-              Want to read
-            </Link>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={2}>
-            2
-          </Grid>
-          <Grid item xs={10}>
-            <Link href="#" underline="none" className="custom-link">
-              Reading
-            </Link>
+          <Grid
+            item
+            xs={10}
+            onClick={() => {
+              navigate('/myBooks?type=0')
+            }}
+          >
+            <Typography variant="body2">Want to read</Typography>
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={2}>
-            2
+            {readingCount}
           </Grid>
-          <Grid item xs={10}>
-            <Link href="#" underline="none" className="custom-link">
-              Read
-            </Link>
+          <Grid
+            item
+            xs={10}
+            onClick={() => {
+              navigate('/myBooks?type=1')
+            }}
+          >
+            <Typography variant="body2">Reading</Typography>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={2}>
+            {readCount}
+          </Grid>
+          <Grid
+            item
+            xs={10}
+            onClick={() => {
+              navigate('/myBooks?type=2')
+            }}
+          >
+            <Typography variant="body2">Read</Typography>
           </Grid>
         </Grid>
       </Box>

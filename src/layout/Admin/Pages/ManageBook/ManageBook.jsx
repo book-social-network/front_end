@@ -1,12 +1,48 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, IconButton, Paper, Typography } from '@mui/material'
+import { Grid, IconButton, Paper, Typography, Button } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import AuthorizationAxios from '../../../../hooks/Request'
 import { FaPlus } from 'react-icons/fa'
+import UploadBook from '../../../../pages/UploadBook/UploadBook'
+import UpdateBook from '../../../../pages/UpdateBook/UpdateBook'
+import { toast } from 'react-toastify'
 
 export default function ManageBook() {
   const [dataBook, setDataBook] = useState([])
+  const [isUploading, setIsUploading] = useState(false)
+  const [editingBook, setEditingBook] = useState(null)
 
+  const handleOpenUploadBook = () => {
+    setIsUploading(true)
+  }
+
+  const handleEditBook = (book) => {
+    setEditingBook(book)
+  }
+
+  const handleCloseUpdate = () => {
+    setEditingBook(null)
+  }
+  const handleDelete = async (id) => {
+    const confirmation = window.confirm(
+      'Are you sure you want to delete this book?',
+    )
+
+    if (confirmation) {
+      const previousData = [...dataBook]
+      setDataBook(dataBook.filter((book) => book.id !== id))
+
+      try {
+        await AuthorizationAxios.remove(`/api/book/delete/${id}`)
+        toast.success('Book deleted successfully!')
+      } catch (error) {
+        console.error('Error deleting book:', error)
+        toast.error('Failed to delete book.')
+
+        setDataBook(previousData)
+      }
+    }
+  }
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -20,28 +56,40 @@ export default function ManageBook() {
     fetchBook()
   }, [])
 
+  if (isUploading) {
+    return <UploadBook onBack={() => setIsUploading(false)} />
+  }
+
+  if (editingBook) {
+    return <UpdateBook book={editingBook} onClose={handleCloseUpdate} />
+  }
+
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100, hide: true },
-    { field: 'name', headerName: 'Book Name', width: 200 },
+    { field: 'id', headerName: 'ID', maxWidth: 100, hide: true },
+    { field: 'name', headerName: 'Book Name', maxWidth: 200 },
     {
       field: 'image',
       headerName: 'Image',
-      width: 150,
+      maxWidth: 150,
       renderCell: (params) => (
         <img
           src={params.value}
           alt={params.row.name}
-          style={{ width: '50px', height: 'auto' }}
+          style={{ maxWidth: '50px', height: 'auto' }}
         />
       ),
     },
-    { field: 'ratings', headerName: 'Ratings', width: 150 },
-    { field: 'reviews', headerName: 'Reviews', width: 150 },
-    { field: 'assessment_score', headerName: 'Assessment Score', width: 180 },
+    { field: 'ratings', headerName: 'Ratings', maxWidth: 150 },
+    { field: 'reviews', headerName: 'Reviews', maxWidth: 150 },
+    {
+      field: 'assessment_score',
+      headerName: 'Assessment Score',
+      maxWidth: 180,
+    },
     {
       field: 'link_book',
       headerName: 'Link',
-      width: 200,
+      maxWidth: 200,
       renderCell: (params) =>
         params.value ? (
           <a href={params.value} target="_blank" rel="noopener noreferrer">
@@ -51,7 +99,42 @@ export default function ManageBook() {
           'No Link'
         ),
     },
-    { field: 'created_at', headerName: 'Created date', width: 200 },
+    { field: 'created_at', headerName: 'Created date', maxWidth: 200 },
+    {
+      field: 'edit',
+      headerName: 'Edit',
+      maxWidth: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() =>
+            handleEditBook({
+              id: params.row.id,
+              name: params.row.name,
+              image: params.row.image,
+              link_book: params.row.link_book,
+            })
+          }
+        >
+          Edit
+        </Button>
+      ),
+    },
+    {
+      field: 'delete',
+      headerName: 'Delete',
+      maxWidth: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          onClick={()=>handleDelete(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
+    },
   ]
 
   const rows = dataBook.map((item) => ({
@@ -99,12 +182,12 @@ export default function ManageBook() {
         >
           Tổng số: {dataBook?.length} sách
         </Typography>
-        <IconButton>
+        <IconButton onClick={handleOpenUploadBook}>
           <FaPlus />
         </IconButton>
       </Grid>
 
-      <Paper sx={{ height: 400, width: '100%' }}>
+      <Paper sx={{ maxHeight: 400, width: '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}

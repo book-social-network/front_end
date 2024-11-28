@@ -6,10 +6,12 @@ import { BsFilePost } from 'react-icons/bs'
 import { ImUsers } from "react-icons/im";
 import { PiBooksFill } from "react-icons/pi";
 import '../../../../css/navbarAdmin.css'
+import { useNavigate } from 'react-router-dom'
+
 
 const NavbarAdmin = ({ onSelect }) => {
   const [activeItem, setActiveItem] = useState('Dashboard')
-
+  const navigate = useNavigate()
   const menuItems = [
     { name: 'Dashboard', icon: <AiOutlineHome className="icon" /> },
     { name: 'Books', icon: <PiBooksFill className="icon" /> },
@@ -22,7 +24,11 @@ const NavbarAdmin = ({ onSelect }) => {
 
   const handleClick = (itemName) => {
     setActiveItem(itemName)
-    onSelect(itemName) // Gọi hàm truyền từ HomePageAdmin
+    onSelect(itemName) 
+  }
+  const handleLogout = ()=>{
+    localStorage.removeItem('access_token')
+    navigate('/')
   }
 
   return (
@@ -40,7 +46,7 @@ const NavbarAdmin = ({ onSelect }) => {
         ))}
         <li
           className="logout"
-          onClick={() => console.log('Logged out')}
+          onClick={handleLogout}
           style={{
             marginTop: 'auto',
             borderTop: '1px solid #ddd',
