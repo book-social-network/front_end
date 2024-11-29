@@ -21,13 +21,15 @@ export default function AlertDialogSlide({
   linkBook,
   arraySelectedAuthor,
   arraySelectedType,
+  resetForm
 }) {
   const [open, setOpen] = React.useState(true)
   const [progress, setProgress] = React.useState(0)
   const [dataBook, setDataBook] = React.useState(null)
   const [dataAuthor, setDataAuthor] = React.useState(false)
+
   const totalTasks = 1 + arraySelectedAuthor.length + arraySelectedType.length
-  console.log(totalTasks);
+
   const uploadBook = async () => {
     const formData = new FormData()
     formData.append('name', nameBook)
@@ -42,38 +44,34 @@ export default function AlertDialogSlide({
       )
       const book = await res.data
       setDataBook(book)
-      setProgress(progress + 1)
+      setProgress((prev) => prev + 1)
     } catch (error) {
       console.error('Error uploading book:', error)
-      return false
+      toast.error('Failed to upload book!')
     }
   }
 
   const insertAuthors = async (author_id, book_id) => {
     try {
-      const authorPromises = AuthorizationAxios.post(
-        '/api/book/insert-author',
-        {
-          author_id: author_id,
-          book_id: book_id,
-        },
-      )
-      console.log(authorPromises.data)
+      await AuthorizationAxios.post('/api/book/insert-author', {
+        author_id: author_id,
+        book_id: book_id,
+      })
     } catch (error) {
       console.error('Error inserting authors:', error)
-      return false
+      toast.error('Failed to associate authors with the book!')
     }
   }
 
   const insertTypes = async (type_id, book_id) => {
     try {
-      const typePromises = AuthorizationAxios.post('/api/book/insert-type', {
+      await AuthorizationAxios.post('/api/book/insert-type', {
         type_id: type_id,
         book_id: book_id,
       })
     } catch (error) {
       console.error('Error inserting types:', error)
-      return false
+      toast.error('Failed to associate types with the book!')
     }
   }
 
@@ -81,31 +79,43 @@ export default function AlertDialogSlide({
     if (progress < 1 && dataBook === null) {
       uploadBook()
     }
-  }, [])
-
-  React.useEffect(() => {
-    if (progress < 2 && dataBook !== null) {
-      for (const item of arraySelectedAuthor) {
-        insertAuthors(item.id, dataBook.id)
-        setProgress(progress + 1)
-      }
-      setDataAuthor(true)
-    }
   }, [dataBook, progress])
 
   React.useEffect(() => {
-    if (progress < totalTasks && dataBook !== null && dataAuthor) {
+    const processAuthors = async () => {
+      for (const item of arraySelectedAuthor) {
+        await insertAuthors(item.id, dataBook.id)
+        setProgress((prev) => prev + 1)
+      }
+      setDataAuthor(true)
+    }
+
+    if (dataBook !== null && progress < 1 + arraySelectedAuthor.length) {
+      processAuthors()
+    }
+  }, [dataBook, arraySelectedAuthor])
+
+  React.useEffect(() => {
+    const processTypes = async () => {
       for (const item of arraySelectedType) {
-        insertTypes(item.type.id, dataBook.id)
-        setProgress(progress + 1)
+        await insertTypes(item.type.id, dataBook.id)
+        setProgress((prev) => prev + 1)
       }
     }
 
+    if (dataAuthor && progress < totalTasks && dataBook !== null) {
+      processTypes()
+    }
+  }, [dataAuthor, arraySelectedType, dataBook, totalTasks])
+
+  React.useEffect(() => {
     if (progress >= totalTasks) {
       toast.success('Upload successfully!!!')
-        setIsUpload(false)
+      setIsUpload(false)
+      resetForm()
     }
-  }, [dataAuthor])
+  }, [progress, totalTasks, setIsUpload, resetForm])
+
   return (
     <React.Fragment>
       <Dialog
@@ -117,7 +127,10 @@ export default function AlertDialogSlide({
       >
         <DialogTitle>{'Uploading book...'}</DialogTitle>
         <DialogContent>
-          <LinearProgress variant="determinate" value={progress} />
+          <LinearProgress
+            variant="determinate"
+            value={(progress / totalTasks) * 100}
+          />
         </DialogContent>
       </Dialog>
     </React.Fragment>

@@ -11,9 +11,9 @@ import {
 import ContainerAuthors from './ContainerAuthors'
 import ContainerType from './ContainerTypes'
 import LoadingDialog from './LoadingUpload'
-import { IoMdReturnLeft } from "react-icons/io";
+import { IoMdReturnLeft } from 'react-icons/io'
 
-export default function UploadBook({onBack}) {
+export default function UploadBook({ onBack }) {
   const [name, setName] = useState('')
   const [image, setImage] = useState(null)
   const [link, setLink] = useState('')
@@ -23,19 +23,25 @@ export default function UploadBook({onBack}) {
   const [selectedTypes, setSelectedTypes] = useState([])
   const [selectedAuthors, setSelectedAuthors] = useState([])
 
-  useEffect(() => {
-    const fetchData = async () => {}
-    fetchData()
-  }, [])
-  const handleClose = ()=>{
+  const handleClose = () => {
     onBack()
   }
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0])
   }
 
   const handleUploadBook = () => {
     setIsUpload(true)
+  }
+
+  const resetForm = () => {
+    setName('')
+    setImage(null)
+    setLink('')
+    setDescription('')
+    setSelectedTypes([])
+    setSelectedAuthors([])
   }
 
   if (isUpload) {
@@ -48,6 +54,7 @@ export default function UploadBook({onBack}) {
         linkBook={link}
         arraySelectedAuthor={selectedAuthors}
         arraySelectedType={selectedTypes}
+        resetForm={resetForm}
       />
     )
   }
@@ -58,7 +65,13 @@ export default function UploadBook({onBack}) {
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <Box>
-        {onBack ? <IconButton onClick={handleClose}><IoMdReturnLeft /></IconButton> : <></>}
+        {onBack ? (
+          <IconButton onClick={handleClose}>
+            <IoMdReturnLeft />
+          </IconButton>
+        ) : (
+          <></>
+        )}
         <Card
           sx={{
             maxWidth: 600,

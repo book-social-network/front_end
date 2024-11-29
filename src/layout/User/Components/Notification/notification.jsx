@@ -6,10 +6,10 @@ import AuthorizationAxios from '../../../../hooks/Request'
 const Notification = () => {
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
-  const [page, setPage] = useState(1) // Trang hiện tại
-  const [hasMore, setHasMore] = useState(true) // Có tiếp tục tải không
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
 
-  const sentinelRef = useRef(null) // Tham chiếu đến phần tử sentinel
+  const sentinelRef = useRef(null)
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -20,11 +20,11 @@ const Notification = () => {
         const response = await AuthorizationAxios.get(
           `/api/notification/get-all?page=${page}`,
         )
-        const { notifications: newNotifications, quantity_pages } = response.data
+        const { notifications: newNotifications, quantity_pages } =
+          response.data
 
         setNotifications((prev) => [...prev, ...newNotifications])
 
-        // Nếu đã tải hết các trang, dừng tải thêm
         if (page >= quantity_pages) {
           setHasMore(false)
         }
@@ -43,14 +43,14 @@ const Notification = () => {
       (entries) => {
         const target = entries[0]
         if (target.isIntersecting && hasMore && !loading) {
-          setPage((prev) => prev + 1) // Tăng trang khi sentinel vào viewport
+          setPage((prev) => prev + 1)
         }
       },
       {
-        root: null, // Quan sát viewport mặc định
+        root: null,
         rootMargin: '0px',
-        threshold: 1.0, // Kích hoạt khi sentinel hoàn toàn trong viewport
-      }
+        threshold: 1.0,
+      },
     )
 
     if (sentinelRef.current) {
@@ -65,7 +65,13 @@ const Notification = () => {
   }, [hasMore, loading])
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '60px' }}>
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        paddingBottom: '60px',
+      }}
+    >
       <Typography variant="h5" paddingLeft={1}>
         Notifications
       </Typography>
@@ -86,13 +92,12 @@ const Notification = () => {
         </Typography>
       )}
 
-      {/* Sentinel nằm ở dưới cùng */}
       <div
         ref={sentinelRef}
         style={{
-          height: '60px', // Đảm bảo chiều cao để giữ sentinel hoạt động
+          height: '60px',
           width: '100%',
-          backgroundColor: 'transparent', // Màu nền trong suốt
+          backgroundColor: 'transparent',
           position: 'absolute',
           bottom: 0,
           left: 0,
