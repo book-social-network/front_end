@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Typography, Box } from '@mui/material'
 export default function Following({ following, setFollower, setFollowed }) {
+  console.log(following);
   const handleClick = (id) => {
     setFollower(id)
     setFollowed(false)

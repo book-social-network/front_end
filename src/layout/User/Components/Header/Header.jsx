@@ -280,7 +280,7 @@ const Header = () => {
             color="inherit"
             onClick={toggleNotificationDrawer(true)}
           >
-            <Badge badgeContent={noti?.notifications.length} color="error">
+            <Badge badgeContent={noti?.quantity} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>

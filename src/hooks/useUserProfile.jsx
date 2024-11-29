@@ -15,7 +15,7 @@ export const useUserProfile = () => {
         const response = await AuthorizationAxios.get('/api/auth/user-profile')
         return response
       } catch (err) {
-        if (err.response?.status === 401) {
+        if (err.response?.message === 401) {
           const refreshResponse = await AuthorizationAxios.post(
             '/api/auth/refresh',
           )

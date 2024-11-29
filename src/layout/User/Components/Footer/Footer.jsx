@@ -9,7 +9,7 @@ import '../../../../css/footer.css';
 export default function Footer({ size = '' }) {
   const footerContent = (
     <Grid container className={`${size}`} spacing={2}>
-      {/* Company Section */}
+      
       <Grid item xs={12} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
         <Typography variant="h6" gutterBottom>
           COMPANY
@@ -53,7 +53,7 @@ export default function Footer({ size = '' }) {
         </ul>
       </Grid>
 
-      {/* Work With Us Section */}
+      
       <Grid item xs={12} sm={size === 'sm' ? 6 : 4} paddingLeft={1}>
         <Typography variant="h6" gutterBottom>
           WORK WITH US
@@ -82,7 +82,7 @@ export default function Footer({ size = '' }) {
         </ul>
       </Grid>
 
-      {/* Connect Section */}
+      
       <Grid item xs={12} sm={size === 'sm' ? 12 : 4} paddingLeft={1}>
         <Typography variant="h6" gutterBottom>
           CONNECT

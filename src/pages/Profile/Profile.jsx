@@ -85,7 +85,6 @@ export default function Profile() {
           variant="fullWidth"
         >
           <Tab label="Post" />
-          <Tab label="Books" />
         </Tabs>
       </Box>
 

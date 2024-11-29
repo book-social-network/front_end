@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const useAuth = (requiredRole, userRole) => {
+export const useAuth = ({requiredRole, userRole}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -10,5 +10,3 @@ const useAuth = (requiredRole, userRole) => {
         }
     }, [requiredRole, userRole]);
 };
-
-export default useAuth;

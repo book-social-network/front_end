@@ -9,6 +9,8 @@ import {
   Typography,
   Grid,
   Container,
+  Menu,
+  MenuItem,
 } from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -22,6 +24,7 @@ import '../../../css/post.css'
 import 'react-toastify/dist/ReactToastify.css'
 import ShareButton from '../Components/DialogShare/ShareButton'
 import MenuState from './MenuState'
+import { toast } from 'react-toastify'
 
 const Post = ({
   bookId,
@@ -38,7 +41,9 @@ const Post = ({
   state_like,
   isDetailPostPage,
   noLink,
+  noDelete,
 }) => {
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null)
   const [status, setStatus] = useState('Choose state')
   const [liked, setLiked] = useState(state_like)
   const [countLike, setCountLike] = useState(likes)
@@ -76,6 +81,26 @@ const Post = ({
     else navigate(`/detail-post/${postId}`)
   }
 
+  const handleMenuOpen = (event) => {
+    setMenuAnchorEl(event.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null)
+  }
+
+  const handleUpdatePost = () => {
+    navigate(`/update-post/${postId}`)
+    handleMenuClose()
+  }
+
+  const handleDeletePost = async () => {
+    await AuthorizationAxios.remove(`/api/post/delete/${postId}`)
+    toast.success('deleted post')
+    navigate('/home')
+    handleMenuClose()
+  }
+
   return (
     <Container>
       <Grid
@@ -102,12 +127,28 @@ const Post = ({
               </Link>
             }
             action={
-              <IconButton
-                aria-label="settings"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <MoreVertIcon />
-              </IconButton>
+              userId === user.user.id ? (
+                <>
+                  <IconButton
+                    aria-label="settings"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      handleMenuOpen(event)
+                    }}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                  <Menu
+                    anchorEl={menuAnchorEl}
+                    open={Boolean(menuAnchorEl)}
+                    onClose={handleMenuClose}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <MenuItem onClick={handleUpdatePost}>Update Post</MenuItem>
+                    <MenuItem onClick={handleDeletePost}>Delete Post</MenuItem>
+                  </Menu>
+                </>
+              ) : null
             }
             title={
               <Link

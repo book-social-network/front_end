@@ -8,11 +8,10 @@ import {
   IconButton,
   InputAdornment,
   Link,
+  Autocomplete,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import BookSVG from '../../../../assets/images/book-open-svgrepo-com.svg'
-import book1 from '../../../../assets/images/book_read/book1.jpg'
-import book2 from '../../../../assets/images/book_read/book2.jpg'
 import AutoStoriesIcon from '@mui/icons-material/AutoStories'
 import SearchIcon from '@mui/icons-material/Search'
 import LinearProgessLabel from '../../../../hooks/LinearProgessLabel'
@@ -22,6 +21,7 @@ import { useUserProfile } from '../../../../hooks/useUserProfile'
 
 const LeftContainer = () => {
   const [data, setData] = useState()
+  const [dataBook, setDataBook] = useState()
   const navigate = useNavigate()
   const { user } = useUserProfile()
   useEffect(() => {
@@ -34,14 +34,21 @@ const LeftContainer = () => {
     }
     fetchData()
   }, [])
-
+  useEffect(() => {
+    const fetchDataBook = async () => {
+      const res = await AuthorizationAxios.get('/api/book/get-all')
+      const resB = await res.data
+      setDataBook(resB)
+    }
+    fetchDataBook()
+  }, [])
   const wantToReadCount =
     data?.filter((item) => item.assessment.state_read === 0).length || 0
   const readingCount =
     data?.filter((item) => item.assessment.state_read === 1).length || 0
   const readCount =
     data?.filter((item) => item.assessment.state_read === 2).length || 0
-
+  const totalBooks = wantToReadCount + readingCount + readCount
   return (
     <Container>
       <Box className="left-content">
@@ -53,22 +60,42 @@ const LeftContainer = () => {
           <Typography variant="p">Hôm nay bạn đọc gì?</Typography>
         </Grid>
         <Box className="search-books">
-          <TextField
-            placeholder="Tìm kiếm"
-            variant="outlined"
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
+          <Autocomplete
+            options={
+              dataBook?.map((book) => ({ id: book.id, title: book.name })) || []
+            }
+            getOptionLabel={(option) => option.title || ''}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder="Tìm kiếm"
+                variant="outlined"
+                size="small"
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <>
+                      {params.InputProps.endAdornment}
+                      <InputAdornment position="end">
+                        <IconButton>
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    </>
+                  ),
+                }}
+              />
+            )}
+            onChange={(event, value) => {
+              if (value?.id) {
+                navigate(`/detail-book/${value.id}`)
+              }
             }}
+            sx={{ width: '100%' }}
           />
           <hr />
         </Box>
+
         <Typography variant="h6">2024 Reading Challenge</Typography>
         <Grid container spacing={2}>
           <Grid
@@ -91,37 +118,34 @@ const LeftContainer = () => {
           <Grid item xs={6}>
             <Box className="challenge-box">
               <Link href="#" underline="none" className="custom-link">
-                <Typography variant="h4">0 </Typography>
+                <Typography variant="h4">{readCount}</Typography>
                 <Typography variant="body1">books completed</Typography>
               </Link>
-              <Typography className="book-count" sx={{ fontSize: '0.75rem' }}>
-                1 book behind schedule
-              </Typography>
-              <LinearProgessLabel full={200} completed={33} />
+              <LinearProgessLabel full={totalBooks} completed={readCount} />
             </Box>
-            <Link href="#" underline="none" className="custom-link">
-              <Typography variant="body2">View Challenge</Typography>
-            </Link>
           </Grid>
         </Grid>
         <hr />
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <Link href="#">
-              <img src={book1} alt="book1" />
-            </Link>
+        {wantToReadCount > 0 ? (
+          <Grid container spacing={3}>
+            {data
+              .filter((item) => item.assessment.state_read === 0)
+              .map((item) => (
+                <Grid item xs={4} key={item.id}>
+                  <Link href="#">
+                    <img
+                      style={{ maxWidth: '100%' }}
+                      src={item.book?.[0]?.image || 'fallback_image.jpg'}
+                      alt={item.book?.[0]?.title || 'Book'}
+                    />
+                  </Link>
+                </Grid>
+              ))}
           </Grid>
-          <Grid item xs={4}>
-            <Link href="#">
-              <img src={book2} alt="book2" />
-            </Link>
-          </Grid>
-          <Grid item xs={4}>
-            <Link href="#">
-              <img src={book1} alt="book3" />
-            </Link>
-          </Grid>
-        </Grid>
+        ) : (
+          <Typography variant="h6">You don't choose a book to read</Typography>
+        )}
+
         <hr />
         <Typography variant="h6">KỆ SÁCH CỦA TÔI</Typography>
         <Grid container>

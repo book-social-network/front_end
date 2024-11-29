@@ -7,7 +7,7 @@ import ModalDeleteUserItem from './ModalDeleteUserItem'
 export default function ModalDelete({
   openModal,
   closeModal,
-  users = [], // Default users to an empty array if undefined or null
+  users = [],
   id_group,
 }) {
   return (

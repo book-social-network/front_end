@@ -77,12 +77,12 @@ export default function ModalDeleteUserItem({
         </Grid>
         <Grid item sm={2} xs={3}>
           <IconButton sx={{ padding: 0 }} onClick={handleOpenDialog}>
-            <MdDelete /> {/* Changed to delete icon */}
+            <MdDelete /> 
           </IconButton>
         </Grid>
       </Grid>
 
-      {/* Confirmation Dialog */}
+      
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Xóa thành viên</DialogTitle>
         <DialogContent>

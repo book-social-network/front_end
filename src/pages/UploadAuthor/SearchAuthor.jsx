@@ -1,23 +1,27 @@
 import React, { useState } from 'react'
-import { TextField, Autocomplete, Box, Card, Avatar, Typography } from '@mui/material'
+import {
+  TextField,
+  Autocomplete,
+  Box,
+  Card,
+  Avatar,
+  Typography,
+} from '@mui/material'
 
-function SearchAuthor
-({ authors }) {
+function SearchAuthor({ authors }) {
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Hàm lọc các tác giả theo tên
   const filteredAuthors = authors.filter((author) =>
-    author.name.toLowerCase().includes(searchQuery.toLowerCase())
+    author.name.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
     <Box sx={{ maxWidth: 600, margin: 'auto' }}>
-      {/* Input tìm kiếm tác giả */}
       <Autocomplete
         freeSolo
         options={filteredAuthors}
         getOptionLabel={(option) => option.name}
-        value={null} // Không lưu giá trị đã chọn
+        value={null}
         onInputChange={(event, newInputValue) => setSearchQuery(newInputValue)}
         renderInput={(params) => (
           <TextField
@@ -59,4 +63,3 @@ function SearchAuthor
 }
 
 export default SearchAuthor
-

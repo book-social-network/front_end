@@ -16,6 +16,7 @@ import Following from './Following'
 import Followers from './Followers'
 import { useTheme, useMediaQuery } from '@mui/material'
 import DetailUser from './DetailUser'
+import SearchFriends from './SearchFriends'
 
 export default function Friends() {
   const { user } = useUserProfile()
@@ -62,6 +63,9 @@ export default function Friends() {
 
   return (
     <Container>
+      <Box position='relative' padding={3}>
+        <SearchFriends/>
+      </Box>
       <Box position="relative">
         <Typography variant="h6" color="#00635d" mb={2}>
           Suggest friends
@@ -131,7 +135,7 @@ export default function Friends() {
           Following
         </Button>
       </Box>
-
+          {console.log(user?.followers.user)}
       <Grid container spacing={2}>
         <Grid item paddingTop={2} md={4} sm={12}>
           {!view ? (
@@ -140,7 +144,6 @@ export default function Friends() {
             <Following following={user?.following.user} setFollower={setSelectedFollowerId} setFollowed={setFollowed}/>
           )}
         </Grid>
-        {console.log(followed)}
         <Grid item md={8} sm={12}>
         {selectedFollowerId && <DetailUser id={selectedFollowerId} isFollowed={followed}/>}
         </Grid>

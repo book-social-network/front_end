@@ -133,7 +133,7 @@ const MyBooks = () => {
           </Typography>
           <hr />
           <Grid container spacing={2}>
-            {/* Sidebar filter buttons */}
+            
             <Grid item xs={12} sm={3}>
               <List component="ul" disablePadding>
                 <ListItem component="li">
@@ -195,7 +195,7 @@ const MyBooks = () => {
               </List>
             </Grid>
 
-            {/* Books table or list */}
+            
             <Grid item xs={12} sm={9}>
               <TableContainer component={Paper}>
                 <Table>

@@ -91,7 +91,7 @@ export default function ModalAddUser({ openModal, closeModal }) {
           </Typography>
 
           <Grid container spacing={2}>
-            {/* Email Field */}
+           
             <Grid item sm={12}>
               <TextField
                 fullWidth
@@ -109,7 +109,7 @@ export default function ModalAddUser({ openModal, closeModal }) {
               />
             </Grid>
 
-            {/* Name Field */}
+           
             <Grid item sm={12}>
               <TextField
                 fullWidth
@@ -121,7 +121,7 @@ export default function ModalAddUser({ openModal, closeModal }) {
               />
             </Grid>
 
-            {/* Password Field */}
+           
             <Grid item sm={12}>
               <TextField
                 fullWidth
@@ -134,7 +134,7 @@ export default function ModalAddUser({ openModal, closeModal }) {
               />
             </Grid>
 
-            {/* Confirm Password Field */}
+           
             <Grid item sm={12}>
               <TextField
                 fullWidth

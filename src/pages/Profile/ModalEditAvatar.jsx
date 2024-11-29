@@ -128,7 +128,7 @@ const ModalEditAvatar = ({ open, onClose }) => {
           Hủy
         </Button>
 
-        {/* Loading and success indicator */}
+        
         <Box
           sx={{
             display: 'flex',

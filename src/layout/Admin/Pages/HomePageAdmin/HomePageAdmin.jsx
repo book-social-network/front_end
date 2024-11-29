@@ -16,7 +16,7 @@ import {
   Drawer,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import useAuth from '../../../../middleware/useAuth'
+import {useAuth} from '../../../../middleware/useAuth'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import ManagePost from '../ManagePost/ManagePost'
 import AuthorizationAxios from '../../../../hooks/Request'
@@ -26,8 +26,9 @@ export default function HomePageAdmin() {
   const [activePage, setActivePage] = useState('Dashboard')
   const [data, setData] = useState()
   const { user } = useUserProfile()
+  useAuth({ requiredRole: "admin",userRole: user?.user.role})
   useEffect(() => {
-    const fetchData = async()=>{
+    const fetchData = async () => {
       const res = await AuthorizationAxios.get('/api/view/statistical')
       setData(res.data)
     }
@@ -49,7 +50,7 @@ export default function HomePageAdmin() {
       case 'Posts':
         return <ManagePost />
       default:
-        return <Dashboard data={data}/>
+        return <Dashboard data={data} />
     }
   }
 
@@ -61,7 +62,7 @@ export default function HomePageAdmin() {
     <div>
       <Grid container spacing={0}>
         <Grid item sm={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <NavbarAdmin onSelect={setActivePage} /> {/* Truyền hàm vào */}
+          <NavbarAdmin onSelect={setActivePage} />
         </Grid>
 
         <Grid item xs={12} sm={10}>
@@ -86,7 +87,6 @@ export default function HomePageAdmin() {
           </Box>
 
           <Box>
-            {/* Hiển thị nội dung tương ứng */}
             <Box sx={{ p: 2 }}>{renderContent()}</Box>
           </Box>
         </Grid>

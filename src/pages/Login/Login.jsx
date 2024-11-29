@@ -41,6 +41,7 @@ const Login = () => {
         password: pass,
       })
 
+      
       if (res?.status === 401) {
         toast.error('Invalid email or password')
         setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
@@ -48,7 +49,7 @@ const Login = () => {
         return
       }
 
-      if (res.data.access_token) {
+      if (res?.data.access_token) {
         const access_token = res.data.access_token
         const userRole = res.data.user?.role
 
@@ -66,7 +67,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error)
-      toast.error('Có lỗi xảy ra. Vui lòng thử lại sau.')
+      toast.error(error.message);
       setPasswordHelperText('Đã xảy ra lỗi. Vui lòng thử lại')
       setPasswordError(true)
     }
