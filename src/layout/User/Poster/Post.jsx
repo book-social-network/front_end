@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import {
   Card,
   CardHeader,
@@ -25,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import ShareButton from '../Components/DialogShare/ShareButton'
 import MenuState from './MenuState'
 import { toast } from 'react-toastify'
+import Pusher from 'pusher-js';
 
 const Post = ({
   bookId,
@@ -75,7 +76,29 @@ const Post = ({
       console.log(e)
     }
   }, [liked, countLike, user, postId])
+  // Realtime
+  useEffect(() => {
+    // Kết nối tới Pusher
+    const pusher = new Pusher('64940ba62e7f545bd4c8', {
+      cluster: 'ap2',
+    });
 
+    // Đăng ký channel
+    const channelPost = pusher.subscribe(`post.${PostId}`);
+    channelPost.bind('like-post', (data) => {
+      console.log(data);
+    });
+    channelPost.bind('comment-post', (data) => {
+      console.log(data);
+    });
+
+    // Cleanup
+    return () => {
+      channelPost.unbind_all();
+      channelPost.unsubscribe();
+    };
+  }, []);
+  // End Realtime
   const handleCardClick = () => {
     if (!noLink) return
     else navigate(`/detail-post/${postId}`)
