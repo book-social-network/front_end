@@ -14,9 +14,8 @@ import { Copy } from 'lucide-react'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import AuthorizationAxios from '../../../../hooks/Request'
 
-export default function DialogShare({ open, onClose }) {
+export default function DialogShare({ open, onClose, id}) {
   const { user } = useUserProfile()
-  const link = 'https://ui.shadcn.com/docs/installation'
   const handleUpdatePoint = async() => {
     await AuthorizationAxios.post('api/user/update',{
         point: user.user.point + 1
@@ -40,7 +39,7 @@ export default function DialogShare({ open, onClose }) {
           <TextField
             id="link"
             variant="outlined"
-            value={link}
+            value={`/detai-post/${id}`}
             InputProps={{
               readOnly: true,
             }}

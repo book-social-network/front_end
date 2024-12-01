@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { ToastContainer } from 'react-toastify'
 import App from './App'
 import 'react-toastify/dist/ReactToastify.css'
 import {
@@ -20,6 +19,5 @@ root.render(
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-    <ToastContainer />
   </React.Fragment>,
 )

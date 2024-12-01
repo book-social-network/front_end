@@ -30,7 +30,7 @@ const getIconNotificationType = (type) => {
         />
       )
       break
-    case 'invited':
+    case 'group':
       return <SupervisedUserCircleIcon />
       break
 

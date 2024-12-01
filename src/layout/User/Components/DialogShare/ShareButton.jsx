@@ -3,7 +3,7 @@ import { Button, IconButton, Typography } from "@mui/material";
 import ShareDialog from "./DialogShare";
 import { FaShare } from 'react-icons/fa'
 
-export default function ShareButton() {
+export default function ShareButton({id}) {
   const [open, setOpen] = useState(false);
 
 
@@ -17,7 +17,7 @@ export default function ShareButton() {
               <Typography paddingLeft={1}>Share</Typography>
             </IconButton> 
 
-      <ShareDialog open={open} onClose={handleClose} />
+      <ShareDialog open={open} onClose={handleClose} id={id}/>
     </>
   );
 }

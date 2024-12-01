@@ -5,11 +5,10 @@ import AuthorizationAxios from '../../hooks/Request'
 
 export default function ModalInviteItem({ user_id, user_name, user_avatar, group_id }) {
   const handleInvite = async()=>{
-    const response = await AuthorizationAxios.post('/api/detail-group-user/insert',{
+    const response = await AuthorizationAxios.post('/api/detail-group-user/invite',{
       group_id: group_id,
       user_id: user_id
     })
-    console.log(response);
   }
   return (
     <Grid container alignItems="center" sx={{ marginBottom: 1 }}>

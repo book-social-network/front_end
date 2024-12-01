@@ -8,7 +8,6 @@ import {
   Divider,
 } from '@mui/material'
 import { Avatar } from '@mui/material'
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Footer from '../../layout/User/Components/Footer/Footer'
@@ -19,22 +18,13 @@ export default function DetailUser() {
   const { id } = useParams()
   const { user: loggedInUser, token } = useUserProfile()
   const [userDetails, setUserDetails] = useState(null)
-  const [isFollowing, setIsFollowing] = useState(false)
 
   useEffect(() => {
   
     const fetchUserData = async () => {
       try {
         const resUser = await AuthorizationAxios.get(`/api/user/get/${id}`)
-        setUserDetails(resUser.data);  
-        const resFollows = await AuthorizationAxios.get('/api/follow/get-all')
-        const followers = resFollows.data.followers || [];
-        const isUserFollowed = followers.some(
-          follow => follow.user_id === loggedInUser && follow.follower === parseInt(id)
-        );
-        console.log(isUserFollowed);
-
-        setIsFollowing(isUserFollowed);
+        setUserDetails(resUser.data);
       } catch (e) {
         console.error('Error fetching user data:', e);
       }
@@ -46,12 +36,11 @@ export default function DetailUser() {
 
   const handleFollow = async () => {
     try {
-      if (isFollowing) {
+      if (userDetails['state-follow'] === 1) {
         await AuthorizationAxios.get(`/api/follow/unfollow/${id}`)
       } else {
         await AuthorizationAxios.get(`/api/follow/follow/${id}`)
       }
-      setIsFollowing(!isFollowing)
     } catch (e) {
       console.log(e)
     }
@@ -76,10 +65,10 @@ export default function DetailUser() {
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
                       variant="contained"
-                      color={isFollowing ? 'error' : 'primary'}
+                      color={userDetails['state-follow']===1 ? 'error' : 'primary'}
                       onClick={handleFollow}
                     >
-                      {isFollowing ? 'Unfollow' : 'Follow'}
+                      {userDetails['state-follow']===1 ? 'Unfollow' : 'Follow'}
                     </Button>
                   </div>
                 </CardContent>

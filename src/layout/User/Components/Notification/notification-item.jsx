@@ -5,6 +5,10 @@ import BlockJoinGroup from './block-join-group'
 import getIconNotificationType from './get-icon-notification-type'
 
 const NotificationItem = ({ notification }) => {
+  const mainType = notification.type.split('-')[0]
+  const id = notification.type_id.split('-')[0]
+  const info = notification.information.includes("mời")
+
   return (
     <Box
       display="flex"
@@ -46,8 +50,8 @@ const NotificationItem = ({ notification }) => {
             {notification.name}
           </Typography>
           <Typography fontSize={14}>{notification.information}</Typography>
-          {notification.type === 'invited' && BlockJoinGroup()}
-          {notification.type === 'friend' && BlockAcceptFriend()}
+          {mainType === 'group' && <BlockJoinGroup idGroup={id} info={info} idNoti={notification.id}/>}
+          {mainType === 'member' && <BlockAcceptFriend id_user={id} idNoti={notification.id}/>}
         </Box>
       </Box>
 

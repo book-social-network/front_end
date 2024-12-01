@@ -4,6 +4,7 @@ import { Typography } from '@mui/material'
 import AuthorizationAxios from '../../../../hooks/Request'
 import {useUserProfile} from '../../../../hooks/useUserProfile'
 import Pusher from 'pusher-js';
+import { toast } from 'react-toastify'
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([])
@@ -22,8 +23,7 @@ const Notification = () => {
     });
     const channel = pusher.subscribe(`notifications.${user?.user.id}`);
     channel.bind('notification-event', (data) => {
-      console.log(data);
-      // setNotifications((prev) => [data.message,...prev]);
+      toast.success("Bạn vừa có 1 thông báo mới")
     });
 
     const fetchNotifications = async () => {

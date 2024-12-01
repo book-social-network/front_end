@@ -5,10 +5,15 @@ import {
   DefaultPage,
   DefaultPageNoHeader,
 } from './layout/User/Components/DefaultPage/DefaultPage'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 
 function App() {
   return (
     <Fragment>
+    <ToastContainer />
+
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>

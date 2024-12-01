@@ -84,21 +84,14 @@ const Post = ({
     });
 
     // Đăng ký channel
-    const channelPost = pusher.subscribe(`post.${PostId}`);
+    const channelPost = pusher.subscribe(`post.${postId}`);
     channelPost.bind('like-post', (data) => {
       console.log(data);
     });
-    channelPost.bind('comment-post', (data) => {
-      console.log(data);
-    });
 
-    // Cleanup
-    return () => {
-      channelPost.unbind_all();
-      channelPost.unsubscribe();
-    };
   }, []);
-  // End Realtime
+
+  
   const handleCardClick = () => {
     if (!noLink) return
     else navigate(`/detail-post/${postId}`)
@@ -266,7 +259,7 @@ const Post = ({
               </Grid>
 
               <Grid item md={4} sm={6}>
-                <ShareButton fullWidth />
+                <ShareButton fullWidth id={postId}/>
               </Grid>
 
               <Grid item md={4} sm={12}>
