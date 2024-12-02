@@ -8,6 +8,7 @@ const Profile = lazy(() => import('../pages/Profile/Profile'))
 const DetailBook = lazy(() => import('../pages/DetailBook/DetailBook'))
 const DetailGroup = lazy(() => import('../pages/DetailGroup/DetailGroup'))
 const DetailUser = lazy(() => import('../pages/DetailUser/DetailUser'))
+const Leaderboard = lazy(() => import('../pages/Leaderboard/Leaderboard'))
 const HomePageAdmin = lazy(
   () => import('../layout/Admin/Pages/HomePageAdmin/HomePageAdmin'),
 )
@@ -39,6 +40,7 @@ export const routes = [
   { path: '/my-profile/edit', page: <EditProfile />, isShowHeader: true },
   { path: '/friends', page: <Friends />, isShowHeader: true },
   { path: '/update-post/:id', page: <UpdatePost />, isShowHeader: true },
+  { path: '/leaderboard', page: <Leaderboard />, isShowHeader: true },
   {
     path: '/admin',
     page: <HomePageAdmin />,

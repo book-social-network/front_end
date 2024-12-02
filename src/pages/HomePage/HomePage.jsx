@@ -10,7 +10,7 @@ import '../../css/HomePage.css'
 import MyGroupItem from '../../hooks/MyGroupItem'
 import AuthorizationAxios from '../../hooks/Request'
 
-const HomePage = () => {
+const HomePage = () => {<s></s>
   const { token } = useUserContext()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)

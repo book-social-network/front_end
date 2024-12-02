@@ -115,22 +115,65 @@ const Header = () => {
       <Typography variant="h6" sx={{ my: 2 }}>
         Menu
       </Typography>
-      <List>
+      <List
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+        }}
+      >
         {isMobile && (
           <>
-            <ListItem button component={Link} to="/home">
+            <ListItem
+              button
+              component={Link}
+              to="/home"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                color: '#000',
+              }}
+            >
               <HomeIcon />
               <ListItemText primary="Home Page" />
             </ListItem>
-            <ListItem button component={Link} to="/mybooks">
+            <ListItem
+              button
+              component={Link}
+              to="/mybooks"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                color: '#000',
+              }}
+            >
               <MenuBookIcon />
               <ListItemText primary="My books" />
             </ListItem>
-            <ListItem button component={Link} to="/groups">
+            <ListItem
+              button
+              component={Link}
+              to="/groups"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                color: '#000',
+              }}
+            >
               <GroupsIcon />
               <ListItemText primary="Groups" />
             </ListItem>
-            <ListItem button component={Link} to="/friends">
+            <ListItem
+              button
+              component={Link}
+              to="/friends"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                color: '#000',
+              }}
+            >
               <FaUserFriends />
               <ListItemText primary="Friends" />
             </ListItem>
@@ -153,13 +196,13 @@ const Header = () => {
     <AppBar position="sticky" sx={{ backgroundColor: '#F4F1EA' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <IconButton
-          color="inherit"
+          color="#000"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
           sx={{ mr: 2, display: { sm: 'none' } }}
         >
-          <MenuIcon />
+          <MenuIcon color="#000" />
         </IconButton>
 
         <Stack>

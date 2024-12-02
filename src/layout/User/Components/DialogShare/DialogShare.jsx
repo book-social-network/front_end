@@ -16,7 +16,6 @@ import AuthorizationAxios from '../../../../hooks/Request'
 import { toast } from 'react-toastify'
 
 export default function DialogShare({ open, onClose, id }) {
-  console.log(`${window.location.origin}`);
   const { user } = useUserProfile()
   const fullLink = `${window.location.origin}/detail-post/${id}`
 
