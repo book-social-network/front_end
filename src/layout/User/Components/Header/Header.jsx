@@ -28,11 +28,11 @@ import {
   Notifications as NotificationsIcon,
   Add as AddIcon,
   Menu as MenuIcon,
+  Leaderboard as LeaderboardIcon,
 } from '@mui/icons-material'
 import { FaUserFriends } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import useIconInHeader from '../../../../hooks/HeaderIcon'
-import { useModal } from '../../../../hooks/ModalContext'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import Notification from '../Notification/notification'
 import '../../../../css/header.css'
@@ -55,7 +55,6 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false)
   const [anchorElAdd, setAnchorElAdd] = useState(null)
-  const { openModal } = useModal()
   const { isLoading, user } = useUserProfile()
   const [noti, setNoti] = useState()
   const getNoti = async () => {
@@ -109,6 +108,7 @@ const Header = () => {
   const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/mybooks')
   const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/groups')
   const books = useIconInHeader(<FaUserFriends />, 'Friends', '/friends')
+  const leaderboard = useIconInHeader(<LeaderboardIcon/>, 'Leaderboard', '/leaderboard')
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -176,6 +176,19 @@ const Header = () => {
             >
               <FaUserFriends />
               <ListItemText primary="Friends" />
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/leaderboard"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                color: '#000',
+              }}
+            >
+              <LeaderboardIcon />
+              <ListItemText primary="Leaderboard" />
             </ListItem>
           </>
         )}
@@ -247,6 +260,11 @@ const Header = () => {
               <Link to="/books">
                 <Grid item xs={1}>
                   {books}
+                </Grid>
+              </Link>
+              <Link to='/leaderboard'>
+                <Grid item xs={1}>
+                  {leaderboard}
                 </Grid>
               </Link>
             </Grid>
