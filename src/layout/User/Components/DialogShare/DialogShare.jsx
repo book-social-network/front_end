@@ -13,17 +13,22 @@ import {
 import { Copy } from 'lucide-react'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import AuthorizationAxios from '../../../../hooks/Request'
+import { toast } from 'react-toastify'
 
-export default function DialogShare({ open, onClose, id}) {
+export default function DialogShare({ open, onClose, id }) {
+  console.log(`${window.location.origin}`);
   const { user } = useUserProfile()
-  const handleUpdatePoint = async() => {
-    await AuthorizationAxios.post('api/user/update',{
-        point: user.user.point + 1
+  const fullLink = `${window.location.origin}/detail-post/${id}`
+
+  const handleUpdatePoint = async () => {
+    await AuthorizationAxios.post('/api/user/update', {
+      point: user.user.point + 1,
     })
   }
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(link)
-    alert('Link copied to clipboard!')
+    navigator.clipboard.writeText(fullLink)
+    toast.success('Link copied to clipboard!')
     handleUpdatePoint()
   }
 
@@ -39,7 +44,7 @@ export default function DialogShare({ open, onClose, id}) {
           <TextField
             id="link"
             variant="outlined"
-            value={`/detai-post/${id}`}
+            value={fullLink}
             InputProps={{
               readOnly: true,
             }}
