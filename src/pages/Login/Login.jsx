@@ -41,7 +41,6 @@ const Login = () => {
         password: pass,
       })
 
-      
       if (res?.status === 401) {
         toast.error('Invalid email or password')
         setPasswordHelperText('Invalid email or password')
@@ -67,7 +66,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error)
-      toast.error(error.message);
+      toast.error(error.message)
       setPasswordHelperText('Error!!!')
       setPasswordError(true)
     }

@@ -91,7 +91,6 @@ export default function ModalAddUser({ openModal, closeModal }) {
           </Typography>
 
           <Grid container spacing={2}>
-           
             <Grid item sm={12}>
               <TextField
                 fullWidth
@@ -109,7 +108,6 @@ export default function ModalAddUser({ openModal, closeModal }) {
               />
             </Grid>
 
-           
             <Grid item sm={12}>
               <TextField
                 fullWidth
@@ -121,7 +119,6 @@ export default function ModalAddUser({ openModal, closeModal }) {
               />
             </Grid>
 
-           
             <Grid item sm={12}>
               <TextField
                 fullWidth
@@ -134,7 +131,6 @@ export default function ModalAddUser({ openModal, closeModal }) {
               />
             </Grid>
 
-           
             <Grid item sm={12}>
               <TextField
                 fullWidth

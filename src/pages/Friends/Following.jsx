@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Typography, Box } from '@mui/material'
 export default function Following({ following, setFollower, setFollowed }) {
-  console.log(following);
+  console.log(following)
   const handleClick = (id) => {
     setFollower(id)
     setFollowed(false)
@@ -41,7 +41,9 @@ export default function Following({ following, setFollower, setFollowed }) {
         ))
       ) : (
         <Box p={2}>
-          <Typography variant="body2">You don't have any followers yet</Typography>
+          <Typography variant="body2">
+            You don't have any followers yet
+          </Typography>
         </Box>
       )}
     </Grid>

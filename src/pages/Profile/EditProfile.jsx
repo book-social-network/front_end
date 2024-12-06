@@ -22,10 +22,10 @@ function EditProfile() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [dob, setDob] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const handleOpenModal = () => setIsModalOpen(true)
+  const handleCloseModal = () => setIsModalOpen(false)
 
   useEffect(() => {
     if (user?.user) {
@@ -229,7 +229,11 @@ function EditProfile() {
           </Grid>
         </Card>
       </Box>
-      <ModalEditAvatar open={isModalOpen} onClose={handleCloseModal} userId={user?.user.id} />
+      <ModalEditAvatar
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        userId={user?.user.id}
+      />
       <Footer />
     </>
   )

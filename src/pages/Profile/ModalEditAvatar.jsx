@@ -1,4 +1,4 @@
-import React, { useState,  useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Modal,
   Box,
@@ -128,7 +128,6 @@ const ModalEditAvatar = ({ open, onClose }) => {
           Hủy
         </Button>
 
-        
         <Box
           sx={{
             display: 'flex',

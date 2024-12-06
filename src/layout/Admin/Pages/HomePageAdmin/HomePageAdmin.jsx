@@ -16,7 +16,7 @@ import {
   Drawer,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import {useAuth} from '../../../../middleware/useAuth'
+import { useAuth } from '../../../../middleware/useAuth'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import ManagePost from '../ManagePost/ManagePost'
 import AuthorizationAxios from '../../../../hooks/Request'
@@ -26,7 +26,7 @@ export default function HomePageAdmin() {
   const [activePage, setActivePage] = useState('Dashboard')
   const [data, setData] = useState()
   const { user } = useUserProfile()
-  useAuth({ requiredRole: "admin",userRole: user?.user.role})
+  useAuth({ requiredRole: 'admin', userRole: user?.user.role })
   useEffect(() => {
     const fetchData = async () => {
       const res = await AuthorizationAxios.get('/api/view/statistical')

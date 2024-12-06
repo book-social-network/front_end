@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Button, Card, CardContent, Container, Divider, Grid, Typography } from '@mui/material'
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  Grid,
+  Typography,
+} from '@mui/material'
 import AuthorizationAxios from '../../hooks/Request'
 import { toast } from 'react-toastify'
 
@@ -13,15 +22,15 @@ export default function DetailUser({ id, isFollowed }) {
   useEffect(() => {
     fetchData()
   }, [id])
-  console.log(isFollowed);
-  const handleFollow = async()=>{
-    if(isFollowed){
-        const res = await AuthorizationAxios.get(`/api/follow/follow/${id}`)
-        console.log(res);
-        toast.success(`You follow ${user.user.name}`)
-    }else{
-        const resp = await AuthorizationAxios.get(`/api/follow/unfollow/${id}`)
-        toast.warn(`You unfollow ${user.user.name}`)
+  console.log(isFollowed)
+  const handleFollow = async () => {
+    if (isFollowed) {
+      const res = await AuthorizationAxios.get(`/api/follow/follow/${id}`)
+      console.log(res)
+      toast.success(`You follow ${user.user.name}`)
+    } else {
+      const resp = await AuthorizationAxios.get(`/api/follow/unfollow/${id}`)
+      toast.warn(`You unfollow ${user.user.name}`)
     }
   }
   return (

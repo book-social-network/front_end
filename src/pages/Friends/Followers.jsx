@@ -2,17 +2,24 @@ import { Grid, Typography, Box } from '@mui/material'
 import React from 'react'
 
 export default function Followers({ followers, setFollower, setFollowed }) {
-  console.log(followers);
+  console.log(followers)
   const handleClick = (id) => {
     setFollower(id)
     setFollowed(true)
-    console.log(setFollowed);
+    console.log(setFollowed)
   }
   return (
     <Grid container spacing={2}>
       {followers && followers.length > 0 ? (
         followers.map((item, index) => (
-          <Grid container item key={index} spacing={2} alignItems="center" onClick={()=>handleClick(item.id)}>
+          <Grid
+            container
+            item
+            key={index}
+            spacing={2}
+            alignItems="center"
+            onClick={() => handleClick(item.id)}
+          >
             <Grid item sm={3}>
               <img
                 src={item.image_url}
@@ -36,7 +43,9 @@ export default function Followers({ followers, setFollower, setFollowed }) {
         ))
       ) : (
         <Box p={2}>
-          <Typography variant="body2">You don't have any followers yet</Typography>
+          <Typography variant="body2">
+            You don't have any followers yet
+          </Typography>
         </Box>
       )}
     </Grid>

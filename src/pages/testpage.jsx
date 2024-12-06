@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Box, Button } from '@mui/material'
 import AuthorizationAxios from '../hooks/Request'
 
-
 function GenreSelector() {
   const [selectedGenres, setSelectedGenres] = useState([])
   const [scrollVisible, setScrollVisible] = useState(false)
@@ -14,13 +13,13 @@ function GenreSelector() {
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre],
     )
   }
-  useEffect(()=>{
-    const fetchType = async()=>{
-        const data = await AuthorizationAxios.get('/api/type/get-all')
-        setTypes(data.data)
+  useEffect(() => {
+    const fetchType = async () => {
+      const data = await AuthorizationAxios.get('/api/type/get-all')
+      setTypes(data.data)
     }
     fetchType()
-  },[types])
+  }, [types])
 
   const handleScroll = () => {
     setScrollVisible(true)

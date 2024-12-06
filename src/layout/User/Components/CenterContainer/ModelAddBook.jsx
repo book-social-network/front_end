@@ -14,7 +14,12 @@ import SearchIcon from '@mui/icons-material/Search'
 import { toast } from 'react-toastify'
 import AuthorizationAxios from '../../../../hooks/Request'
 
-export default function ModelAddBook({ selectedBook, setSelectedBook, isAddBookModalOpen, closeAddBookModal }) {
+export default function ModelAddBook({
+  selectedBook,
+  setSelectedBook,
+  isAddBookModalOpen,
+  closeAddBookModal,
+}) {
   const [listSearchBook, setListSearchBook] = useState([])
   const [valueSearch, setValueSearch] = useState('')
 
@@ -24,7 +29,9 @@ export default function ModelAddBook({ selectedBook, setSelectedBook, isAddBookM
       return
     }
     try {
-      const response =await AuthorizationAxios.post(`/api/profession/search?type=book&search=${valueSearch}`)
+      const response = await AuthorizationAxios.post(
+        `/api/profession/search?type=book&search=${valueSearch}`,
+      )
       setListSearchBook(response.data)
     } catch (error) {
       console.log(error)
@@ -54,7 +61,14 @@ export default function ModelAddBook({ selectedBook, setSelectedBook, isAddBookM
             </IconButton>
           </Grid>
           <Grid item xs={10}>
-            <Typography sx={{ textAlign: 'center', fontWeight: 'bold', marginLeft: '-30px' }} variant="h6">
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                marginLeft: '-30px',
+              }}
+              variant="h6"
+            >
               Select a Book
             </Typography>
           </Grid>
@@ -105,7 +119,9 @@ export default function ModelAddBook({ selectedBook, setSelectedBook, isAddBookM
                   </ListItem>
                 ))
               ) : (
-                <Typography sx={{ textAlign: 'center' }}>No books found</Typography>
+                <Typography sx={{ textAlign: 'center' }}>
+                  No books found
+                </Typography>
               )}
             </List>
           </Grid>

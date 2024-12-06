@@ -57,9 +57,7 @@ export default function ManagePosts() {
         <Button
           variant="contained"
           color="error"
-          onClick={() =>
-            handleDelete(params.id)
-          }
+          onClick={() => handleDelete(params.id)}
         >
           Edit
         </Button>
@@ -89,17 +87,17 @@ export default function ManagePosts() {
         Manage Posts
       </Typography>
       <hr />
-        <Typography
-          variant="subtitle1"
-          color="#00635d"
-          align="left"
-          sx={{ mb: 2 }}
-        >
-          Total posts: {posts.length}
-        </Typography>
+      <Typography
+        variant="subtitle1"
+        color="#00635d"
+        align="left"
+        sx={{ mb: 2 }}
+      >
+        Total posts: {posts.length}
+      </Typography>
 
       <Paper sx={{ height: 400, width: '100%' }}>
-        <Typography variant="h6" color="#00635d" sx={{ padding:2}}>
+        <Typography variant="h6" color="#00635d" sx={{ padding: 2 }}>
           Posts List
         </Typography>
         <DataGrid

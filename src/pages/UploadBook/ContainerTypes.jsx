@@ -11,10 +11,7 @@ import {
 } from '@mui/material'
 import { TiDelete } from 'react-icons/ti'
 
-export default function ContainerType({
-  selectedTypes,
-  setSelectedTypes,
-}) {
+export default function ContainerType({ selectedTypes, setSelectedTypes }) {
   const [allTypes, setAllTypes] = useState([])
 
   useEffect(() => {
@@ -32,9 +29,7 @@ export default function ContainerType({
 
   const handleSelectType = (event) => {
     const selectedTypeId = event.target.value
-    const typeOption = allTypes.find(
-      (type) => type.type.id === selectedTypeId,
-    )
+    const typeOption = allTypes.find((type) => type.type.id === selectedTypeId)
 
     if (
       typeOption &&
@@ -50,46 +45,46 @@ export default function ContainerType({
     )
   }
 
-
-
   return (
     <div>
-     {selectedTypes.length > 0 &&  <>
-        <Typography variant="h6" paddingLeft={3}>
-        Selected Type
-      </Typography>
-      <div
-        style={{
-          border: '2px solid #000',
-          margin: '5px 5px 5px 25px',
-          padding: 10,
-          borderRadius: 5,
-          display: 'flex',
-          flexWrap: 'wrap',
-        }}
-      >
-        {selectedTypes.map((type) => (
-          <Grid
-            key={type.id}
-            display="flex"
-            padding={0.5}
-            justifyContent="center"
-            alignItems="center"
-            marginRight={1}
-            sx={{
-              borderRadius: '10px',
-              border: '1px solid blue',
-              fontSize: '13px',
+      {selectedTypes.length > 0 && (
+        <>
+          <Typography variant="h6" paddingLeft={3}>
+            Selected Type
+          </Typography>
+          <div
+            style={{
+              border: '2px solid #000',
+              margin: '5px 5px 5px 25px',
+              padding: 10,
+              borderRadius: 5,
+              display: 'flex',
+              flexWrap: 'wrap',
             }}
           >
-            <Typography variant="body2">{type.type.name}</Typography>
-            <IconButton onClick={hanleDeleteType(type)}>
-              <TiDelete />
-            </IconButton>
-          </Grid>
-        ))}
-      </div>
-     </>}
+            {selectedTypes.map((type) => (
+              <Grid
+                key={type.id}
+                display="flex"
+                padding={0.5}
+                justifyContent="center"
+                alignItems="center"
+                marginRight={1}
+                sx={{
+                  borderRadius: '10px',
+                  border: '1px solid blue',
+                  fontSize: '13px',
+                }}
+              >
+                <Typography variant="body2">{type.type.name}</Typography>
+                <IconButton onClick={hanleDeleteType(type)}>
+                  <TiDelete />
+                </IconButton>
+              </Grid>
+            ))}
+          </div>
+        </>
+      )}
 
       <Grid item xs={12} sx={{ margin: '5px 5px 5px 25px' }}>
         <FormControl fullWidth>

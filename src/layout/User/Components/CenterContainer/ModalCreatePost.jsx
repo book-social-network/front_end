@@ -30,7 +30,7 @@ export default function ModalCreatePost({ user, idGroup, token }) {
 
   const handleSubmitPost = async () => {
     try {
-      const response1 = await AuthorizationAxios.post('/api/post/insert',{
+      const response1 = await AuthorizationAxios.post('/api/post/insert', {
         id: 1000,
         description,
         user_id: user.user.id,
@@ -95,14 +95,25 @@ export default function ModalCreatePost({ user, idGroup, token }) {
             borderRadius: '8px',
           }}
         >
-          <Grid container spacing={3} alignItems="center" justifyContent="space-between">
+          <Grid
+            container
+            spacing={3}
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Grid item sm={6}>
-              <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }} variant="h6">
+              <Typography
+                sx={{ textAlign: 'center', fontWeight: 'bold' }}
+                variant="h6"
+              >
                 Add new post
               </Typography>
             </Grid>
             <Grid item sm={6} container justifyContent="flex-end">
-              <IconButton sx={{ display: 'flex', alignItems: 'center' }} onClick={handleSubmitPost}>
+              <IconButton
+                sx={{ display: 'flex', alignItems: 'center' }}
+                onClick={handleSubmitPost}
+              >
                 <SendIcon sx={{ marginRight: 1 }} />
                 <Typography variant="body2">Post</Typography>
               </IconButton>
@@ -110,11 +121,15 @@ export default function ModalCreatePost({ user, idGroup, token }) {
           </Grid>
 
           <CardHeader
-            avatar={<Avatar src={user ? user.user.image_url : ''} alt="User Avatar" />}
+            avatar={
+              <Avatar src={user ? user.user.image_url : ''} alt="User Avatar" />
+            }
             title={user ? user.user.name : ''}
             subheader={
               <Button onClick={() => setIsModalOpenBook(true)}>
-                {selectedBook ? `Change Book: ${selectedBook.name}` : 'Add book'}
+                {selectedBook
+                  ? `Change Book: ${selectedBook.name}`
+                  : 'Add book'}
               </Button>
             }
           />

@@ -11,19 +11,18 @@ export default function ModalInvite({ openModal, closeModal, id_group }) {
     // Kết nối tới Pusher
     const pusher = new Pusher('64940ba62e7f545bd4c8', {
       cluster: 'ap2',
-    });
+    })
 
     // Đăng ký channel
-    const channelPost = pusher.subscribe(`notifications.${user?.user.id}`);
+    const channelPost = pusher.subscribe(`notifications.${user?.user.id}`)
     channelPost.bind('notification-event', (data) => {
-      console.log(data);
-    });
-
-  }, []);
+      console.log(data)
+    })
+  }, [])
   useEffect(() => {
-    setFriends(user?.following?.user || []) 
+    setFriends(user?.following?.user || [])
   }, [user])
-  
+
   return (
     <Modal open={openModal} onClose={closeModal}>
       <Box

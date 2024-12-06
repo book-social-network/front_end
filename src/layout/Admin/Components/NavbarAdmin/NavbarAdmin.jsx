@@ -3,11 +3,10 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { MdGroups, MdOutlinePerson, MdCategory } from 'react-icons/md'
 import { IoLogOutOutline } from 'react-icons/io5'
 import { BsFilePost } from 'react-icons/bs'
-import { ImUsers } from "react-icons/im";
-import { PiBooksFill } from "react-icons/pi";
+import { ImUsers } from 'react-icons/im'
+import { PiBooksFill } from 'react-icons/pi'
 import '../../../../css/navbarAdmin.css'
 import { useNavigate } from 'react-router-dom'
-
 
 const NavbarAdmin = ({ onSelect }) => {
   const [activeItem, setActiveItem] = useState('Dashboard')
@@ -24,9 +23,9 @@ const NavbarAdmin = ({ onSelect }) => {
 
   const handleClick = (itemName) => {
     setActiveItem(itemName)
-    onSelect(itemName) 
+    onSelect(itemName)
   }
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     localStorage.removeItem('access_token')
     navigate('/')
   }

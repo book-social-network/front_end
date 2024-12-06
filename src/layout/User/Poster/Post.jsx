@@ -25,7 +25,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import ShareButton from '../Components/DialogShare/ShareButton'
 import MenuState from './MenuState'
 import { toast } from 'react-toastify'
-import Pusher from 'pusher-js';
+import Pusher from 'pusher-js'
 
 const Post = ({
   bookId,
@@ -81,17 +81,15 @@ const Post = ({
     // Kết nối tới Pusher
     const pusher = new Pusher('64940ba62e7f545bd4c8', {
       cluster: 'ap2',
-    });
+    })
 
     // Đăng ký channel
-    const channelPost = pusher.subscribe(`post.${postId}`);
+    const channelPost = pusher.subscribe(`post.${postId}`)
     channelPost.bind('like-post', (data) => {
-      console.log(data);
-    });
+      console.log(data)
+    })
+  }, [])
 
-  }, []);
-
-  
   const handleCardClick = () => {
     if (!noLink) return
     else navigate(`/detail-post/${postId}`)
@@ -259,7 +257,7 @@ const Post = ({
               </Grid>
 
               <Grid item md={4} sm={6}>
-                <ShareButton fullWidth id={postId}/>
+                <ShareButton fullWidth id={postId} />
               </Grid>
 
               <Grid item md={4} sm={12}>

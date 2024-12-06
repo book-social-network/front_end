@@ -1,14 +1,14 @@
-import React from 'react';
-import { Card, Typography, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { TbCircleNumber2Filled } from 'react-icons/tb';
+import React from 'react'
+import { Card, Typography, Box } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { TbCircleNumber2Filled } from 'react-icons/tb'
 
 export default function UserSecond({ id, name, point, image }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleClickUser = () => {
-    navigate(`/detail-user/${id}`);
-  };
+    navigate(`/detail-user/${id}`)
+  }
 
   return (
     <Box
@@ -21,20 +21,20 @@ export default function UserSecond({ id, name, point, image }) {
     >
       <Card
         sx={{
-          bgcolor: '#C0C0C0', 
+          bgcolor: '#C0C0C0',
           color: '#fff',
           borderRadius: '15px',
           height: 280,
           width: 280,
           textAlign: 'center',
-          boxShadow: '0 4px 15px rgba(192, 192, 192, 0.8)', 
+          boxShadow: '0 4px 15px rgba(192, 192, 192, 0.8)',
           position: 'relative',
           padding: 3,
           transition: 'transform 0.3s, box-shadow 0.3s',
           cursor: 'pointer',
           '&:hover': {
             transform: 'scale(1.05)',
-            boxShadow: '0 10px 20px rgba(192, 192, 192, 1)', 
+            boxShadow: '0 10px 20px rgba(192, 192, 192, 1)',
           },
         }}
         onClick={handleClickUser}
@@ -42,7 +42,7 @@ export default function UserSecond({ id, name, point, image }) {
         <TbCircleNumber2Filled
           style={{
             fontSize: '3rem',
-            color: '#ffffff', 
+            color: '#ffffff',
             position: 'absolute',
             top: 15,
             left: 15,
@@ -55,7 +55,7 @@ export default function UserSecond({ id, name, point, image }) {
             borderRadius: '50%',
             overflow: 'hidden',
             margin: '0 auto',
-            border: '3px solid #fff', 
+            border: '3px solid #fff',
           }}
         >
           <img
@@ -70,7 +70,7 @@ export default function UserSecond({ id, name, point, image }) {
             marginTop: 3,
             fontWeight: 'bold',
             textTransform: 'uppercase',
-            color: '#333', 
+            color: '#333',
           }}
         >
           {name}
@@ -81,12 +81,12 @@ export default function UserSecond({ id, name, point, image }) {
             marginTop: 1,
             fontSize: '1rem',
             letterSpacing: '0.5px',
-            color: '#333', 
+            color: '#333',
           }}
         >
           Points: {point}
         </Typography>
       </Card>
     </Box>
-  );
+  )
 }

@@ -21,7 +21,7 @@ export default function AlertDialogSlide({
   linkBook,
   arraySelectedAuthor,
   arraySelectedType,
-  resetForm
+  resetForm,
 }) {
   const [open, setOpen] = React.useState(true)
   const [progress, setProgress] = React.useState(0)

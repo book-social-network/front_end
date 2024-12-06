@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import NotificationItem from './notification-item'
 import { Typography } from '@mui/material'
 import AuthorizationAxios from '../../../../hooks/Request'
-import {useUserProfile} from '../../../../hooks/useUserProfile'
-import Pusher from 'pusher-js';
+import { useUserProfile } from '../../../../hooks/useUserProfile'
+import Pusher from 'pusher-js'
 import { toast } from 'react-toastify'
 
 const Notification = () => {
@@ -11,20 +11,18 @@ const Notification = () => {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
-  const {user} = useUserProfile()
-
+  const { user } = useUserProfile()
 
   const sentinelRef = useRef(null)
-  
 
   useEffect(() => {
     const pusher = new Pusher('64940ba62e7f545bd4c8', {
       cluster: 'ap2',
-    });
-    const channel = pusher.subscribe(`notifications.${user?.user.id}`);
+    })
+    const channel = pusher.subscribe(`notifications.${user?.user.id}`)
     channel.bind('notification-event', (data) => {
-      toast.success("You have a new notification")
-    });
+      toast.success('You have a new notification')
+    })
 
     const fetchNotifications = async () => {
       if (!hasMore) return

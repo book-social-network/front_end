@@ -63,8 +63,8 @@ export default function Friends() {
 
   return (
     <Container>
-      <Box position='relative' padding={3}>
-        <SearchFriends/>
+      <Box position="relative" padding={3}>
+        <SearchFriends />
       </Box>
       <Box position="relative">
         <Typography variant="h6" color="#00635d" mb={2}>
@@ -135,17 +135,27 @@ export default function Friends() {
           Following
         </Button>
       </Box>
-          {console.log(user?.followers.user)}
+      {console.log(user?.followers.user)}
       <Grid container spacing={2}>
         <Grid item paddingTop={2} md={4} sm={12}>
           {!view ? (
-            <Followers followers={user?.followers.user} setFollower={setSelectedFollowerId} setFollowed={setFollowed}/>
+            <Followers
+              followers={user?.followers.user}
+              setFollower={setSelectedFollowerId}
+              setFollowed={setFollowed}
+            />
           ) : (
-            <Following following={user?.following.user} setFollower={setSelectedFollowerId} setFollowed={setFollowed}/>
+            <Following
+              following={user?.following.user}
+              setFollower={setSelectedFollowerId}
+              setFollowed={setFollowed}
+            />
           )}
         </Grid>
         <Grid item md={8} sm={12}>
-        {selectedFollowerId && <DetailUser id={selectedFollowerId} isFollowed={followed}/>}
+          {selectedFollowerId && (
+            <DetailUser id={selectedFollowerId} isFollowed={followed} />
+          )}
         </Grid>
       </Grid>
     </Container>

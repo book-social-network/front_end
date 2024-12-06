@@ -99,7 +99,7 @@ export default function ManageUser() {
           loading={loading}
         />
       </Paper>
-      <ModalAddUser openModal={isOpenModal} closeModal={handleClose}/>
+      <ModalAddUser openModal={isOpenModal} closeModal={handleClose} />
     </div>
   )
 }

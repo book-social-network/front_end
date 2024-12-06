@@ -77,17 +77,16 @@ export default function ModalDeleteUserItem({
         </Grid>
         <Grid item sm={2} xs={3}>
           <IconButton sx={{ padding: 0 }} onClick={handleOpenDialog}>
-            <MdDelete /> 
+            <MdDelete />
           </IconButton>
         </Grid>
       </Grid>
 
-      
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Delete member</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-          Are you sure you want to remove {user_name} from this group?
+            Are you sure you want to remove {user_name} from this group?
           </Typography>
         </DialogContent>
         <DialogActions>

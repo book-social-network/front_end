@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, IconButton, Paper, Typography, Button } from '@mui/material';
-import AuthorizationAxios from '../../../../hooks/Request';
-import { DataGrid } from '@mui/x-data-grid';
-import { FaPlus } from 'react-icons/fa';
-import UploadType from '../../../../pages/UploadType/UploadType';
-import UpdateType from '../../../../pages/UpdateType/UpdateType';
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react'
+import { Grid, IconButton, Paper, Typography, Button } from '@mui/material'
+import AuthorizationAxios from '../../../../hooks/Request'
+import { DataGrid } from '@mui/x-data-grid'
+import { FaPlus } from 'react-icons/fa'
+import UploadType from '../../../../pages/UploadType/UploadType'
+import UpdateType from '../../../../pages/UpdateType/UpdateType'
+import { toast } from 'react-toastify'
 
 export default function ManageType() {
-  const [dataType, setDataType] = useState([]);
-  const [editType, setEditType] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [dataType, setDataType] = useState([])
+  const [editType, setEditType] = useState(null)
+  const [isUploading, setIsUploading] = useState(false)
   useEffect(() => {
     const fetchType = async () => {
       try {
-        const res = await AuthorizationAxios.get('/api/type/get-all');
-        setDataType(res.data);
+        const res = await AuthorizationAxios.get('/api/type/get-all')
+        setDataType(res.data)
       } catch (error) {
-        console.error('Error fetching book types:', error);
+        console.error('Error fetching book types:', error)
       }
-    };
+    }
 
-    fetchType();
-  }, []);
-  const handleUploadType = ()=>{
+    fetchType()
+  }, [])
+  const handleUploadType = () => {
     setIsUploading(true)
   }
 
   const handleEditType = (type) => {
-    setEditType(type);
-  };
+    setEditType(type)
+  }
 
   const handleCloseUpdate = () => {
-    setEditType(null);
-  };
+    setEditType(null)
+  }
   const handleDelete = async (id) => {
     const confirmation = window.confirm(
       'Are you sure you want to delete this Took?',
@@ -88,18 +88,18 @@ export default function ManageType() {
         </Button>
       ),
     },
-  ];
+  ]
 
   const rows = dataType.map((item) => ({
-    id: item?.type.id,  
+    id: item?.type.id,
     name: item?.type.name,
     'count-book': item['count-book'],
-  }));
+  }))
   if (isUploading) {
-    return <UploadType onBack={() => setIsUploading(false)} />;
+    return <UploadType onBack={() => setIsUploading(false)} />
   }
   if (editType) {
-    return <UpdateType type={editType} onClose={handleCloseUpdate} />;
+    return <UpdateType type={editType} onClose={handleCloseUpdate} />
   }
 
   return (
@@ -150,5 +150,5 @@ export default function ManageType() {
         />
       </Paper>
     </div>
-  );
+  )
 }

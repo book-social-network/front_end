@@ -108,7 +108,11 @@ const Header = () => {
   const myBooks = useIconInHeader(<MenuBookIcon />, 'My books', '/mybooks')
   const groups = useIconInHeader(<GroupsIcon />, 'Groups', '/groups')
   const books = useIconInHeader(<FaUserFriends />, 'Friends', '/friends')
-  const leaderboard = useIconInHeader(<LeaderboardIcon/>, 'Leaderboard', '/leaderboard')
+  const leaderboard = useIconInHeader(
+    <LeaderboardIcon />,
+    'Leaderboard',
+    '/leaderboard',
+  )
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -262,7 +266,7 @@ const Header = () => {
                   {books}
                 </Grid>
               </Link>
-              <Link to='/leaderboard'>
+              <Link to="/leaderboard">
                 <Grid item xs={1}>
                   {leaderboard}
                 </Grid>

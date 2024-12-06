@@ -13,7 +13,7 @@ import {
 import { IoSend } from 'react-icons/io5'
 import MyGroupItem from '../../hooks/MyGroupItem'
 import CommentItem from '../../layout/User/Components/Comments/CommentItem'
-import Pusher from 'pusher-js';
+import Pusher from 'pusher-js'
 export default function DetailPost() {
   const param = useParams()
   const [data, setData] = useState()
@@ -33,14 +33,13 @@ export default function DetailPost() {
   useEffect(() => {
     const pusher = new Pusher('64940ba62e7f545bd4c8', {
       cluster: 'ap2',
-    });
+    })
 
-    const channelPost = pusher.subscribe(`post.${param.id}`);
+    const channelPost = pusher.subscribe(`post.${param.id}`)
     channelPost.bind('comment-post', (data) => {
-      console.log(data);
-    });
-
-  }, []);
+      console.log(data)
+    })
+  }, [])
   const handleCommentSubmit = async () => {
     if (comment.trim()) {
       try {

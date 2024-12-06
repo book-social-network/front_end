@@ -1,40 +1,43 @@
-import React, { useState } from 'react';
-import { Button, TextField, Typography } from '@mui/material';
-import AuthorizationAxios from '../../hooks/Request';
-import { toast } from 'react-toastify';
+import React, { useState } from 'react'
+import { Button, TextField, Typography } from '@mui/material'
+import AuthorizationAxios from '../../hooks/Request'
+import { toast } from 'react-toastify'
 
 export default function UpdateAuthor({ author, onClose }) {
-  const [name, setName] = useState(author.name);
-  const [born, setBorn] = useState(author.born);
-  const [dob, setDob] = useState(author.dob);
-  const [died, setDied] = useState(author.died === 'N/A' ? '' : author.died);
-  const [description, setDescription] = useState(author.description);
-  const [image, setImage] = useState(null);
+  const [name, setName] = useState(author.name)
+  const [born, setBorn] = useState(author.born)
+  const [dob, setDob] = useState(author.dob)
+  const [died, setDied] = useState(author.died === 'N/A' ? '' : author.died)
+  const [description, setDescription] = useState(author.description)
+  const [image, setImage] = useState(null)
 
   const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
-  };
+    setImage(e.target.files[0])
+  }
 
   const handleUpdate = async () => {
     try {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('born', born);
-      formData.append('dob', dob);
-      formData.append('died', died || null);
-      formData.append('description', description);
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('born', born)
+      formData.append('dob', dob)
+      formData.append('died', died || null)
+      formData.append('description', description)
       if (image) {
-        formData.append('image', image);
+        formData.append('image', image)
       }
 
-      await AuthorizationAxios.postUpload(`/api/author/update/${author.id}`, formData);
-      toast.success('Author updated successfully!');
-      onClose();
+      await AuthorizationAxios.postUpload(
+        `/api/author/update/${author.id}`,
+        formData,
+      )
+      toast.success('Author updated successfully!')
+      onClose()
     } catch (error) {
-      console.error('Error updating author:', error);
-      toast.error('Failed to update author.');
+      console.error('Error updating author:', error)
+      toast.error('Failed to update author.')
     }
-  };
+  }
 
   return (
     <div>
@@ -111,5 +114,5 @@ export default function UpdateAuthor({ author, onClose }) {
         </Button>
       </div>
     </div>
-  );
+  )
 }

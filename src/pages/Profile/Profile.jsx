@@ -69,10 +69,14 @@ export default function Profile() {
             startIcon={<Edit />}
             sx={{
               marginBottom: 1,
-              
             }}
           >
-            <Link to="/my-profile/edit" style={{color:'#fff', textDecoration:'none'}}>Edit Profile</Link>
+            <Link
+              to="/my-profile/edit"
+              style={{ color: '#fff', textDecoration: 'none' }}
+            >
+              Edit Profile
+            </Link>
           </Button>
         </Box>
       </Box>

@@ -23,7 +23,9 @@ export default function Group() {
   }
   const fetchGroupJoined = async () => {
     try {
-      const response = await AuthorizationAxios.get('/api/post/get-post-in-group')
+      const response = await AuthorizationAxios.get(
+        '/api/post/get-post-in-group',
+      )
       setJoinedGroups(response.data)
     } catch (e) {
       console.log(e)
@@ -115,7 +117,7 @@ export default function Group() {
               </Grid>
             ) : (
               <Grid container spacing={2}>
-                <MyGroups groups={joinedGroups}/>
+                <MyGroups groups={joinedGroups} />
               </Grid>
             )}
           </Grid>
@@ -125,4 +127,3 @@ export default function Group() {
     </div>
   )
 }
-

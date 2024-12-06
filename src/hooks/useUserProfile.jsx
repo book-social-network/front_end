@@ -23,11 +23,9 @@ export const useUserProfile = () => {
     },
   })
 
-  if(isError)
-  {
-    if(error.message === `["user"] data is undefined`)
-      navigate('/')
-      localStorage.removeItem('access_token')
+  if (isError) {
+    if (error.message === `["user"] data is undefined`) navigate('/')
+    localStorage.removeItem('access_token')
   }
 
   return {

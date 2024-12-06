@@ -129,7 +129,7 @@ export default function ManageBook() {
         <Button
           variant="contained"
           color="error"
-          onClick={()=>handleDelete(params.row.id)}
+          onClick={() => handleDelete(params.row.id)}
         >
           Delete
         </Button>

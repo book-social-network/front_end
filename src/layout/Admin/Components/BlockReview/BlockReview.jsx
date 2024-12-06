@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import React from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 
 export default function BlockReview({ text, num, color }) {
   return (
@@ -10,7 +10,7 @@ export default function BlockReview({ text, num, color }) {
         padding: '24px',
         color: '#fff',
         boxShadow: '0 6px 15px rgba(0, 0, 0, 0.15)',
-        maxWidth:'70%',
+        maxWidth: '70%',
         transition: 'transform 0.3s ease',
         '&:hover': {
           transform: 'scale(1.05)',
@@ -24,11 +24,15 @@ export default function BlockReview({ text, num, color }) {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="subtitle1" fontSize="1.2rem" textTransform="capitalize">
+          <Typography
+            variant="subtitle1"
+            fontSize="1.2rem"
+            textTransform="capitalize"
+          >
             {text}
           </Typography>
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }

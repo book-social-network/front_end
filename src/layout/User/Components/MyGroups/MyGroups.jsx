@@ -3,7 +3,7 @@ import MyGroupItem from '../../../../hooks/MyGroupItem'
 import { Grid } from '@mui/material'
 
 export default function MyGroups({ groups }) {
-    const joinedGroups = groups
+  const joinedGroups = groups
   return (
     <>
       {joinedGroups.map((group, index) => (
@@ -15,7 +15,7 @@ export default function MyGroups({ groups }) {
             user_name={group.user.name}
             group_name={group.group.name}
             group_description={group.post.description}
-            group_avatar = {group.group.image_group}
+            group_avatar={group.group.image_group}
             name_book={group.books.name}
             image_book={group.books[0].image}
             group_id={group.group.id}

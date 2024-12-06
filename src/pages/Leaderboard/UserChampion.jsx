@@ -1,14 +1,14 @@
-import React from 'react';
-import { Card, Typography, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { TbCircleNumber1Filled } from 'react-icons/tb';
+import React from 'react'
+import { Card, Typography, Box } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { TbCircleNumber1Filled } from 'react-icons/tb'
 
 export default function UserChampion({ id, name, point, image }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleClickUser = () => {
-    navigate(`/detail-user/${id}`);
-  };
+    navigate(`/detail-user/${id}`)
+  }
 
   return (
     <Box
@@ -21,20 +21,20 @@ export default function UserChampion({ id, name, point, image }) {
     >
       <Card
         sx={{
-          bgcolor: '#FFD700', 
+          bgcolor: '#FFD700',
           color: '#fff',
           borderRadius: '15px',
           height: 320,
           width: 280,
           textAlign: 'center',
-          boxShadow: '0 4px 15px rgba(255, 223, 0, 0.7)', 
+          boxShadow: '0 4px 15px rgba(255, 223, 0, 0.7)',
           position: 'relative',
           padding: 3,
           transition: 'transform 0.3s, box-shadow 0.3s',
           cursor: 'pointer',
           '&:hover': {
             transform: 'scale(1.05)',
-            boxShadow: '0 8px 20px rgba(255, 223, 0, 1)', 
+            boxShadow: '0 8px 20px rgba(255, 223, 0, 1)',
           },
         }}
         onClick={handleClickUser}
@@ -55,7 +55,7 @@ export default function UserChampion({ id, name, point, image }) {
             borderRadius: '50%',
             overflow: 'hidden',
             margin: '0 auto',
-            border: '4px solid #fff', 
+            border: '4px solid #fff',
           }}
         >
           <img
@@ -70,7 +70,7 @@ export default function UserChampion({ id, name, point, image }) {
             marginTop: 3,
             fontWeight: 'bold',
             textTransform: 'uppercase',
-            color: '#333', 
+            color: '#333',
           }}
         >
           {name}
@@ -81,12 +81,12 @@ export default function UserChampion({ id, name, point, image }) {
             marginTop: 1,
             fontSize: '1rem',
             letterSpacing: '0.5px',
-            color: '#333', 
+            color: '#333',
           }}
         >
           Points: {point}
         </Typography>
       </Card>
     </Box>
-  );
+  )
 }

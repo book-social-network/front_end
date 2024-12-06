@@ -3,16 +3,28 @@ import { Grid, IconButton, Typography, Box } from '@mui/material'
 import { FaPlus } from 'react-icons/fa'
 import AuthorizationAxios from '../../hooks/Request'
 
-export default function ModalInviteItem({ user_id, user_name, user_avatar, group_id }) {
-  const handleInvite = async()=>{
-    const response = await AuthorizationAxios.post('/api/detail-group-user/invite',{
-      group_id: group_id,
-      user_id: user_id
-    })
+export default function ModalInviteItem({
+  user_id,
+  user_name,
+  user_avatar,
+  group_id,
+}) {
+  const handleInvite = async () => {
+    const response = await AuthorizationAxios.post(
+      '/api/detail-group-user/invite',
+      {
+        group_id: group_id,
+        user_id: user_id,
+      },
+    )
   }
   return (
     <Grid container alignItems="center" sx={{ marginBottom: 1 }}>
-      <Grid item sm={2} sx={{ display: 'flex', justifyContent: 'center', alignItems:'center' }}>
+      <Grid
+        item
+        sm={2}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
         <Box
           component="img"
           src={user_avatar}

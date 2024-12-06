@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
-import { Box, Card, Grid, Typography, TextField, Button } from '@mui/material';
-import AuthorizationAxios from '../../hooks/Request';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Box, Card, Grid, Typography, TextField, Button } from '@mui/material'
+import AuthorizationAxios from '../../hooks/Request'
+import { useNavigate } from 'react-router-dom'
 
 export default function CreateGroup() {
-  const [name, setName] = useState('');
-  const [title, setTile] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+  const [name, setName] = useState('')
+  const [title, setTile] = useState('')
+  const [description, setDescription] = useState('')
+  const [image, setImage] = useState(null)
   const navigate = useNavigate()
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]
     if (file) {
       setImage({
         file,
         url: URL.createObjectURL(file),
-      });
+      })
     }
-  };
+  }
 
-  const handleCreate = async() => {
-    const formData = new FormData();
+  const handleCreate = async () => {
+    const formData = new FormData()
     formData.append('name', name)
     formData.append('title', title)
     formData.append('description', description)
     formData.append('image', image.file)
-    const res = await AuthorizationAxios.postUpload('/api/group/insert', formData)
-    const group = await res.data;
+    const res = await AuthorizationAxios.postUpload(
+      '/api/group/insert',
+      formData,
+    )
+    const group = await res.data
     navigate(`/detail-group/${group.id}`)
-  };
+  }
 
   return (
     <Box
@@ -194,5 +197,5 @@ export default function CreateGroup() {
         </Grid>
       </Card>
     </Box>
-  );
+  )
 }

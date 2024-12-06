@@ -25,7 +25,7 @@ const BlockJoinGroup = ({ idGroup, info, idNoti }) => {
         user_id: user?.user.id,
       },
     )
-      setState(1)
+    setState(1)
     toast.success('You have joined the group')
   }
   return (

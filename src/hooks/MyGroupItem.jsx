@@ -44,7 +44,7 @@ export default function MyGroupItem({
   const { user } = useUserProfile()
   const navigate = useNavigate()
 
-  const handleCardClick = ()=>{
+  const handleCardClick = () => {
     navigate(`/detail-group/${group_id}`)
   }
 

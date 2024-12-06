@@ -24,7 +24,7 @@ export default function CommentItem({
   userImage,
   commentText,
   timestamp,
-  getData
+  getData,
 }) {
   const [comment, setComment] = useState(commentText)
   const [isEditor, setIsEditor] = useState(false)
@@ -45,11 +45,11 @@ export default function CommentItem({
     })
     setIsEditor(false)
     toast.success('Comment updated')
-    getData();
+    getData()
   }
-  const handleDelete = async()=>{
+  const handleDelete = async () => {
     await AuthorizationAxios.remove(`/api/post/delete-comment/${commentId}`)
-    toast.warn("Delete completed")
+    toast.warn('Delete completed')
     getData()
   }
   const handleEditComment = () => {

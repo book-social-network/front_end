@@ -31,7 +31,7 @@ const MyBooks = () => {
   const [filter, setFilter] = useState('all')
   const { user } = useUserProfile()
   const location = useLocation()
-  const navigate= useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
@@ -72,7 +72,7 @@ const MyBooks = () => {
     }
     fetchBooks()
   }, [user, filter])
-  const handleDetail =(id)=>{
+  const handleDetail = (id) => {
     navigate(`/detail-book/${id}`)
   }
 
@@ -122,7 +122,7 @@ const MyBooks = () => {
           ) : (
             <StarBorderIcon style={{ color: 'gray' }} />
           )}
-        </IconButton>
+        </IconButton>,
       )
     }
     return stars
@@ -137,7 +137,6 @@ const MyBooks = () => {
           </Typography>
           <hr />
           <Grid container spacing={2}>
-            
             <Grid item xs={12} sm={3}>
               <List component="ul" disablePadding>
                 <ListItem component="li">
@@ -199,7 +198,6 @@ const MyBooks = () => {
               </List>
             </Grid>
 
-            
             <Grid item xs={12} sm={9}>
               <TableContainer component={Paper}>
                 <Table>
@@ -214,7 +212,12 @@ const MyBooks = () => {
                   </TableHead>
                   <TableBody>
                     {books.map((item, rowIndex) => (
-                      <TableRow key={rowIndex} onClick={()=>{handleDetail(item.book[0].id)}}>
+                      <TableRow
+                        key={rowIndex}
+                        onClick={() => {
+                          handleDetail(item.book[0].id)
+                        }}
+                      >
                         <TableCell>
                           <img
                             src={item.book[0].image || Image}
@@ -223,9 +226,19 @@ const MyBooks = () => {
                           />
                         </TableCell>
                         <TableCell>{item.book[0].name}</TableCell>
-                        <TableCell>{item.authors[0].name || 'Unknown'}</TableCell>
                         <TableCell>
-                          {getStatusText(item.assessment.state_read)==="Want to read" ? <></> : renderStars(ratings[rowIndex] || item.assessment.star, rowIndex)}
+                          {item.authors[0].name || 'Unknown'}
+                        </TableCell>
+                        <TableCell>
+                          {getStatusText(item.assessment.state_read) ===
+                          'Want to read' ? (
+                            <></>
+                          ) : (
+                            renderStars(
+                              ratings[rowIndex] || item.assessment.star,
+                              rowIndex,
+                            )
+                          )}
                         </TableCell>
                         <TableCell>
                           <p>{getStatusText(item.assessment.state_read)}</p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Container,
   Grid,
@@ -10,39 +10,39 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import UserChampion from './UserChampion';
-import UserSecond from './UserSecond';
-import UserThird from './UserThird';
-import Footer from '../../layout/User/Components/Footer/Footer';
-import AuthorizationAxios from '../../hooks/Request';
+} from '@mui/material'
+import UserChampion from './UserChampion'
+import UserSecond from './UserSecond'
+import UserThird from './UserThird'
+import Footer from '../../layout/User/Components/Footer/Footer'
+import AuthorizationAxios from '../../hooks/Request'
 
 export default function Leaderboard() {
-  const [userRank, setUserRank] = useState([]);
-  
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Detect if the screen size is 'sm' or smaller
-  
+  const [userRank, setUserRank] = useState([])
+
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')) // Detect if the screen size is 'sm' or smaller
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await AuthorizationAxios.get('/api/profession/get-points');
-        const resData = await res.data;
-        setUserRank(resData);
+        const res = await AuthorizationAxios.get('/api/profession/get-points')
+        const resData = await res.data
+        setUserRank(resData)
       } catch (error) {
-        console.error('Error fetching leaderboard data:', error);
+        console.error('Error fetching leaderboard data:', error)
       }
-    };
-    fetchData();
-  }, []);
+    }
+    fetchData()
+  }, [])
 
   if (userRank.length === 0) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading...</Typography>
   }
 
-  const [first, second, third, ...others] = userRank;
-  const top10 = userRank.slice(0,10)
-  const top10Others = others.slice(0, 7);
+  const [first, second, third, ...others] = userRank
+  const top10 = userRank.slice(0, 10)
+  const top10Others = others.slice(0, 7)
 
   return (
     <>
@@ -103,22 +103,25 @@ export default function Leaderboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {!isSmallScreen ? top10Others.map((user, index) => (
-              <TableRow key={user.id}>
-                <TableCell>{index + 4}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.point}</TableCell>
-              </TableRow>
-            )) : top10.map((user, index) => (
-              <TableRow key={user.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.point}</TableCell>
-              </TableRow>))}
+            {!isSmallScreen
+              ? top10Others.map((user, index) => (
+                  <TableRow key={user.id}>
+                    <TableCell>{index + 4}</TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.point}</TableCell>
+                  </TableRow>
+                ))
+              : top10.map((user, index) => (
+                  <TableRow key={user.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.point}</TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </Container>
       <Footer />
     </>
-  );
+  )
 }

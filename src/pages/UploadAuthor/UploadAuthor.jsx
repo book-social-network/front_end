@@ -52,16 +52,12 @@ function UploadAuthor({ onBack }) {
       setImagePreview(URL.createObjectURL(file))
     }
   }
-  if (dod && dob && dod.isBefore(dob)) {
-    toast.error('Date of death must be greater than date of birth.')
-    return
-  }
   const handleSubmit = async () => {
-    if (dod && dob && dod.isBefore(dob)) {
+    if (dod.isBefore(dob)) {
       toast.error('Date of death must be greater than date of birth.')
       return
     }
-
+  
     try {
       const formData = new FormData()
       formData.append('name', name)
@@ -71,13 +67,9 @@ function UploadAuthor({ onBack }) {
       if (image) {
         formData.append('image', image)
       }
-
-      await AuthorizationAxios.post('/api/author/insert', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      setBorn('null')
+  
+      await AuthorizationAxios.post('/api/author/insert', formData)
+      setBorn('')
       setDescription('')
       setImage('')
       setName('')
@@ -91,6 +83,7 @@ function UploadAuthor({ onBack }) {
       toast.error('Error in add author')
     }
   }
+  
 
   return (
     <>
