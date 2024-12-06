@@ -44,9 +44,7 @@ const ModalEditAvatar = ({ open, onClose }) => {
       const formData = new FormData()
       formData.append('image', file)
 
-      await AuthorizationAxios.post('/api/user/update', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      await AuthorizationAxios.postUpload('/api/user/update', formData)
 
       setSuccess(true)
       toast.success('Avatar is updated!!')

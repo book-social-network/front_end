@@ -307,31 +307,31 @@ const Header = () => {
           >
             <MenuItem
               onClick={() => {
-                navigate('/upload-type')
                 handleCloseAddMenu()
+                setTimeout(()=> navigate('/upload-type'),0)
               }}
             >
               Upload Type
             </MenuItem>
             <MenuItem
               onClick={() => {
-                navigate('/upload-book')
                 handleCloseAddMenu()
+                setTimeout(()=>navigate('/upload-book'),0)
               }}
             >
               Upload Book
             </MenuItem>
             <MenuItem
               onClick={() => {
-                navigate('/upload-author')
-                handleCloseAddMenu()
+                handleCloseAddMenu() 
+                setTimeout(() => navigate('/upload-author'), 0)
               }}
             >
               Upload Author
             </MenuItem>
             <MenuItem
               onClick={() => {
-                navigate('/create-group')
+                setTimeout(() => navigate('/create-group'), 0)
                 handleCloseAddMenu()
               }}
             >

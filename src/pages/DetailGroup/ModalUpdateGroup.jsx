@@ -56,11 +56,7 @@ export default function ModalUpdateGroup({
     formData.append('state', groupState)
 
     try {
-      await AuthorizationAxios.postUpload(`/api/group/update/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      await AuthorizationAxios.postUpload(`/api/group/update/${id}`, formData)
       closeModal()
     } catch (error) {
       console.error('Error updating group:', error)
