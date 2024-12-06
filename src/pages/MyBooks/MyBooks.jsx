@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   Typography,
   IconButton,
@@ -31,6 +31,7 @@ const MyBooks = () => {
   const [filter, setFilter] = useState('all')
   const { user } = useUserProfile()
   const location = useLocation()
+  const navigate= useNavigate()
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
@@ -71,6 +72,9 @@ const MyBooks = () => {
     }
     fetchBooks()
   }, [user, filter])
+  const handleDetail =(id)=>{
+    navigate(`/detail-book/${id}`)
+  }
 
   const getStatusText = (stateRead) => {
     switch (stateRead) {
@@ -210,7 +214,7 @@ const MyBooks = () => {
                   </TableHead>
                   <TableBody>
                     {books.map((item, rowIndex) => (
-                      <TableRow key={rowIndex}>
+                      <TableRow key={rowIndex} onClick={()=>{handleDetail(item.book[0].id)}}>
                         <TableCell>
                           <img
                             src={item.book[0].image || Image}
@@ -221,7 +225,7 @@ const MyBooks = () => {
                         <TableCell>{item.book[0].name}</TableCell>
                         <TableCell>{item.authors[0].name || 'Unknown'}</TableCell>
                         <TableCell>
-                          {renderStars(ratings[rowIndex] || item.assessment.star, rowIndex)}
+                          {getStatusText(item.assessment.state_read)==="Want to read" ? <></> : renderStars(ratings[rowIndex] || item.assessment.star, rowIndex)}
                         </TableCell>
                         <TableCell>
                           <p>{getStatusText(item.assessment.state_read)}</p>

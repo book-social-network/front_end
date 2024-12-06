@@ -15,6 +15,7 @@ import ModalEditAvatar from './ModalEditAvatar'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import AuthorizationAxios from '../../hooks/Request'
 import dayjs from 'dayjs'
+import { toast } from 'react-toastify'
 
 function EditProfile() {
   const { user } = useUserProfile()
@@ -40,10 +41,10 @@ function EditProfile() {
         phone: phone,
         dob: dob?.format('YYYY-MM-DD'),
       })
-      alert('Cập nhật thông tin thành công!')
+      toast.success('Update successfully')
     } catch (error) {
-      console.error('Lỗi cập nhật thông tin:', error)
-      alert('Đã xảy ra lỗi khi cập nhật thông tin.')
+      console.error('Error in update: ', error)
+      toast.warning('Error in update')
     }
   }
 
@@ -123,7 +124,7 @@ function EditProfile() {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Họ và tên"
+                label="Full name"
                 variant="outlined"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -185,7 +186,7 @@ function EditProfile() {
             <Grid item xs={12}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Ngày sinh"
+                  label="date of birth"
                   value={dob}
                   onChange={(newValue) => setDob(newValue)}
                   renderInput={(params) => (

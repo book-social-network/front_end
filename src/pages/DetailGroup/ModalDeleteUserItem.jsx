@@ -84,18 +84,18 @@ export default function ModalDeleteUserItem({
 
       
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Xóa thành viên</DialogTitle>
+        <DialogTitle>Delete member</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            Bạn có chắc chắn muốn xóa {user_name} khỏi nhóm này?
+          Are you sure you want to remove {user_name} from this group?
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} color="primary">
-            Không
+            Cancel
           </Button>
           <Button onClick={handleRemove} color="secondary">
-            Xóa
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

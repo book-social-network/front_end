@@ -57,7 +57,7 @@ const LeftContainer = () => {
           <IconButton>
             <AutoStoriesIcon />
           </IconButton>
-          <Typography variant="p">Hôm nay bạn đọc gì?</Typography>
+          <Typography variant="p">What are you reading today?</Typography>
         </Grid>
         <Box className="search-books">
           <Autocomplete
@@ -147,7 +147,7 @@ const LeftContainer = () => {
         )}
 
         <hr />
-        <Typography variant="h6">KỆ SÁCH CỦA TÔI</Typography>
+        <Typography variant="h6">MY BOOKSHELF </Typography>
         <Grid container>
           <Grid item xs={2}>
             {wantToReadCount}

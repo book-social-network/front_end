@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import {
   Box,
   Typography,
-  Avatar,
   Button,
   Card,
   TextField,
@@ -19,9 +18,9 @@ import AuthorizationAxios from '../../hooks/Request'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import { toast } from 'react-toastify'
 import SearchAuthor from './SearchAuthor'
-import { IoMdReturnLeft } from "react-icons/io";
+import { IoMdReturnLeft } from 'react-icons/io'
 
-function UploadAuthor({onBack}) {
+function UploadAuthor({ onBack }) {
   const [name, setName] = useState('')
   const [born, setBorn] = useState('')
   const [dob, setDob] = useState(null)
@@ -30,7 +29,7 @@ function UploadAuthor({onBack}) {
   const [image, setImage] = useState('')
   const [imagePreview, setImagePreview] = useState(null)
   const [authors, setAuthors] = useState([])
-  const handleClose = ()=>{
+  const handleClose = () => {
     onBack()
   }
   useEffect(() => {
@@ -45,7 +44,7 @@ function UploadAuthor({onBack}) {
 
     fetchAuthors()
   }, [])
-  
+
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -54,12 +53,12 @@ function UploadAuthor({onBack}) {
     }
   }
   if (dod && dob && dod.isBefore(dob)) {
-    toast.error('Ngày mất phải lớn hơn ngày sinh.')
+    toast.error('Date of death must be greater than date of birth.')
     return
   }
   const handleSubmit = async () => {
     if (dod && dob && dod.isBefore(dob)) {
-      toast.error('Ngày mất phải lớn hơn ngày sinh.')
+      toast.error('Date of death must be greater than date of birth.')
       return
     }
 
@@ -86,249 +85,259 @@ function UploadAuthor({onBack}) {
       setDod(null)
       setImage('')
       setImagePreview(null)
-      toast.success('Tác giả đã được thêm thành công!')
+      toast.success('Add author successfully')
     } catch (error) {
-      console.error('Lỗi khi thêm tác giả:', error)
-      toast.error('Đã xảy ra lỗi khi thêm tác giả.')
+      console.error('Error', error)
+      toast.error('Error in add author')
     }
   }
 
   return (
     <>
       <Box
-      sx={{
-        paddingTop: '10px',
-        bgcolor: '#f5f5f5',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        color: '#000',
-        minHeight: '100vh',
-      }}
-    >
-      <Box sx={{ width: '100%', maxWidth: 800, marginBottom: 4 }}>
-       {onBack ? <IconButton onClick={handleClose}><IoMdReturnLeft /></IconButton> : <></>}
-
-        <Typography
-          variant="h6"
-          sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center', color: '#333' }}
-        >
-          Tác giả hiện có
-        </Typography>
-        <SearchAuthor authors={authors} />
-      </Box>
-
-      <Card
         sx={{
-          maxWidth: 400,
-          bgcolor: '#fff',
-          p: 4,
-          borderRadius: '12px',
-          boxShadow: 3,
+          paddingTop: '10px',
+          bgcolor: '#f5f5f5',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          flexGrow: 1,
-          marginBottom: '20px',
+          justifyContent: 'flex-start',
+          color: '#000',
+          minHeight: '100vh',
         }}
       >
-        <Typography
-          variant="h5"
-          sx={{ mb: 3, fontWeight: 'bold', color: '#333' }}
+        <Box sx={{ width: '100%', maxWidth: 800, marginBottom: 4 }}>
+          {onBack ? (
+            <IconButton onClick={handleClose}>
+              <IoMdReturnLeft />
+            </IconButton>
+          ) : (
+            <></>
+          )}
+
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 2,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: '#333',
+            }}
+          >
+            Author available
+          </Typography>
+          <SearchAuthor authors={authors} />
+        </Box>
+
+        <Card
+          sx={{
+            maxWidth: 400,
+            bgcolor: '#fff',
+            p: 4,
+            borderRadius: '12px',
+            boxShadow: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            flexGrow: 1,
+            marginBottom: '20px',
+          }}
         >
-          Thêm tác giả mới
-        </Typography>
+          <Typography
+            variant="h5"
+            sx={{ mb: 3, fontWeight: 'bold', color: '#333' }}
+          >
+            Add new author
+          </Typography>
 
-        <Grid container spacing={3} sx={{ maxWidth: 420 }}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Họ và tên"
-              variant="outlined"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              sx={{
-                bgcolor: '#fff',
-                '& .MuiInputLabel-root': {
-                  color: '#000',
-                  fontWeight: 'bold',
-                },
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  '&:hover fieldset': { borderColor: '#000' },
-                  '&.Mui-focused fieldset': { borderColor: '#000' },
-                },
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Nơi sinh"
-              variant="outlined"
-              value={born}
-              onChange={(e) => setBorn(e.target.value)}
-              sx={{
-                bgcolor: '#fff',
-                '& .MuiInputLabel-root': {
-                  color: '#000',
-                  fontWeight: 'bold',
-                },
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  '&:hover fieldset': { borderColor: '#000' },
-                  '&.Mui-focused fieldset': { borderColor: '#000' },
-                },
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Ngày sinh"
-                value={dob}
-                onChange={(newValue) => setDob(newValue)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    sx={{
-                      bgcolor: '#fff',
-                      '& .MuiInputLabel-root': {
-                        color: '#000',
-                        fontWeight: 'bold',
-                      },
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: '8px',
-                        '&:hover fieldset': { borderColor: '#000' },
-                        '&.Mui-focused fieldset': { borderColor: '#000' },
-                      },
-                    }}
-                  />
-                )}
-              />
-            </LocalizationProvider>
-          </Grid>
-
-          <Grid item xs={12}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Ngày mất"
-                value={dod}
-                onChange={(newValue) => setDod(newValue)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    sx={{
-                      bgcolor: '#fff',
-                      '& .MuiInputLabel-root': {
-                        color: '#000',
-                        fontWeight: 'bold',
-                      },
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: '8px',
-                        '&:hover fieldset': { borderColor: '#000' },
-                        '&.Mui-focused fieldset': { borderColor: '#000' },
-                      },
-                    }}
-                  />
-                )}
-              />
-            </LocalizationProvider>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Mô tả"
-              multiline
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              sx={{
-                bgcolor: '#fff',
-                '& .MuiInputLabel-root': {
-                  color: '#000',
-                  fontWeight: 'bold',
-                },
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  '&:hover fieldset': { borderColor: '#000' },
-                  '&.Mui-focused fieldset': { borderColor: '#000' },
-                },
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              component="label"
-              fullWidth
-              sx={{
-                bgcolor: '#000',
-                ':hover': { bgcolor: '#0056b3' },
-                fontWeight: 'bold',
-                padding: '12px 0',
-              }}
-            >
-              Tải lên ảnh
-              <input
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={handleImageChange}
-              />
-            </Button>
-            {imagePreview && (
-              <Box
+          <Grid container spacing={3} sx={{ maxWidth: 420 }}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Full name"
+                variant="outlined"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 sx={{
-                  mt: 2,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '100%',
+                  bgcolor: '#fff',
+                  '& .MuiInputLabel-root': {
+                    color: '#000',
+                    fontWeight: 'bold',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '8px',
+                    '&:hover fieldset': { borderColor: '#000' },
+                    '&.Mui-focused fieldset': { borderColor: '#000' },
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Place was born"
+                variant="outlined"
+                value={born}
+                onChange={(e) => setBorn(e.target.value)}
+                sx={{
+                  bgcolor: '#fff',
+                  '& .MuiInputLabel-root': {
+                    color: '#000',
+                    fontWeight: 'bold',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '8px',
+                    '&:hover fieldset': { borderColor: '#000' },
+                    '&.Mui-focused fieldset': { borderColor: '#000' },
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Date of birth"
+                  value={dob}
+                  onChange={(newValue) => setDob(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      sx={{
+                        bgcolor: '#fff',
+                        '& .MuiInputLabel-root': {
+                          color: '#000',
+                          fontWeight: 'bold',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                          borderRadius: '8px',
+                          '&:hover fieldset': { borderColor: '#000' },
+                          '&.Mui-focused fieldset': { borderColor: '#000' },
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+            </Grid>
+
+            <Grid item xs={12}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Đead of dead"
+                  value={dod}
+                  onChange={(newValue) => setDod(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      sx={{
+                        bgcolor: '#fff',
+                        '& .MuiInputLabel-root': {
+                          color: '#000',
+                          fontWeight: 'bold',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                          borderRadius: '8px',
+                          '&:hover fieldset': { borderColor: '#000' },
+                          '&.Mui-focused fieldset': { borderColor: '#000' },
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                multiline
+                rows={4}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                sx={{
+                  bgcolor: '#fff',
+                  '& .MuiInputLabel-root': {
+                    color: '#000',
+                    fontWeight: 'bold',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '8px',
+                    '&:hover fieldset': { borderColor: '#000' },
+                    '&.Mui-focused fieldset': { borderColor: '#000' },
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                component="label"
+                fullWidth
+                sx={{
+                  bgcolor: '#000',
+                  ':hover': { bgcolor: '#0056b3' },
+                  fontWeight: 'bold',
+                  padding: '12px 0',
                 }}
               >
-                <Box
-                  component="img"
-                  src={imagePreview}
-                  alt="Image Preview"
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                  }}
+                Tải lên ảnh
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleImageChange}
                 />
-              </Box>
-            )}
-          </Grid>
+              </Button>
+              {imagePreview && (
+                <Box
+                  sx={{
+                    mt: 2,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={imagePreview}
+                    alt="Image Preview"
+                    sx={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '50%',
+                    }}
+                  />
+                </Box>
+              )}
+            </Grid>
 
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{
-                bgcolor: '#000',
-                ':hover': { bgcolor: '#0056b3' },
-                fontWeight: 'bold',
-                padding: '12px 0',
-              }}
-              onClick={handleSubmit}
-            >
-              Lưu tác giả
-            </Button>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{
+                  bgcolor: '#000',
+                  ':hover': { bgcolor: '#0056b3' },
+                  fontWeight: 'bold',
+                  padding: '12px 0',
+                }}
+                onClick={handleSubmit}
+              >
+                Lưu tác giả
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
-    </Box>
-    <Footer/>
+        </Card>
+      </Box>
+      <Footer />
     </>
-    
   )
 }
 

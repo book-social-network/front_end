@@ -41,7 +41,7 @@ export default function ModalInvite({ openModal, closeModal, id_group }) {
         }}
       >
         <Typography variant="h6" component="h2" mb={2}>
-          Mời bạn bè vào nhóm
+          Invite a friend
         </Typography>
 
         <Box
@@ -65,7 +65,7 @@ export default function ModalInvite({ openModal, closeModal, id_group }) {
             ))
           ) : (
             <Typography variant="body2" color="textSecondary">
-              Bạn chưa theo dõi bạn bè nào để mời.
+              You don't follow any friends yet to invite.
             </Typography>
           )}
         </Box>

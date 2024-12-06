@@ -103,7 +103,7 @@ export default function ModalUpdateGroup({
 
         <TextField
           fullWidth
-          label="Mô tả"
+          label="description"
           value={groupDescription}
           onChange={(e) => setGroupDescription(e.target.value)}
           sx={{ mb: 2 }}
@@ -131,10 +131,10 @@ export default function ModalUpdateGroup({
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button variant="outlined" onClick={closeModal}>
-            Hủy
+            Cancel
           </Button>
           <Button variant="contained" onClick={handleUpdate}>
-            Cập nhật
+            Update
           </Button>
         </Box>
       </Box>

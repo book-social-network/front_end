@@ -23,7 +23,7 @@ const Notification = () => {
     });
     const channel = pusher.subscribe(`notifications.${user?.user.id}`);
     channel.bind('notification-event', (data) => {
-      toast.success("Bạn vừa có 1 thông báo mới")
+      toast.success("You have a new notification")
     });
 
     const fetchNotifications = async () => {

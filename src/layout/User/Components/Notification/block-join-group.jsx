@@ -26,7 +26,7 @@ const BlockJoinGroup = ({ idGroup, info, idNoti }) => {
       },
     )
       setState(1)
-    toast.success('Bạn đã tham gia vào group')
+    toast.success('You have joined the group')
   }
   return (
     <>

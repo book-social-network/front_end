@@ -252,8 +252,8 @@ const Post = ({
                     sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
                   >
                     {countLike > 0
-                      ? `${countLike} người đã thích`
-                      : 'Hãy thích bài viết'}
+                      ? `${countLike} liked`
+                      : 'Please like the post'}
                   </Typography>
                 </IconButton>
               </Grid>

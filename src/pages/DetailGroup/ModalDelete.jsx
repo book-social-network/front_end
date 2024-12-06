@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Modal, Box, Typography, Button } from '@mui/material'
-import { useUserProfile } from '../../hooks/useUserProfile'
-import ModalInviteItem from './ModalInviteItem'
 import ModalDeleteUserItem from './ModalDeleteUserItem'
 
 export default function ModalDelete({
@@ -51,7 +49,7 @@ export default function ModalDelete({
             ))
           ) : (
             <Typography variant="body2" color="textSecondary">
-              Không có thành viên nào trong nhóm.
+              There are no members in the group.
             </Typography>
           )}
         </Box>

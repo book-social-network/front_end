@@ -72,7 +72,7 @@ export default function MyGroupItem({
 
     try {
       if (!liked) {
-        const data = await AuthorizationAxios.post('/api/post/insert-like', {
+        await AuthorizationAxios.post('/api/post/insert-like', {
           post_id: PostId,
           user_id: UserId,
         })
@@ -84,7 +84,7 @@ export default function MyGroupItem({
     }
   }, [liked, countLike, post_id])
 
-  const toggleCommentSection = () => setShowComment((prev) => !prev)
+  // const toggleCommentSection = () => setShowComment((prev) => !prev)
 
   const toggleShowComment = () => setShowComment(!showComment)
 
@@ -147,7 +147,7 @@ export default function MyGroupItem({
         <IconButton onClick={toggleLike}>
           {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
         </IconButton>
-        <Typography variant="body2">{countLike} người đã thích</Typography>
+        <Typography variant="body2">{countLike} liked</Typography>
         <IconButton onClick={toggleShowComment}>
           <CommentIcon />
         </IconButton>

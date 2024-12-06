@@ -6,7 +6,6 @@ import {
   IconButton,
   Grid,
 } from '@mui/material'
-import SettingsIcon from '@mui/icons-material/Settings'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../../../css/centerContainer.css'
 import ModalCreatePost from './ModalCreatePost'
@@ -61,12 +60,6 @@ const CenterContainer = () => {
       <Grid container sx={{ marginTop: '20px' }}>
         <Grid item xs={6} container justifyContent="flex-start">
           <Typography variant="body2">UPDATES</Typography>
-        </Grid>
-        <Grid item xs={6} container justifyContent="flex-end">
-          <IconButton>
-            <SettingsIcon />
-            <Typography variant="body2">Customize</Typography>
-          </IconButton>
         </Grid>
       </Grid>
 

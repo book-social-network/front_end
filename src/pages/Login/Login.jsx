@@ -32,7 +32,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       if (!email || !pass) {
-        setPasswordHelperText('Bạn phải nhập đủ các trường')
+        setPasswordHelperText('You must enter all fields')
         setPasswordError(true)
         return
       }
@@ -44,7 +44,7 @@ const Login = () => {
       
       if (res?.status === 401) {
         toast.error('Invalid email or password')
-        setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
+        setPasswordHelperText('Invalid email or password')
         setPasswordError(true)
         return
       }
@@ -62,13 +62,13 @@ const Login = () => {
           navigate('/home')
         }
       } else {
-        setPasswordHelperText('Tài khoản hoặc mật khẩu không đúng')
+        setPasswordHelperText('Invalid email or password')
         setPasswordError(true)
       }
     } catch (error) {
       console.error(error)
       toast.error(error.message);
-      setPasswordHelperText('Đã xảy ra lỗi. Vui lòng thử lại')
+      setPasswordHelperText('Error!!!')
       setPasswordError(true)
     }
   }

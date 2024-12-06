@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState,  useEffect } from 'react'
 import {
   Modal,
   Box,
@@ -49,13 +49,13 @@ const ModalEditAvatar = ({ open, onClose }) => {
       })
 
       setSuccess(true)
-      toast.success('Ảnh đại diện đã được cập nhật!')
+      toast.success('Avatar is updated!!')
       setLoading(false)
 
       onClose()
     } catch (error) {
       setLoading(false)
-      toast.error('Đã xảy ra lỗi khi tải ảnh. Vui lòng thử lại.')
+      toast.error('Error in upload avatar')
     }
   }
 
@@ -63,12 +63,12 @@ const ModalEditAvatar = ({ open, onClose }) => {
     try {
       setLoading(true)
       await AuthorizationAxios.post('/api/user/update', { image: null })
-      toast.success('Ảnh đại diện đã được gỡ!')
+      toast.success('Avatar is removed!!')
       setLoading(false)
       onClose()
     } catch (error) {
       setLoading(false)
-      toast.error('Đã xảy ra lỗi khi gỡ ảnh.')
+      toast.error('Error in remove avatar!!')
     }
   }
 

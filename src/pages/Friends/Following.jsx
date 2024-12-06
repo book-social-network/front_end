@@ -41,7 +41,7 @@ export default function Following({ following, setFollower, setFollowed }) {
         ))
       ) : (
         <Box p={2}>
-          <Typography variant="body2">Bạn chưa có người theo dõi</Typography>
+          <Typography variant="body2">You don't have any followers yet</Typography>
         </Box>
       )}
     </Grid>

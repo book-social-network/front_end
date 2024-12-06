@@ -12,7 +12,6 @@ import {
 } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import LockIcon from '@mui/icons-material/Lock'
-import PublicIcon from '@mui/icons-material/Public'
 import { FaUsers } from 'react-icons/fa'
 import { BsFileEarmarkPostFill } from 'react-icons/bs'
 import { useUserProfile } from '../../hooks/useUserProfile'
@@ -257,19 +256,19 @@ export default function DetailGroup() {
                 ))
               ) : (
                 <Typography variant="body2" color="#b0b0b0" textAlign="center">
-                  Chưa có bài viết nào trong nhóm này.
+                  There are no posts in this group yet.
                 </Typography>
               )}
             </>
           ) : (
-            <Typography>Bạn chưa tham gia group</Typography>
+            <Typography>You have not joined the group yet</Typography>
           )}
         </Grid>
 
         <Grid item xs={12} sm={3}>
           <Box sx={{ padding: 2, backgroundColor: '#252728', borderRadius: 2 }}>
             <Typography variant="h6" color="#fff" fontWeight="bold">
-              Giới thiệu
+              Introduce
             </Typography>
             <Typography variant="body2" color="#b0b0b0" mt={1}>
               {dataGroup ? dataGroup.group.description : ''}
@@ -290,8 +289,8 @@ export default function DetailGroup() {
             </Box>
             <Typography variant="body2" color="#b0b0b0">
               {dataGroup && dataGroup.group.state === 1
-                ? 'Bất kỳ ai cũng có thể nhìn thấy mọi người trong nhóm và những gì họ đăng.'
-                : 'Chỉ các thành viên mới có thể nhìn thấy những gì được đăng trong nhóm.'}
+                ? 'Anyone can see everyone in the group and what they post.'
+                : 'Only members can see what is posted in the group.'}
             </Typography>
             <Box display="flex" alignItems="center" gap={1} mt={1}>
               <Icon sx={{ color: 'white' }}>

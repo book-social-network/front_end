@@ -119,7 +119,7 @@ function HeadType({ types }) {
             variant="body2"
             sx={{ color: '#999', fontStyle: 'italic', marginTop: 2 }}
           >
-            Không tìm thấy type nào phù hợp.
+            Type not found
           </Typography>
         )}
       </Box>

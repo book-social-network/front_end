@@ -26,8 +26,8 @@ function SearchAuthor({ authors }) {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Tìm tác giả"
-            placeholder="Nhập tên tác giả"
+            label="find author"
+            placeholder="type name author"
             fullWidth
             variant="outlined"
             sx={{

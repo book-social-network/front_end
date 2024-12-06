@@ -15,13 +15,14 @@ import Footer from '../../layout/User/Components/Footer/Footer'
 import StarIcon from '@mui/icons-material/Star'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
-import { useParams } from 'react-router-dom'
+import {  useNavigate, useParams } from 'react-router-dom'
 import AuthorizationAxios from '../../hooks/Request'
 
 export default function DetailBook() {
   const [dataBook, setDataBook] = useState(null)
   const [rating, setRating] = useState(0)
   const id = useParams()
+  const navigate = useNavigate();
 
   const id_book = id.id
   useEffect(() => {
@@ -36,8 +37,6 @@ export default function DetailBook() {
     }
     fetchData()
   }, [id_book])
-  console.log(dataBook)
-
   const handleChange = (event) => {}
 
   if (!dataBook) {
@@ -161,8 +160,10 @@ export default function DetailBook() {
                     </Select>
                   </FormControl>
                 </Grid>
+                
                 <Grid item xs={4}>
                   <Button
+                  onClick={navigate(dataBook?.book.link_book)}
                     variant="contained"
                     color="primary"
                     sx={{
@@ -181,46 +182,6 @@ export default function DetailBook() {
                   </Button>
                 </Grid>
               </Grid>
-              <Box
-                sx={{
-                  marginTop: 3,
-                  maxHeight: 200,
-                  overflowY: 'auto',
-                  padding: 2,
-                  backgroundColor: '#fff',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                  borderRadius: 1,
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: 'bold', color: '#333' }}
-                >
-                  Comments
-                </Typography>
-
-                {dataBook?.comments?.map((comment, index) => (
-                  <Grid
-                    container
-                    spacing={2}
-                    sx={{ marginBottom: 2 }}
-                    key={index}
-                  >
-                    <Grid item>
-                      <Avatar
-                        alt={comment.userName}
-                        src={comment.userAvatar}
-                        sx={{ width: 40, height: 40 }}
-                      />
-                    </Grid>
-                    <Grid item xs={10}>
-                      <Typography variant="body2" sx={{ color: '#555' }}>
-                        {comment.text}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ))}
-              </Box>
             </Box>
           </Grid>
         </Grid>

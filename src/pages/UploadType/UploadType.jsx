@@ -31,7 +31,7 @@ export default function UploadType({ onBack }) {
       (typeObj) => typeObj.type.name.toLowerCase() === name.toLowerCase(),
     )
     if (typeExists) {
-      setError('Type đã tồn tại.')
+      setError('Type already')
     } else {
       setError('')
     }

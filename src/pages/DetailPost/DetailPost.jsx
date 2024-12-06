@@ -127,7 +127,7 @@ export default function DetailPost() {
               ) : (
                 <div>
                   <Typography sx={{ textAlign: 'center' }}>
-                    Chưa có bình luận
+                    No comment
                   </Typography>
                 </div>
               )}
