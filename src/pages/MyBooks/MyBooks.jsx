@@ -212,9 +212,7 @@ const MyBooks = () => {
                   </TableHead>
                   <TableBody>
                     {books.map((item, rowIndex) => (
-                      <TableRow
-                        key={rowIndex}
-                      >
+                      <TableRow key={rowIndex}>
                         <TableCell>
                           <img
                             src={item.book[0].image || Image}

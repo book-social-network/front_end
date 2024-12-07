@@ -27,7 +27,7 @@ export default function ManageUser() {
 
     fetchUsers()
   }, [])
-  const handleDelete=async(id)=>{
+  const handleDelete = async (id) => {
     const confirmation = window.confirm(
       'Are you sure you want to delete this user?',
     )

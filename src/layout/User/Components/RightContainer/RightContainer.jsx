@@ -5,7 +5,7 @@ import '../../../../css/rightContainer.css'
 
 const RightContainer = () => {
   return (
-    <Box className="right-content"> 
+    <Box className="right-content">
       <Typography variant="h6">News & Interviews</Typography>
       <Typography variant="body1">
         <Link href="#" underline="none">

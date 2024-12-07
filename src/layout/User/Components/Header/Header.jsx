@@ -308,7 +308,7 @@ const Header = () => {
             <MenuItem
               onClick={() => {
                 handleCloseAddMenu()
-                setTimeout(()=> navigate('/upload-type'),0)
+                setTimeout(() => navigate('/upload-type'), 0)
               }}
             >
               Upload Type
@@ -316,14 +316,14 @@ const Header = () => {
             <MenuItem
               onClick={() => {
                 handleCloseAddMenu()
-                setTimeout(()=>navigate('/upload-book'),0)
+                setTimeout(() => navigate('/upload-book'), 0)
               }}
             >
               Upload Book
             </MenuItem>
             <MenuItem
               onClick={() => {
-                handleCloseAddMenu() 
+                handleCloseAddMenu()
                 setTimeout(() => navigate('/upload-author'), 0)
               }}
             >

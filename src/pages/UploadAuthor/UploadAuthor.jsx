@@ -57,17 +57,17 @@ function UploadAuthor({ onBack }) {
       toast.error('Date of death must be greater than date of birth.')
       return
     }
-  
+
     try {
       const formData = new FormData()
       formData.append('name', name)
       formData.append('born', born)
       formData.append('dob', dob?.format('YYYY-MM-DD'))
-      formData.append('died', dod?dod?.format('YYYY-MM-DD'):'')
+      formData.append('died', dod ? dod?.format('YYYY-MM-DD') : '')
       if (image) {
         formData.append('image', image)
       }
-  
+
       await AuthorizationAxios.post('/api/author/insert', formData)
       setBorn('')
       setDescription('')
@@ -83,7 +83,6 @@ function UploadAuthor({ onBack }) {
       toast.error('Error in add author')
     }
   }
-  
 
   return (
     <>

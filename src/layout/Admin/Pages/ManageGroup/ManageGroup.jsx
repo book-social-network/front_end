@@ -24,7 +24,7 @@ export default function ManageGroup() {
     fetchGroups()
   }, [])
 
-  const handleDelete = async(id)=>{
+  const handleDelete = async (id) => {
     const confirmation = window.confirm(
       'Are you sure you want to delete this group?',
     )
@@ -34,8 +34,8 @@ export default function ManageGroup() {
       setGroups(groups.filter((group) => group.id !== id))
 
       try {
-        const res =  await AuthorizationAxios.remove(`/api/group/delete/${id}`)
-        console.log(res);
+        const res = await AuthorizationAxios.remove(`/api/group/delete/${id}`)
+        console.log(res)
         toast.success('Group deleted successfully!')
       } catch (error) {
         console.error('Error deleting group:', error)
@@ -45,7 +45,6 @@ export default function ManageGroup() {
       }
     }
   }
-  
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },

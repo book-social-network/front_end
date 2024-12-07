@@ -115,11 +115,7 @@ export default function ModalUpdateGroup({
 
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>State</InputLabel>
-          <Select
-            value={groupState}
-            onChange={handleStateChange}
-            label="State"
-          >
+          <Select value={groupState} onChange={handleStateChange} label="State">
             <MenuItem value={0}>Public</MenuItem>
             <MenuItem value={1}>Private</MenuItem>
           </Select>

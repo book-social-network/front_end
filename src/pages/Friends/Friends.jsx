@@ -70,9 +70,17 @@ export default function Friends() {
         <Typography variant="h6" color="#00635d" mb={2}>
           Suggest friends
         </Typography>
-        <Grid container spacing={2} >
+        <Grid container spacing={2}>
           {visibleItems.map((item, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index} sx={{background:'#6495ED'}} paddingRight={1}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              key={index}
+              sx={{ background: '#6495ED' }}
+              paddingRight={1}
+            >
               <SuggestFriendsItem
                 id={item.id}
                 name={item.name}

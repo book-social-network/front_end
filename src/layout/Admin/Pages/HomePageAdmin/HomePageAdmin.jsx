@@ -27,7 +27,7 @@ export default function HomePageAdmin() {
   const [data, setData] = useState()
   const { user } = useUserProfile()
 
-  useCheckAuth({ requiredRole: 'admin', userRole: user?.user?.role });
+  useCheckAuth({ requiredRole: 'admin', userRole: user?.user?.role })
 
   useEffect(() => {
     const fetchData = async () => {

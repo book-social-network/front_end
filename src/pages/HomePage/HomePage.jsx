@@ -40,7 +40,13 @@ const HomePage = () => {
         <p>Loading...</p>
       ) : (
         <Grid container spacing={3}>
-          <Grid className="LeftContainer container" item xs={0} sm={3}  sx={{background:'#FDF5E6'}}>
+          <Grid
+            className="LeftContainer container"
+            item
+            xs={0}
+            sm={3}
+            sx={{ background: '#FDF5E6' }}
+          >
             <Box mt={2} mb={2}>
               <LeftContainer />
             </Box>
@@ -88,7 +94,13 @@ const HomePage = () => {
               }
             })}
           </Grid>
-          <Grid className="RightContainer container" item xs={0} sm={3} sx={{background:'#FDF5E6'}}>
+          <Grid
+            className="RightContainer container"
+            item
+            xs={0}
+            sm={3}
+            sx={{ background: '#FDF5E6' }}
+          >
             <RightContainer />
             <Footer size="sm" />
           </Grid>

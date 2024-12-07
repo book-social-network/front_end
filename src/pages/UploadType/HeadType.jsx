@@ -60,7 +60,7 @@ function HeadType({ types }) {
             '&:focus': {
               borderColor: '#000',
             },
-            bgcolor: '#fff'
+            bgcolor: '#fff',
           }}
         />
       </Container>
