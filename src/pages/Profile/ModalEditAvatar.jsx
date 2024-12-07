@@ -90,7 +90,7 @@ const ModalEditAvatar = ({ open, onClose }) => {
           align="center"
           sx={{ mb: 2, fontWeight: 'bold' }}
         >
-          Thay đổi ảnh đại diện
+          Change avatar
         </Typography>
         <label htmlFor="upload-image" style={{ display: 'block' }}>
           <input

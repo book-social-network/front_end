@@ -30,6 +30,7 @@ export default function SuggestFriendsItem({ id, name, image }) {
         flexDirection: 'column',
         alignItems: 'center',
         padding: 2,
+        backgroundColor:'#E0FFFF'
       }}
     >
       <Box

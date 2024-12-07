@@ -25,7 +25,7 @@ export default function ModalDelete({
         }}
       >
         <Typography variant="h6" component="h2" mb={2}>
-          Thành viên
+          member
         </Typography>
 
         <Box
@@ -60,7 +60,7 @@ export default function ModalDelete({
           onClick={closeModal}
           sx={{ mt: 2 }}
         >
-          Đóng
+          Close
         </Button>
       </Box>
     </Modal>

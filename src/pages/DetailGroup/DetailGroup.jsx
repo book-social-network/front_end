@@ -149,7 +149,7 @@ export default function DetailGroup() {
                 ))}
               </AvatarGroup>
               <Typography variant="body1" color="#fff">
-                {dataGroup ? dataGroup?.users.length : ''} thành viên
+                {dataGroup ? dataGroup?.users.length : ''} member
               </Typography>
             </Box>
           </Grid>
@@ -283,8 +283,8 @@ export default function DetailGroup() {
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
                 {dataGroup && dataGroup.group.state === 1
-                  ? 'Công khai'
-                  : 'Riêng tư'}
+                  ? 'Public'
+                  : 'Private'}
               </Typography>
             </Box>
             <Typography variant="body2" color="#b0b0b0">
@@ -297,7 +297,7 @@ export default function DetailGroup() {
                 <FaUsers />
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
-                {dataGroup ? dataGroup.users.length : ''} thành viên
+                {dataGroup ? dataGroup.users.length : ''} member
               </Typography>
             </Box>
             <Box display="flex" alignItems="center" gap={1} mt={1}>
@@ -305,7 +305,7 @@ export default function DetailGroup() {
                 <BsFileEarmarkPostFill />
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
-                {dataGroup ? dataGroup?.['count-post'] : 0} bài viết
+                {dataGroup ? dataGroup?.['count-post'] : 0} post
               </Typography>
             </Box>
 
@@ -316,7 +316,7 @@ export default function DetailGroup() {
                   color="primary"
                   onClick={handleOpenModaUsers}
                 >
-                  Quản lý thành viên
+                  manager member
                 </Button>
                 <Button
                   variant="contained"
@@ -324,7 +324,7 @@ export default function DetailGroup() {
                   sx={{ mb: 1 }}
                   onClick={handleOpenModalUpdate}
                 >
-                  Chỉnh sửa nhóm
+                  Update group
                 </Button>
               </Box>
             )}

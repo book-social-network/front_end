@@ -53,7 +53,7 @@ function EditProfile() {
       <Box
         sx={{
           paddingTop: '10px',
-          bgcolor: '#f5f5f5',
+          bgcolor: '#FFFAF0',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -80,7 +80,7 @@ function EditProfile() {
             variant="h5"
             sx={{ mb: 3, fontWeight: 'bold', color: '#333' }}
           >
-            Chỉnh sửa trang cá nhân
+            Update profile
           </Typography>
 
           <Card
@@ -116,7 +116,7 @@ function EditProfile() {
               }}
               onClick={handleOpenModal}
             >
-              Đổi ảnh
+              Change image
             </Button>
           </Card>
 
@@ -164,7 +164,7 @@ function EditProfile() {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Số điện thoại"
+                label="Phone number"
                 variant="outlined"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -223,7 +223,7 @@ function EditProfile() {
                 }}
                 onClick={handleSubmit}
               >
-                Lưu thay đổi
+                Save changes
               </Button>
             </Grid>
           </Grid>

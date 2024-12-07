@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import { Typography, Paper, Grid, IconButton } from '@mui/material'
+import { Typography, Paper, Grid, IconButton, Button } from '@mui/material'
 import AuthorizationAxios from '../../../../hooks/Request'
 import { FaPlus } from 'react-icons/fa'
 import ModalAddUser from './ModalAddUser'
+import { toast } from 'react-toastify'
 
 export default function ManageUser() {
   const [users, setUsers] = useState([])
@@ -26,6 +27,26 @@ export default function ManageUser() {
 
     fetchUsers()
   }, [])
+  const handleDelete=async(id)=>{
+    const confirmation = window.confirm(
+      'Are you sure you want to delete this user?',
+    )
+
+    if (confirmation) {
+      const previousData = [...users]
+      setUsers(users.filter((user) => user.id !== id))
+
+      try {
+        await AuthorizationAxios.remove(`/api/user/delete/${id}`)
+        toast.success('User deleted successfully!')
+      } catch (error) {
+        console.error('Error deleting user:', error)
+        toast.error('Failed to delete user.')
+
+        setUsers(previousData)
+      }
+    }
+  }
 
   const userColumns = [
     { field: 'id', headerName: 'ID', width: 100 },
@@ -43,6 +64,21 @@ export default function ManageUser() {
           alt="avatar"
           style={{ width: 40, height: 40, borderRadius: '50%' }}
         />
+      ),
+    },
+    {
+      field: 'Delete',
+      headerName: 'Delete',
+      maxWidth: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          size="small"
+          color="error"
+          onClick={() => handleDelete(params.row.id)}
+        >
+          Delete
+        </Button>
       ),
     },
   ]

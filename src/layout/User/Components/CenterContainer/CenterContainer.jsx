@@ -31,11 +31,10 @@ const CenterContainer = () => {
           className="banner-title"
           sx={{ marginTop: '20px' }}
         >
-          Mừng tháng đọc sách
+          Happy reading month
         </Typography>
         <Typography variant="body1" sx={{ marginTop: '10px' }}>
-          Khám phá những cuốn sách mới tuyệt vời để đọc trong tháng này và cả
-          năm!
+          Discover great new books to read this month and beyond year!
         </Typography>
       </Box>
 

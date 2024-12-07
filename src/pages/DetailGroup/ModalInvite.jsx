@@ -75,7 +75,7 @@ export default function ModalInvite({ openModal, closeModal, id_group }) {
           onClick={closeModal}
           sx={{ mt: 2 }}
         >
-          Đóng
+          Close
         </Button>
       </Box>
     </Modal>

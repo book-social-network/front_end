@@ -30,7 +30,7 @@ const BlockJoinGroup = ({ idGroup, info, idNoti }) => {
   }
   return (
     <>
-      {info && state === 1 ? (
+      {info && state === 0 ? (
         <Box p={1}>
           <Button
             sx={{ margin: '5px' }}

@@ -50,7 +50,7 @@ const LeftContainer = () => {
     data?.filter((item) => item.assessment.state_read === 2).length || 0
   const totalBooks = wantToReadCount + readingCount + readCount
   return (
-    <Container>
+    <Container sx={{background:'#FDF5E6'}}>
       <Box className="left-content">
         <Typography variant="h6">Currently Reading</Typography>
         <Grid>
@@ -68,7 +68,7 @@ const LeftContainer = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder="Tìm kiếm"
+                placeholder="Find book"
                 variant="outlined"
                 size="small"
                 InputProps={{

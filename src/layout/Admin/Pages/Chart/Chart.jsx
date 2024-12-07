@@ -142,7 +142,7 @@ const Chart = () => {
         {data ? (
           <Line data={chartData} options={options} />
         ) : (
-          <p>Đang tải dữ liệu...</p>
+          <p>Data loading...</p>
         )}
       </div>
     </div>

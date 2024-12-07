@@ -50,8 +50,8 @@ export default function ManagePosts() {
     { field: 'commentsCount', headerName: 'Comments Count', width: 180 },
     { field: 'likesCount', headerName: 'Likes Count', width: 180 },
     {
-      field: 'edit',
-      headerName: 'Edit',
+      field: 'Delete',
+      headerName: 'Delete',
       maxWidth: 150,
       renderCell: (params) => (
         <Button
@@ -59,7 +59,7 @@ export default function ManagePosts() {
           color="error"
           onClick={() => handleDelete(params.id)}
         >
-          Edit
+          Delete
         </Button>
       ),
     },

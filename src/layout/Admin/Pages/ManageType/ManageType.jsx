@@ -36,7 +36,7 @@ export default function ManageType() {
   }
   const handleDelete = async (id) => {
     const confirmation = window.confirm(
-      'Are you sure you want to delete this Took?',
+      'Are you sure you want to delete this Type?',
     )
 
     if (confirmation) {

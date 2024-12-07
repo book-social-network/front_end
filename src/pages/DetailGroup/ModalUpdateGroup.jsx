@@ -78,12 +78,12 @@ export default function ModalUpdateGroup({
         }}
       >
         <Typography variant="h6" mb={2}>
-          Chỉnh sửa nhóm
+          Update group
         </Typography>
 
         <TextField
           fullWidth
-          label="Tên nhóm"
+          label="Group name"
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
           sx={{ mb: 2 }}
@@ -91,7 +91,7 @@ export default function ModalUpdateGroup({
 
         <TextField
           fullWidth
-          label="Tiêu đề"
+          label="Title"
           value={groupTitle}
           onChange={(e) => setGroupTitle(e.target.value)}
           sx={{ mb: 2 }}
@@ -114,14 +114,14 @@ export default function ModalUpdateGroup({
         />
 
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel>Trạng thái</InputLabel>
+          <InputLabel>State</InputLabel>
           <Select
             value={groupState}
             onChange={handleStateChange}
-            label="Trạng thái"
+            label="State"
           >
-            <MenuItem value={0}>Công khai</MenuItem>
-            <MenuItem value={1}>Riêng tư</MenuItem>
+            <MenuItem value={0}>Public</MenuItem>
+            <MenuItem value={1}>Private</MenuItem>
           </Select>
         </FormControl>
 

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, IconButton, Typography, Box } from '@mui/material'
 import { FaPlus } from 'react-icons/fa'
 import AuthorizationAxios from '../../hooks/Request'
+import { useUserProfile } from '../../hooks/useUserProfile'
+import Pusher from 'pusher-js'
 
 export default function ModalInviteItem({
   user_id,
@@ -9,6 +11,19 @@ export default function ModalInviteItem({
   user_avatar,
   group_id,
 }) {
+  const { user } = useUserProfile()
+  useEffect(() => {
+    // Kết nối tới Pusher
+    const pusher = new Pusher('64940ba62e7f545bd4c8', {
+      cluster: 'ap2',
+    })
+
+    // Đăng ký channel
+    const channelPost = pusher.subscribe(`notifications.${user?.user.id}`)
+    channelPost.bind('notification-event', (data) => {
+      console.log(data)
+    })
+  }, [])
   const handleInvite = async () => {
     const response = await AuthorizationAxios.post(
       '/api/detail-group-user/invite',

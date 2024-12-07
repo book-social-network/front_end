@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 
-export const useAuth = ({ requiredRole, userRole }) => {
+export const useCheckAuth = ({ requiredRole, userRole }) => {
   const navigate = useNavigate()
+  useEffect(()=>{
 
-  useEffect(() => {
-    if (userRole !== requiredRole) {
-      navigate('/')
+    if (userRole && userRole !== requiredRole) {
+      navigate('/');
     }
-  }, [requiredRole, userRole])
+  },[requiredRole, userRole])
 }

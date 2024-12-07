@@ -72,9 +72,9 @@ const MyBooks = () => {
     }
     fetchBooks()
   }, [user, filter])
-  const handleDetail = (id) => {
-    navigate(`/detail-book/${id}`)
-  }
+  // const handleDetail = (id) => {
+  //   navigate(`/detail-book/${id}`)
+  // }
 
   const getStatusText = (stateRead) => {
     switch (stateRead) {
@@ -214,9 +214,6 @@ const MyBooks = () => {
                     {books.map((item, rowIndex) => (
                       <TableRow
                         key={rowIndex}
-                        onClick={() => {
-                          handleDetail(item.book[0].id)
-                        }}
                       >
                         <TableCell>
                           <img

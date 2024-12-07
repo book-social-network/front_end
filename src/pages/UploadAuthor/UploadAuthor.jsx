@@ -53,7 +53,7 @@ function UploadAuthor({ onBack }) {
     }
   }
   const handleSubmit = async () => {
-    if (dod.isBefore(dob)) {
+    if (dod && dob && dod.isBefore(dob)) {
       toast.error('Date of death must be greater than date of birth.')
       return
     }
@@ -63,7 +63,7 @@ function UploadAuthor({ onBack }) {
       formData.append('name', name)
       formData.append('born', born)
       formData.append('dob', dob?.format('YYYY-MM-DD'))
-      formData.append('died', dod?.format('YYYY-MM-DD'))
+      formData.append('died', dod?dod?.format('YYYY-MM-DD'):'')
       if (image) {
         formData.append('image', image)
       }
@@ -90,7 +90,7 @@ function UploadAuthor({ onBack }) {
       <Box
         sx={{
           paddingTop: '10px',
-          bgcolor: '#f5f5f5',
+          bgcolor: '#FFFAF0',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -117,7 +117,7 @@ function UploadAuthor({ onBack }) {
               color: '#333',
             }}
           >
-            Author available
+            Authors
           </Typography>
           <SearchAuthor authors={authors} />
         </Box>
@@ -216,10 +216,10 @@ function UploadAuthor({ onBack }) {
               </LocalizationProvider>
             </Grid>
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Đead of dead"
+                  label="Date of dead"
                   value={dod}
                   onChange={(newValue) => setDod(newValue)}
                   renderInput={(params) => (
@@ -242,7 +242,7 @@ function UploadAuthor({ onBack }) {
                   )}
                 />
               </LocalizationProvider>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12}>
               <TextField

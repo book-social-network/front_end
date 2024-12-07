@@ -71,14 +71,14 @@ function RecommendedGroup({
               <RemoveRedEyeIcon
                 style={{ marginRight: '4px', fontSize: '1rem' }}
               />
-              <Typography variant="body2">Công khai</Typography>
+              <Typography variant="body2">Public</Typography>
             </div>
           ) : (
             <div style={{ display: 'flex', margin: '0.5rem' }}>
               <VisibilityOffIcon
                 style={{ marginRight: '4px', fontSize: '1rem' }}
               />
-              <Typography variant="body2">Riêng tư</Typography>
+              <Typography variant="body2">Private</Typography>
             </div>
           )}
         </CardContent>
@@ -86,7 +86,7 @@ function RecommendedGroup({
         <Button size="small" color="primary">
           <ThumbUpIcon />
           <Typography sx={{ padding: '0.5rem' }} variant="body2">
-            Tham gia
+            Join
           </Typography>
         </Button>
       </Card>

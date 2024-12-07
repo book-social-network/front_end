@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, IconButton, Paper, Typography } from '@mui/material'
+import { Button, Grid, IconButton, Paper, Typography } from '@mui/material'
 import AuthorizationAxios from '../../../../hooks/Request'
 import { DataGrid } from '@mui/x-data-grid'
 import { FaPlus } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 export default function ManageGroup() {
   const [groups, setGroups] = useState([])
@@ -23,12 +24,50 @@ export default function ManageGroup() {
     fetchGroups()
   }, [])
 
+  const handleDelete = async(id)=>{
+    const confirmation = window.confirm(
+      'Are you sure you want to delete this group?',
+    )
+
+    if (confirmation) {
+      const previousData = [...groups]
+      setGroups(groups.filter((group) => group.id !== id))
+
+      try {
+        const res =  await AuthorizationAxios.remove(`/api/group/delete/${id}`)
+        console.log(res);
+        toast.success('Group deleted successfully!')
+      } catch (error) {
+        console.error('Error deleting group:', error)
+        toast.error('Failed to delete group.')
+
+        setGroups(previousData)
+      }
+    }
+  }
+  
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
     { field: 'name', headerName: 'Group Name', width: 200 },
     { field: 'description', headerName: 'Description', width: 250 },
-    { field: 'user_count', headerName: 'Users', width: 180 },
+    { field: 'user_count', headerName: 'Members', width: 180 },
     { field: 'state', headerName: 'State', width: 100 },
+    {
+      field: 'Delete',
+      headerName: 'Delete',
+      maxWidth: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          size="small"
+          color="error"
+          onClick={() => handleDelete(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
+    },
   ]
 
   const rows = groups.map((item) => ({

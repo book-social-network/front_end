@@ -60,6 +60,7 @@ function HeadType({ types }) {
             '&:focus': {
               borderColor: '#000',
             },
+            bgcolor: '#fff'
           }}
         />
       </Container>
@@ -79,6 +80,7 @@ function HeadType({ types }) {
           overflowY: 'auto',
           border: '1px solid #ccc',
           borderRadius: '8px',
+          bgcolor: '#fff',
           '&::-webkit-scrollbar': {
             width: '8px',
             backgroundColor: '#f1f1f1',

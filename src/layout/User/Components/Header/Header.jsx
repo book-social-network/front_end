@@ -210,7 +210,7 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#F4F1EA' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#DEB887' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <IconButton
           color="#000"
