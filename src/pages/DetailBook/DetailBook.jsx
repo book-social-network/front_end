@@ -9,35 +9,57 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Avatar,
 } from '@mui/material'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import StarIcon from '@mui/icons-material/Star'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import AuthorizationAxios from '../../hooks/Request'
 
 export default function DetailBook() {
   const [dataBook, setDataBook] = useState(null)
   const [rating, setRating] = useState(0)
-  const id = useParams()
-  const navigate = useNavigate()
+  const [status, setStatus] = useState('')
+  const { id } = useParams()
 
-  const id_book = id.id
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await AuthorizationAxios.get(`/api/book/get/${id_book}`)
-        setDataBook(res?.data)
+        const res = await AuthorizationAxios.get(`/api/book/get/${id}`)
+        const book = res?.data?.book
+        setDataBook(book)
+
+        const statusMap = {
+          0: 'want to read',
+          1: 'reading',
+          2: 'finish reading',
+        }
+        setStatus(statusMap[book.status] || '')
         setRating(res?.data?.assessment?.star || 0)
       } catch (error) {
         console.error('Error fetching book details:', error)
       }
     }
     fetchData()
-  }, [id_book])
-  const handleChange = (event) => {}
+  }, [id])
+
+  const handleChange = (event) => {
+    const value = event.target.value
+    setStatus(value)
+    const statusReverseMap = {
+      'want to read': 0,
+      reading: 1,
+      'finish reading': 2,
+    }
+    const numericStatus = statusReverseMap[value]
+
+    AuthorizationAxios.post(`/api/assessment/update-state-read/${id}`, {
+      state_read: numericStatus,
+    }).then(() => {
+      console.log('Status updated successfully')
+    })
+  }
 
   if (!dataBook) {
     return (
@@ -68,7 +90,7 @@ export default function DetailBook() {
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                 transition: 'transform 0.3s ease-in-out',
               }}
-              src={dataBook?.book?.image || 'default-image.jpg'}
+              src={dataBook?.image || 'default-image.jpg'}
               alt="Book"
               onMouseOver={(e) => (e.target.style.transform = 'scale(1.05)')}
               onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
@@ -80,7 +102,7 @@ export default function DetailBook() {
                 variant="h4"
                 sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}
               >
-                {dataBook?.book?.name || 'Book Title'}{' '}
+                {dataBook?.name || 'Book Title'}
               </Typography>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ mr: 1, color: '#555' }}>
@@ -150,7 +172,7 @@ export default function DetailBook() {
                     <InputLabel id="status-label">Trạng thái</InputLabel>
                     <Select
                       labelId="status-label"
-                      label="Trạng thái"
+                      value={status}
                       onChange={handleChange}
                       sx={{ borderRadius: 1, padding: 1 }}
                     >
@@ -163,7 +185,7 @@ export default function DetailBook() {
 
                 <Grid item xs={4}>
                   <Button
-                    onClick={navigate(dataBook?.book.link_book)}
+                    onClick={() => window.open(dataBook?.link_book, '_blank')}
                     variant="contained"
                     color="primary"
                     sx={{

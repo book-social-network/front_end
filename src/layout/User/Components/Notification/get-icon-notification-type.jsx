@@ -3,13 +3,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import ChatIcon from '@mui/icons-material/Chat'
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle'
+import GppMaybeIcon from '@mui/icons-material/GppMaybe'
 const getIconNotificationType = (type) => {
   const mainType = type.split('-')[0]
   switch (mainType) {
     case 'follow':
       return <AccountCircleIcon />
       break
-    case 'user':
+    case 'member':
       return <AccountCircleIcon />
       break
     case 'post':
@@ -20,6 +21,9 @@ const getIconNotificationType = (type) => {
           }}
         />
       )
+      break
+    case 'admin':
+      return <GppMaybeIcon sx={{ fontSize: 12 }} />
       break
     case 'comment':
       return (

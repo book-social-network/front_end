@@ -12,6 +12,8 @@ import ContainerAuthors from './ContainerAuthors'
 import ContainerType from './ContainerTypes'
 import LoadingDialog from './LoadingUpload'
 import { IoMdReturnLeft } from 'react-icons/io'
+import { toast } from 'react-toastify'
+import AuthorizationAxios from '../../hooks/Request'
 
 export default function UploadBook({ onBack }) {
   const [name, setName] = useState('')
@@ -19,9 +21,18 @@ export default function UploadBook({ onBack }) {
   const [link, setLink] = useState('')
   const [isUpload, setIsUpload] = useState(false)
   const [description, setDescription] = useState('')
-
   const [selectedTypes, setSelectedTypes] = useState([])
   const [selectedAuthors, setSelectedAuthors] = useState([])
+  const [dataBook, setDataBook] = useState([])
+
+  useEffect(()=>{
+    const fetchData =async()=>{
+      const res = await AuthorizationAxios.get('/api/book/get-all')
+      const book = await res.data
+      setDataBook(book)
+    }
+    fetchData()
+  },[])
 
   const handleClose = () => {
     onBack()
@@ -32,7 +43,18 @@ export default function UploadBook({ onBack }) {
   }
 
   const handleUploadBook = () => {
-    setIsUpload(true)
+    const isBookExists = dataBook.some((book) => book.name === name);
+    if (isBookExists) {
+      toast.warning('The book already exists!');
+      return; 
+    }
+    if (selectedAuthors.length === 0) {
+      toast.warning('You must select a author')
+    } else if (selectedTypes.length === 0) {
+      toast.warning('You must select a type')
+    } else {
+      setIsUpload(true)
+    }
   }
 
   const resetForm = () => {

@@ -282,7 +282,7 @@ export default function DetailGroup() {
                 )}
               </Icon>
               <Typography variant="body2" color="#b0b0b0" mt={1}>
-                {dataGroup && dataGroup.group.state === 1
+                {dataGroup && dataGroup.group.state === 0
                   ? 'Public'
                   : 'Private'}
               </Typography>
