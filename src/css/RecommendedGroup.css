@@ -7,7 +7,6 @@
 }
 
 .img-group {
-  max-width: '200px';
   height: auto;
   object-fit: cover;
 }

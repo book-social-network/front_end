@@ -35,7 +35,7 @@ function RecommendedGroup({
           className="img-group"
           alt={NameGroup}
           image={imgGroup}
-          sx={{ width: '100%' }}
+          sx={{ width: '100%', height: 200, objectFit:'cover' }}
         />
         <CardContent>
           <Link
@@ -66,7 +66,7 @@ function RecommendedGroup({
           >
             {DetailGroup}
           </Typography>
-          {StateGroup === 1 ? (
+          {StateGroup === 0 ? (
             <div style={{ display: 'flex', margin: '0.5rem' }}>
               <RemoveRedEyeIcon
                 style={{ marginRight: '4px', fontSize: '1rem' }}

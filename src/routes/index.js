@@ -13,7 +13,6 @@ const HomePageAdmin = lazy(
   () => import('../layout/Admin/Pages/HomePageAdmin/HomePageAdmin'),
 )
 const DetailPost = lazy(() => import('../pages/DetailPost/DetailPost'))
-const TestPage = lazy(() => import('../pages/testpage'))
 const UploadAuthor = lazy(() => import('../pages/UploadAuthor/UploadAuthor'))
 const UploadType = lazy(() => import('../pages/UploadType/UploadType'))
 const UploadBook = lazy(() => import('../pages/UploadBook/UploadBook'))
@@ -45,6 +44,5 @@ export const routes = [
     path: '/admin',
     page: <HomePageAdmin />,
     isShowHeader: false,
-  },
-  { path: '/test', page: <TestPage />, isShowHeader: false },
+  }
 ]

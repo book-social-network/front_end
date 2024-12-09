@@ -47,7 +47,7 @@ export default function SuggestBook() {
             >
               <CardMedia
                 component="img"
-                sx={{ maxHeight: 140 }}
+                sx={{ maxHeight: 115, objectFit: 'cover' }}
                 image={item.image}
                 alt={item.name}
               />
