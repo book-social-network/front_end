@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import AuthorizationAxios from '../../../../hooks/Request';
-import { useNavigate } from 'react-router-dom';
-import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
+import React, { useEffect, useState } from 'react'
+import AuthorizationAxios from '../../../../hooks/Request'
+import { useNavigate } from 'react-router-dom'
+import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 export default function SuggestBook() {
-  const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const navigate = useNavigate()
+  const [data, setData] = useState([])
 
   useEffect(() => {
     const fetchBook = async () => {
-      const res = await AuthorizationAxios.get('/api/book/suggest-book');
-      const resB = await res.data;
-      setData(resB);
-    };
-    fetchBook();
-  }, []);
+      const res = await AuthorizationAxios.get('/api/book/suggest-book')
+      const resB = await res.data
+      setData(resB)
+    }
+    fetchBook()
+  }, [])
 
   return (
     <Box sx={{ padding: 2 }}>
       <Swiper
-  modules={[Navigation, Pagination]}
-  navigation
-  pagination={{ clickable: true }}
-  spaceBetween={20}
-  slidesPerView={3}
-  style={{ padding: '20px' }}
->
-
+        modules={[Navigation, Pagination]}
+        navigation
+        pagination={{ clickable: true }}
+        spaceBetween={20}
+        slidesPerView={3}
+        style={{ padding: '20px' }}
+      >
         {data.map((item) => (
           <SwiperSlide key={item.id}>
             <Card
@@ -44,7 +42,7 @@ export default function SuggestBook() {
                 borderRadius: '12px',
               }}
               onClick={() => {
-                navigate(`/detail-book/${item.id}`);
+                navigate(`/detail-book/${item.id}`)
               }}
             >
               <CardMedia
@@ -68,5 +66,5 @@ export default function SuggestBook() {
         ))}
       </Swiper>
     </Box>
-  );
+  )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography,  Grid } from '@mui/material'
+import { Box, Typography, Grid } from '@mui/material'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../../../css/centerContainer.css'
 import ModalCreatePost from './ModalCreatePost'
@@ -10,7 +10,7 @@ const CenterContainer = () => {
   const { user, token } = useUserProfile()
   return (
     <>
-    <SuggestBook/>
+      <SuggestBook />
       <Box
         className="center-content"
         sx={{

@@ -10,7 +10,6 @@ import {
   Box,
   InputAdornment,
 } from '@mui/material'
-import GoogleIcon from '@mui/icons-material/Google'
 import PersonIcon from '@mui/icons-material/Person'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
@@ -129,22 +128,6 @@ const Login = () => {
       >
         Login
       </Button>
-      <Typography variant="body2" className="signup-using-text">
-        Or Sign Up Using
-      </Typography>
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item>
-          <IconButton
-            className="google-button"
-            sx={{
-              backgroundColor: '#DB4437',
-              '&:hover': { backgroundColor: '#C13529' },
-            }}
-          >
-            <GoogleIcon sx={{ color: '#fff' }} />
-          </IconButton>
-        </Grid>
-      </Grid>
       <Typography variant="body2" className="signup-link">
         Or <Link href="/register">Sign up</Link>
       </Typography>

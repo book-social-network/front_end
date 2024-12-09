@@ -9,7 +9,6 @@ import {
   Grid,
   Box,
 } from '@mui/material'
-import GoogleIcon from '@mui/icons-material/Google'
 import { useForm } from 'react-hook-form'
 import '../../css/Register.css'
 import AuthorizationAxios from '../../hooks/Request'
@@ -120,24 +119,8 @@ const Register = () => {
         </Button>
       </form>
 
-      <Typography variant="body2" className="sign-up-with-text">
-        Or sign up with
-      </Typography>
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item>
-          <IconButton
-            className="google-button"
-            sx={{
-              backgroundColor: '#DB4437',
-              '&:hover': { backgroundColor: '#C13529' },
-            }}
-          >
-            <GoogleIcon sx={{ color: '#fff' }} />
-          </IconButton>
-        </Grid>
-      </Grid>
       <Typography variant="body2" className="login-link">
-        Already have an account? <Link to="/Login">Login</Link>
+        Already have an account? <Link to="/">Login</Link>
       </Typography>
     </Container>
   )

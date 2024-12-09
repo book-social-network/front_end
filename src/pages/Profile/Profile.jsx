@@ -12,12 +12,18 @@ import {
   Grid,
 } from '@mui/material'
 import { useUserProfile } from '../../hooks/useUserProfile'
-import { Edit, CameraAlt } from '@mui/icons-material'
+import { Edit } from '@mui/icons-material'
 import Post from '../../layout/User/Poster/Post'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { Link } from 'react-router-dom'
+import ModalChangePass from './ModalChangePass'
 
 export default function Profile() {
   const { user } = useUserProfile()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleOpenModal = () => setIsModalOpen(true)
+  const handleCloseModal = () => setIsModalOpen(false)
 
   useEffect(() => {
     if (user?.posts) {
@@ -63,7 +69,7 @@ export default function Profile() {
             </Grid>
           </Grid>
         </Box>
-        <Box>
+        <Box display="flex" flexDirection="column">
           <Button
             variant="contained"
             startIcon={<Edit />}
@@ -77,6 +83,14 @@ export default function Profile() {
             >
               Edit Profile
             </Link>
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<SettingsIcon />}
+            sx={{ marginBottom: 1 }}
+            onClick={handleOpenModal}
+          >
+            Change password
           </Button>
         </Box>
       </Box>
@@ -118,6 +132,7 @@ export default function Profile() {
           </Paper>
         )}
       </Box>
+      <ModalChangePass open={isModalOpen} close={handleCloseModal} />
     </Container>
   )
 }

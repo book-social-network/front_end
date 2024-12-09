@@ -25,14 +25,14 @@ export default function UploadBook({ onBack }) {
   const [selectedAuthors, setSelectedAuthors] = useState([])
   const [dataBook, setDataBook] = useState([])
 
-  useEffect(()=>{
-    const fetchData =async()=>{
+  useEffect(() => {
+    const fetchData = async () => {
       const res = await AuthorizationAxios.get('/api/book/get-all')
       const book = await res.data
       setDataBook(book)
     }
     fetchData()
-  },[])
+  }, [])
 
   const handleClose = () => {
     onBack()
@@ -43,10 +43,10 @@ export default function UploadBook({ onBack }) {
   }
 
   const handleUploadBook = () => {
-    const isBookExists = dataBook.some((book) => book.name === name);
+    const isBookExists = dataBook.some((book) => book.name === name)
     if (isBookExists) {
-      toast.warning('The book already exists!');
-      return; 
+      toast.warning('The book already exists!')
+      return
     }
     if (selectedAuthors.length === 0) {
       toast.warning('You must select a author')

@@ -17,7 +17,7 @@ const NotificationItem = ({ notification }) => {
       justifyContent="space-between"
       padding={1}
       margin={1}
-      bgcolor={warning===true ?'#cc3300' : '#f5f5f5' }
+      bgcolor={warning === true ? '#cc3300' : '#f5f5f5'}
       borderRadius={2}
       boxShadow={1}
     >
@@ -47,10 +47,12 @@ const NotificationItem = ({ notification }) => {
           <Avatar />
         </Badge>
         <Box>
-          <Typography fontSize={14} fontWeight="bold" >
+          <Typography fontSize={14} fontWeight="bold">
             {notification.name}
           </Typography>
-          <Typography fontSize={14} color={warning===true ?'#fff' : '#000' }>{notification.information}</Typography>
+          <Typography fontSize={14} color={warning === true ? '#fff' : '#000'}>
+            {notification.information}
+          </Typography>
           {mainType === 'group' && (
             <BlockJoinGroup idGroup={id} info={info} idNoti={notification.id} />
           )}
