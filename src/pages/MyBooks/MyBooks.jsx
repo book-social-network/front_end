@@ -72,9 +72,6 @@ const MyBooks = () => {
     }
     fetchBooks()
   }, [user, filter])
-  // const handleDetail = (id) => {
-  //   navigate(`/detail-book/${id}`)
-  // }
 
   const getStatusText = (stateRead) => {
     switch (stateRead) {

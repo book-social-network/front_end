@@ -21,7 +21,7 @@ export default function Leaderboard() {
   const [userRank, setUserRank] = useState([])
 
   const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')) // Detect if the screen size is 'sm' or smaller
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')) 
 
   useEffect(() => {
     const fetchData = async () => {
