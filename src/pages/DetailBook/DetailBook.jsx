@@ -16,18 +16,22 @@ import StarBorderIcon from '@mui/icons-material/StarBorder'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
 import { useParams } from 'react-router-dom'
 import AuthorizationAxios from '../../hooks/Request'
+import InsertNewAssessment from './InsertNewAssessment'
+import { useUserProfile } from '../../hooks/useUserProfile'
+import GetAssessment from './GetAssessment'
 
 export default function DetailBook() {
-  const [dataBook, setDataBook] = useState(null)
+  const [dataBook, setDataBook] = useState([])
   const [rating, setRating] = useState(0)
   const [status, setStatus] = useState('')
+  const { user } = useUserProfile();
   const { id } = useParams()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await AuthorizationAxios.get(`/api/book/get/${id}`)
-        const book = res?.data?.book
+        const book = res?.data
         setDataBook(book)
 
         const statusMap = {
@@ -43,7 +47,6 @@ export default function DetailBook() {
     }
     fetchData()
   }, [id])
-
   const handleChange = (event) => {
     const value = event.target.value
     setStatus(value)
@@ -90,7 +93,7 @@ export default function DetailBook() {
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                 transition: 'transform 0.3s ease-in-out',
               }}
-              src={dataBook?.image || 'default-image.jpg'}
+              src={dataBook?.book?.image || 'default-image.jpg'}
               alt="Book"
               onMouseOver={(e) => (e.target.style.transform = 'scale(1.05)')}
               onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
@@ -102,7 +105,7 @@ export default function DetailBook() {
                 variant="h4"
                 sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}
               >
-                {dataBook?.name || 'Book Title'}
+                {dataBook?.book?.name || 'Book Title'}
               </Typography>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ mr: 1, color: '#555' }}>
@@ -204,6 +207,8 @@ export default function DetailBook() {
                   </Button>
                 </Grid>
               </Grid>
+              <InsertNewAssessment bookId={id} userId={user?.user?.id}/>
+              <GetAssessment assessment={dataBook?.assessment} idBook={id} idUser={user?.user.id} />
             </Box>
           </Grid>
         </Grid>

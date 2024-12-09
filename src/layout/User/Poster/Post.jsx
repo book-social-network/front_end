@@ -42,8 +42,8 @@ const Post = ({
   state_like,
   isDetailPostPage,
   noLink,
-  noDelete,
 }) => {
+  console.log(bookId);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null)
   const [status, setStatus] = useState('Choose state')
   const [liked, setLiked] = useState(state_like)

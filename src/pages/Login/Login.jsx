@@ -39,7 +39,7 @@ const Login = () => {
         email: email,
         password: pass,
       })
-
+      console.log(res);
       if (res?.status === 401) {
         toast.error('Invalid email or password')
         setPasswordHelperText('Invalid email or password')

@@ -70,6 +70,7 @@ const HomePage = () => {
                     timeStamp={item.post.created_at}
                     userName={item.user.name}
                     isDetailPostPage={false}
+                    bookId={item.books[0].id}
                   />
                 )
               } else {
