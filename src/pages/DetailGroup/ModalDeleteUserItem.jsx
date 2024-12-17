@@ -38,7 +38,6 @@ export default function ModalDeleteUserItem({
           user_id: user_id,
         },
       )
-      console.log(response)
     } catch (error) {
       console.error('Error removing member:', error)
     } finally {

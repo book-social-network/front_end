@@ -4,7 +4,6 @@ import {
   Avatar,
   Typography,
   Box,
-  IconButton,
   Button,
   Tabs,
   Tab,
@@ -13,25 +12,30 @@ import {
 } from '@mui/material'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import { Edit } from '@mui/icons-material'
-import Post from '../../layout/User/Poster/Post'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Link } from 'react-router-dom'
 import ModalChangePass from './ModalChangePass'
+import MyPost from './MyPost'
+import SharedPost from './SharedPost'
 
 export default function Profile() {
   const { user } = useUserProfile()
+  const [state, setState] = useState('post')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [post, setPost] = useState([])
 
   const handleOpenModal = () => setIsModalOpen(true)
   const handleCloseModal = () => setIsModalOpen(false)
+
+  const handleChange = (label) => {
+    setState(label) // Simplified the logic to directly set the state
+  }
 
   useEffect(() => {
     if (user?.posts) {
       setPost(user.posts)
     }
   }, [user])
-
-  const [post, setPost] = useState([])
 
   return (
     <Container maxWidth="md">
@@ -54,7 +58,10 @@ export default function Profile() {
             {user?.user?.name || 'Loading...'}
           </Typography>
           <Typography variant="body2" color="#fff" sx={{ marginBottom: 1 }}>
-            {user?.posts?.length} bài post
+            {user?.posts?.length || 0} posts
+          </Typography>
+          <Typography variant="body2" color="#fff" sx={{ marginBottom: 1 }}>
+            {user?.user?.point || 0} points
           </Typography>
           <Grid display="flex">
             <Grid item>
@@ -73,9 +80,7 @@ export default function Profile() {
           <Button
             variant="contained"
             startIcon={<Edit />}
-            sx={{
-              marginBottom: 1,
-            }}
+            sx={{ marginBottom: 1 }}
           >
             <Link
               to="/my-profile/edit"
@@ -97,41 +102,28 @@ export default function Profile() {
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={0}
+          value={state === 'post' ? 0 : 1}
           indicatorColor="primary"
           textColor="inherit"
           variant="fullWidth"
         >
-          <Tab label="Post" />
+          <Tab label="Post" onClick={() => handleChange('post')} />
+          <Tab label="Shared Post" onClick={() => handleChange('sharePost')} />
         </Tabs>
       </Box>
 
       <Box sx={{ marginTop: 3 }}>
-        {post.length <= 0 ? (
-          <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            Please upload a post
-          </Typography>
+        {state === 'post' ? (
+          <Paper sx={{ padding: 3, backgroundColor: '#121212' }}>
+            <MyPost post={post} />
+          </Paper>
         ) : (
           <Paper sx={{ padding: 3, backgroundColor: '#121212' }}>
-            {post.map((item, index) => (
-              <Post
-                key={index}
-                userName={user?.user.name}
-                userId={user?.user.id}
-                userAvatar={user?.user.image_url}
-                timeStamp={item?.post.created_at}
-                postId={item?.post.id}
-                bookDescription={item?.books[0].name}
-                bookImg={item.books[0].image}
-                bookLink={item?.books[0].link_book}
-                bookTitle={item?.books[0].name}
-                likes={item?.likes.length}
-                state_like={item['state-like']}
-              />
-            ))}
+            <SharedPost />
           </Paper>
         )}
       </Box>
+
       <ModalChangePass open={isModalOpen} close={handleCloseModal} />
     </Container>
   )

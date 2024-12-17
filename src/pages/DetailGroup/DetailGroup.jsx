@@ -24,6 +24,7 @@ import ModalInvite from './ModalInvite'
 import { toast } from 'react-toastify'
 import ModalDelete from './ModalDelete'
 import ModalUpdateGroup from './ModalUpdateGroup'
+import IconAdmin from '../../hooks/IconAdmin'
 
 export default function DetailGroup() {
   const [postGroup, setPostGroup] = useState(null)
@@ -140,13 +141,19 @@ export default function DetailGroup() {
           <Grid item>
             <Box display="flex" alignItems="center" gap={1} mt={2}>
               <AvatarGroup max={4}>
-                {dataGroup?.users.slice(0, 4).map((user, index) => (
-                  <Avatar
-                    key={index}
-                    alt={user.user.name}
-                    src={user?.user.image_url}
-                  />
-                ))}
+                {dataGroup?.users
+                  .slice(0, 4)
+                  .map((user, index) =>
+                    user["role-in-group"] === 'admin' ? (
+                      <IconAdmin image={user.user.image_url} />
+                    ) : (
+                      <Avatar
+                        key={index}
+                        alt={user.user.name}
+                        src={user?.user.image_url}
+                      />
+                    ),
+                  )}
               </AvatarGroup>
               <Typography variant="body1" color="#fff">
                 {dataGroup ? dataGroup?.users.length : ''} member
@@ -161,7 +168,7 @@ export default function DetailGroup() {
                   color="primary"
                   onClick={handleJoin}
                 >
-                  Tham gia nhóm
+                  Join
                 </Button>
               ) : (
                 <Box display="flex" flexDirection="row" gap={2}>
@@ -179,7 +186,7 @@ export default function DetailGroup() {
                     }}
                     onClick={handleOpen}
                   >
-                    <FaPlus /> Mời
+                    <FaPlus /> Invite
                   </Button>
                   <Button
                     variant="outlined"
@@ -195,7 +202,7 @@ export default function DetailGroup() {
                     }}
                     onClick={handleLeave}
                   >
-                    <MdLogout /> Thoát nhóm
+                    <MdLogout /> Out group
                   </Button>
                 </Box>
               )}
@@ -242,7 +249,7 @@ export default function DetailGroup() {
                     postId={post.post.id}
                     userId={post.user.id}
                     userName={post.user.name}
-                    userAvatar={post.user.avatar}
+                    userAvatar={post.user.image_url}
                     bookImg={post.books[0]?.image}
                     bookDescription={post.post.description}
                     bookLink={post.books[0]?.link_book}
@@ -315,6 +322,7 @@ export default function DetailGroup() {
                   variant="outlined"
                   color="primary"
                   onClick={handleOpenModaUsers}
+                  sx={{ my: 1 }}
                 >
                   manager member
                 </Button>

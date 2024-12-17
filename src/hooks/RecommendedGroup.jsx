@@ -12,6 +12,9 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import '../css/RecommendedGroup.css'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Link } from 'react-router-dom'
+import { useUserProfile } from './useUserProfile'
+import AuthorizationAxios from './Request'
+import { toast } from 'react-toastify'
 
 function RecommendedGroup({
   idGroup,
@@ -20,6 +23,14 @@ function RecommendedGroup({
   DetailGroup,
   StateGroup,
 }) {
+  const { user } = useUserProfile();
+  const handleJoin = async () => {
+    await AuthorizationAxios.post('/api/detail-group-user/insert', {
+      user_id: user?.user.id,
+      group_id: idGroup,
+    })
+    toast.success('Joined group success')
+  }
   return (
     <Grid sm={4} xs={6} item>
       <Card
@@ -35,7 +46,7 @@ function RecommendedGroup({
           className="img-group"
           alt={NameGroup}
           image={imgGroup}
-          sx={{ width: '100%', height: 200, objectFit:'cover' }}
+          sx={{ width: '100%', height: "200px !important", objectFit:'cover' }}
         />
         <CardContent>
           <Link
@@ -83,7 +94,7 @@ function RecommendedGroup({
           )}
         </CardContent>
 
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleJoin}>
           <ThumbUpIcon />
           <Typography sx={{ padding: '0.5rem' }} variant="body2">
             Join

@@ -90,6 +90,8 @@ const HomePage = () => {
                     state_like={item['state-like']}
                     user_avatar={item.user.image_url}
                     user_name={item.user.name}
+                    timeStamp={item.post.created_at}
+                    book_id={item.books[0].id}
                   />
                 )
               }

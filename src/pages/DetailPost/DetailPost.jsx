@@ -23,13 +23,15 @@ export default function DetailPost() {
   useEffect(() => {
     getData()
   }, [param])
+  
   const getData = async () => {
     const response = await AuthorizationAxios.get(`/api/post/get/${param.id}`)
     setData(response?.data)
   }
   useEffect(() => {
     setListComment(data?.comments)
-  }, [data])
+  }, [])
+
   useEffect(() => {
     const pusher = new Pusher('64940ba62e7f545bd4c8', {
       cluster: 'ap2',
@@ -40,6 +42,7 @@ export default function DetailPost() {
       console.log(data)
     })
   }, [])
+
   const handleCommentSubmit = async () => {
     if (comment.trim()) {
       try {
@@ -132,7 +135,73 @@ export default function DetailPost() {
               )}
             </div>
           ) : (
-            <MyGroupItem />
+            <div>
+              <MyGroupItem
+                book_link={data?.books[0].link_book}
+                group_avatar={data?.group.image_group}
+                group_id={data?.group.id}
+                group_name={data?.group.name}
+                image_book={data?.books[0].image}
+                likes={data?.likes.length}
+                name_book={data?.books[0].name}
+                state_like={data?.['state_like']}
+                user_avatar={data?.user[0].image_url}
+                user_id={data?.user[0].id}
+                user_name={data?.user[0].name}
+                bookDescription={data?.post.description}
+                book_id={data?.books[0].id}
+                isDetailPostPage={true}
+                timeStamp={data?.post.created_at}
+              />
+              <div
+                className="comment-input-container"
+                style={{ maxWidth: '850px', margin: 'auto' }}
+              >
+                <Avatar
+                  src={data?.user[0].image_url}
+                  alt="User Avatar"
+                  className="comment-avatar"
+                />
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  placeholder="Write a comment..."
+                  value={comment}
+                  onChange={(e) => {
+                    setComment(e.target.value)
+                  }}
+                  className="comment-input"
+                  fullWidth
+                />
+                <IconButton
+                  color="primary"
+                  aria-label="send comment"
+                  onClick={handleCommentSubmit}
+                >
+                  <IoSend />
+                </IconButton>
+              </div>
+              {listComment?.length > 0 ? (
+                listComment.map((item, index) => (
+                  <CommentItem
+                    key={index}
+                    userId={item.comment.user_id}
+                    userImage={item.user[0].image_url}
+                    userName={item.user[0].name}
+                    commentId={item.comment.id}
+                    commentText={item.comment.description}
+                    timestamp={item.comment.created_at}
+                    getData={getData}
+                  />
+                ))
+              ) : (
+                <div>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    No comment
+                  </Typography>
+                </div>
+              )}
+            </div>
           )
         ) : (
           <Typography sx={{ textAlign: 'center' }}>Loading...</Typography>

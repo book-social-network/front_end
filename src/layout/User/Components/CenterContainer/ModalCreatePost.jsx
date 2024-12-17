@@ -31,7 +31,6 @@ export default function ModalCreatePost({ user, idGroup, token }) {
   const handleSubmitPost = async () => {
     try {
       const response1 = await AuthorizationAxios.post('/api/post/insert', {
-        id: 1000,
         description,
         user_id: user.user.id,
         group_id: idGroup,
@@ -41,6 +40,9 @@ export default function ModalCreatePost({ user, idGroup, token }) {
         await AuthorizationAxios.post('/api/post/insert-book', {
           post_id: response1.data.id,
           book_id: selectedBook.id,
+        })
+        await AuthorizationAxios.post('/api/user/update', {
+          point: user.user.point + 3,
         })
       }
 

@@ -26,6 +26,7 @@ import ShareButton from '../Components/DialogShare/ShareButton'
 import MenuState from './MenuState'
 import { toast } from 'react-toastify'
 import Pusher from 'pusher-js'
+import ModalReport from './ModalReport'
 
 const Post = ({
   bookId,
@@ -43,13 +44,16 @@ const Post = ({
   isDetailPostPage,
   noLink,
 }) => {
-  console.log(bookId);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null)
   const [status, setStatus] = useState('Choose state')
   const [liked, setLiked] = useState(state_like)
   const [countLike, setCountLike] = useState(likes)
   const [rating, setRating] = useState(0)
+  const [openModal, setOpenModal] = useState(false)
   const { user } = useUserProfile()
+
+  const handleOpen = () => setOpenModal(true)
+  const handleClose = () => setOpenModal(false)
   const navigate = useNavigate()
   const dateObj = timeStamp ? parseISO(timeStamp) : null
   const timeAgo = dateObj
@@ -115,6 +119,10 @@ const Post = ({
     handleMenuClose()
   }
 
+  const handleReportPost =async()=>{
+    handleOpen();
+    handleMenuClose();
+  }
   return (
     <Container>
       <Grid
@@ -146,8 +154,8 @@ const Post = ({
                   <IconButton
                     aria-label="settings"
                     onClick={(event) => {
-                      event.stopPropagation()
-                      handleMenuOpen(event)
+                      event.stopPropagation();
+                      handleMenuOpen(event);
                     }}
                   >
                     <MoreVertIcon />
@@ -162,8 +170,28 @@ const Post = ({
                     <MenuItem onClick={handleDeletePost}>Delete Post</MenuItem>
                   </Menu>
                 </>
-              ) : null
-            }
+              ) : (
+                <>
+                  <IconButton
+                    aria-label="report"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleMenuOpen(event);
+                    }}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                  <Menu
+                    anchorEl={menuAnchorEl}
+                    open={Boolean(menuAnchorEl)}
+                    onClose={handleMenuClose}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <MenuItem onClick={handleReportPost}>Report Post</MenuItem>
+                  </Menu>
+                </>
+              )
+            }            
             title={
               <Link
                 to={
@@ -251,7 +279,7 @@ const Post = ({
                   >
                     {countLike > 0
                       ? `${countLike} liked`
-                      : 'Please like the post'}
+                      : '0 liked'}
                   </Typography>
                 </IconButton>
               </Grid>
@@ -275,6 +303,7 @@ const Post = ({
           </CardActions>
         </Card>
       </Grid>
+      <ModalReport open={openModal} close={handleClose} id={postId}/>
     </Container>
   )
 }

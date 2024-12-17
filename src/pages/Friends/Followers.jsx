@@ -2,7 +2,6 @@ import { Grid, Typography, Box } from '@mui/material'
 import React from 'react'
 
 export default function Followers({ followers, setFollower, setFollowed }) {
-  console.log(followers)
   const handleClick = (id) => {
     setFollower(id)
     setFollowed(true)
@@ -43,7 +42,7 @@ export default function Followers({ followers, setFollower, setFollowed }) {
         ))
       ) : (
         <Box p={2}>
-          <Typography variant="body2">
+          <Typography variant="body2" color='#3498db'>
             You don't have any followers yet
           </Typography>
         </Box>

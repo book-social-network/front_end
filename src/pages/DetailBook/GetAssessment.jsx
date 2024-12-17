@@ -23,9 +23,7 @@ export default function GetAssessment({ idBook, assessment }) {
   }, [idBook, assessment])
 
   return (
-    
     <Paper sx={{ padding: 2 }}>
-        {console.log(data)}
       <Typography variant="h6" gutterBottom>
         Assessments
       </Typography>
@@ -34,9 +32,8 @@ export default function GetAssessment({ idBook, assessment }) {
           <Typography>No Assessments Available</Typography>
         ) : (
           data.map(
-            (item, index) => (
-              console.log(item),
-              (
+            (item, index) =>
+              item.assessment.description != null && (
                 <ItemAssessment
                   key={index}
                   description={item?.assessment?.description}
@@ -45,8 +42,7 @@ export default function GetAssessment({ idBook, assessment }) {
                   timeStamp={item?.assessment?.created_at}
                   nameUser={item?.user[0].name}
                 />
-              )
-            ),
+              ),
           )
         )}
       </Box>

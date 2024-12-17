@@ -24,7 +24,7 @@ export default function DetailBook() {
   const [dataBook, setDataBook] = useState([])
   const [rating, setRating] = useState(0)
   const [status, setStatus] = useState('')
-  const { user } = useUserProfile();
+  const { user } = useUserProfile()
   const { id } = useParams()
 
   useEffect(() => {
@@ -185,10 +185,9 @@ export default function DetailBook() {
                     </Select>
                   </FormControl>
                 </Grid>
-
                 <Grid item xs={4}>
                   <Button
-                    onClick={() => window.open(dataBook?.link_book, '_blank')}
+                    onClick={() => window.open(dataBook?.book.link_book)}
                     variant="contained"
                     color="primary"
                     sx={{
@@ -207,8 +206,14 @@ export default function DetailBook() {
                   </Button>
                 </Grid>
               </Grid>
-              <InsertNewAssessment bookId={id} userId={user?.user?.id}/>
-              <GetAssessment assessment={dataBook?.assessment} idBook={id} idUser={user?.user.id} />
+              {status && status !== 'want to read' && (
+                <InsertNewAssessment bookId={id} userId={user?.user?.id} />
+              )}
+              <GetAssessment
+                assessment={dataBook?.assessment}
+                idBook={id}
+                idUser={user?.user.id}
+              />
             </Box>
           </Grid>
         </Grid>

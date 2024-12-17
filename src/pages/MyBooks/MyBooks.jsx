@@ -143,7 +143,7 @@ const MyBooks = () => {
                     onClick={() => setFilter('all')}
                     fullWidth
                     sx={{
-                      color: filter === 'all' ? '#ffffff' : '#00635d',
+                      color: filter === 'all' ? '#fff' : '#00635d',
                       fontWeight: filter === 'all' ? 'bold' : 'normal',
                     }}
                   >
@@ -157,7 +157,7 @@ const MyBooks = () => {
                     onClick={() => setFilter('wantToRead')}
                     fullWidth
                     sx={{
-                      color: filter === 'wantToRead' ? '#ffffff' : '#00635d',
+                      color: filter === 'wantToRead' ? '#fff' : '#00635d',
                       fontWeight: filter === 'wantToRead' ? 'bold' : 'normal',
                     }}
                   >
@@ -171,7 +171,7 @@ const MyBooks = () => {
                     onClick={() => setFilter('Reading')}
                     fullWidth
                     sx={{
-                      color: filter === 'Reading' ? '#ffffff' : '#00635d',
+                      color: filter === 'Reading' ? '#fff' : '#00635d',
                       fontWeight: filter === 'Reading' ? 'bold' : 'normal',
                     }}
                   >
@@ -185,7 +185,7 @@ const MyBooks = () => {
                     onClick={() => setFilter('Read')}
                     fullWidth
                     sx={{
-                      color: filter === 'Read' ? '#ffffff' : '#00635d',
+                      color: filter === 'Read' ? '#fff' : '#00635d',
                       fontWeight: filter === 'Read' ? 'bold' : 'normal',
                     }}
                   >

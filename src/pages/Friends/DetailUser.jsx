@@ -22,7 +22,6 @@ export default function DetailUser({ id, isFollowed }) {
   useEffect(() => {
     fetchData()
   }, [id])
-  console.log(isFollowed)
   const handleFollow = async () => {
     if (isFollowed) {
       const res = await AuthorizationAxios.get(`/api/follow/follow/${id}`)

@@ -37,6 +37,7 @@ export default function SuggestBook() {
               sx={{
                 cursor: 'pointer',
                 maxWidth: 300,
+                height: 320,
                 margin: 'auto',
                 boxShadow: 3,
                 borderRadius: '12px',
@@ -47,7 +48,7 @@ export default function SuggestBook() {
             >
               <CardMedia
                 component="img"
-                sx={{ height: 200, objectFit: 'cover' }}
+                sx={{ height: '200px !important', objectFit: 'cover' }}
                 image={item.image}
                 alt={item.name}
               />
