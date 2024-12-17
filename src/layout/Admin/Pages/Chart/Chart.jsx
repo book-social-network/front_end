@@ -51,8 +51,8 @@ const Chart = () => {
   const chartData = {
     labels: data
       ? data.map((item) =>
-          timeRange === 'Month' ? item.month + ' / ' + item.year : item.year,
-        )
+        timeRange === 'Month' ? item.month + ' / ' + item.year : item.year,
+      )
       : [],
     datasets: [
       {
