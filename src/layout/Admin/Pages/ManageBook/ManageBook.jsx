@@ -92,9 +92,10 @@ export default function ManageBook() {
       maxWidth: 200,
       renderCell: (params) =>
         params.value ? (
-          <a href={params.value} target="_blank" rel="noopener noreferrer">
+          <a href={params.value} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#1E90FF' }}>
             View Book
           </a>
+
         ) : (
           'No Link'
         ),
@@ -180,14 +181,14 @@ export default function ManageBook() {
           align="left"
           sx={{ mb: 2 }}
         >
-          Tổng số: {dataBook?.length} sách
+          Total: {dataBook?.length} books
         </Typography>
         <IconButton onClick={handleOpenUploadBook}>
           <FaPlus />
         </IconButton>
       </Grid>
 
-      <Paper sx={{ maxHeight: 400, width: '100%' }}>
+      <Paper sx={{ maxHeight: 800, width: '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}

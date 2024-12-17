@@ -101,21 +101,21 @@ export default function Dashboard({ data }) {
             <BlockReview
               text="New posts"
               num={newPost.length}
-              color="#e6f2ff"
+              color="#B0E0E6"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <BlockReview
               text="New group"
               num={newGroup.length}
-              color="#ccffcc"
+              color="#B0E0E6"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <BlockReview
               text="Old users"
               num={OldUser.length}
-              color="#ccffcc"
+              color="#B0E0E6"
             />
           </Grid>
         </Grid>
