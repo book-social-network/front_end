@@ -20,16 +20,24 @@ export default function DialogShare({ open, onClose, id }) {
   const { user } = useUserProfile()
   const fullLink = `${window.location.origin}/detail-post/${id}`
 
-  const handleUpdatePoint = async () => {
+  const handleUpdatePoint = async (point) => {
     await AuthorizationAxios.post('/api/user/update', {
-      point: user.user.point + 1,
+      point: user.user.point + point,
     })
   }
 
   const handleCopy = () => {
     navigator.clipboard.writeText(fullLink)
     toast.success('Link copied to clipboard!')
-    handleUpdatePoint()
+    handleUpdatePoint(1)
+  }
+
+  const handleSharePost = async()=>{
+    await AuthorizationAxios.post(`/api/post/share`,{
+      share_id: id,
+    })
+    toast.success('Share successfully')
+    handleUpdatePoint(3)
   }
 
   return (
@@ -53,7 +61,7 @@ export default function DialogShare({ open, onClose, id }) {
           <IconButton color="primary" onClick={handleCopy}>
             <Copy />
           </IconButton>
-          <IconButton color='primary'>
+          <IconButton color='primary' onClick={handleSharePost}>
             <CiShare1/>
           </IconButton>
         </Box>

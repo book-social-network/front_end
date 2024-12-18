@@ -9,6 +9,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  IconButton,
 } from '@mui/material'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import StarIcon from '@mui/icons-material/Star'
@@ -19,11 +20,14 @@ import AuthorizationAxios from '../../hooks/Request'
 import InsertNewAssessment from './InsertNewAssessment'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import GetAssessment from './GetAssessment'
+import { FaShare } from "react-icons/fa";
+import ModalShareBook from './ModalShareBook'
 
 export default function DetailBook() {
   const [dataBook, setDataBook] = useState([])
   const [rating, setRating] = useState(0)
   const [status, setStatus] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
   const { user } = useUserProfile()
   const { id } = useParams()
 
@@ -63,6 +67,8 @@ export default function DetailBook() {
       console.log('Status updated successfully')
     })
   }
+  const handleOpen =()=> setIsOpen(true)
+  const handleClose =()=>setIsOpen(false)
 
   if (!dataBook) {
     return (
@@ -101,12 +107,18 @@ export default function DetailBook() {
           </Grid>
           <Grid item sm={8} xs={12}>
             <Box sx={{ padding: 2 }}>
+              <Grid display='flex' alignItems='flex-start' justifyContent='space-between'>
               <Typography
                 variant="h4"
                 sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}
               >
                 {dataBook?.book?.name || 'Book Title'}
               </Typography>
+              <IconButton onClick={handleOpen}>
+                <FaShare/>
+              </IconButton>
+              </Grid>
+              
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ mr: 1, color: '#555' }}>
                   Ratings:
@@ -217,6 +229,7 @@ export default function DetailBook() {
             </Box>
           </Grid>
         </Grid>
+        <ModalShareBook open={isOpen} close={handleClose} idBook={id} imageBook={dataBook?.book?.image} user={user}/> 
       </Container>
       <Footer />
     </>

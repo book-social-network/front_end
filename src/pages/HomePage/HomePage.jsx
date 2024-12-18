@@ -54,7 +54,7 @@ const HomePage = () => {
           <Grid item xs={12} sm={6} sx={{ paddingRight: '24px' }}>
             <CenterContainer />
             {posts.map((item, index) => {
-              if (!item.group) {
+              if (!item.group && item.share === null) {
                 return (
                   <Post
                     key={index}
@@ -74,6 +74,7 @@ const HomePage = () => {
                   />
                 )
               } else {
+                if(item.share === null)
                 return (
                   <MyGroupItem
                     key={index}

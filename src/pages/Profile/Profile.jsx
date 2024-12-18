@@ -16,7 +16,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { Link } from 'react-router-dom'
 import ModalChangePass from './ModalChangePass'
 import MyPost from './MyPost'
-import SharedPost from './SharedPost'
+import SharePostList from '../../layout/User/Poster/SharePostList'
 
 export default function Profile() {
   const { user } = useUserProfile()
@@ -28,7 +28,7 @@ export default function Profile() {
   const handleCloseModal = () => setIsModalOpen(false)
 
   const handleChange = (label) => {
-    setState(label) // Simplified the logic to directly set the state
+    setState(label) 
   }
 
   useEffect(() => {
@@ -119,7 +119,7 @@ export default function Profile() {
           </Paper>
         ) : (
           <Paper sx={{ padding: 3, backgroundColor: '#121212' }}>
-            <SharedPost />
+            <SharePostList user={user} />
           </Paper>
         )}
       </Box>
