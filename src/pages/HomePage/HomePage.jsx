@@ -51,7 +51,7 @@ const HomePage = () => {
               <LeftContainer />
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ paddingRight: '24px' }}>
+          <Grid item xs={12} sm={6} sx={{ paddingRight: '24px', background:'#ffd1dc5e'}}>
             <CenterContainer />
             {posts.map((item, index) => {
               if (!item.group && item.share === null) {

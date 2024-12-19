@@ -22,6 +22,7 @@ import { useUserProfile } from '../../hooks/useUserProfile'
 import GetAssessment from './GetAssessment'
 import { FaShare } from "react-icons/fa";
 import ModalShareBook from './ModalShareBook'
+import { toast } from 'react-toastify'
 
 export default function DetailBook() {
   const [dataBook, setDataBook] = useState([])
@@ -45,27 +46,32 @@ export default function DetailBook() {
         }
         setStatus(statusMap[book.status] || '')
         setRating(res?.data?.assessment?.star || 0)
+
       } catch (error) {
         console.error('Error fetching book details:', error)
       }
     }
     fetchData()
   }, [id])
-  const handleChange = (event) => {
-    const value = event.target.value
-    setStatus(value)
-    const statusReverseMap = {
-      'want to read': 0,
-      reading: 1,
-      'finish reading': 2,
-    }
-    const numericStatus = statusReverseMap[value]
-
-    AuthorizationAxios.post(`/api/assessment/update-state-read/${id}`, {
-      state_read: numericStatus,
-    }).then(() => {
-      console.log('Status updated successfully')
-    })
+  const handleChange = async(event) => {
+      const value = event.target.value
+      setStatus(value)
+      const statusReverseMap = {
+        'want to read': 0,
+        reading: 1,
+        'finish reading': 2,
+      }
+      const numericStatus = statusReverseMap[value]
+  
+      
+      const data = AuthorizationAxios.post(`/api/assessment/update-state-read/${id}`, {
+        state_read: numericStatus,
+      } )
+      const statusRes = await data;
+      if(statusRes)
+      {
+      toast.success('You set state successfully')
+      }
   }
   const handleOpen =()=> setIsOpen(true)
   const handleClose =()=>setIsOpen(false)

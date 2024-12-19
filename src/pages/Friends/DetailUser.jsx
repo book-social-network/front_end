@@ -75,18 +75,18 @@ export default function DetailUser({ id, isFollowed }) {
                   <div
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
-                    <Typography variant="body2">Email</Typography>
+                    <Typography variant="body2">Posts</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {user?.user.email}
+                      {user?.posts.length}
                     </Typography>
                   </div>
                   <Divider style={{ margin: '10px 0' }} />
                   <div
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
-                    <Typography variant="body2">Phone</Typography>
+                    <Typography variant="body2">Followers</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {user?.user.phone}
+                      {user?.followers.quantity}
                     </Typography>
                   </div>
                   <Divider style={{ margin: '10px 0' }} />

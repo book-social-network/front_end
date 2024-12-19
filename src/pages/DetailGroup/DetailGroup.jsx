@@ -109,7 +109,7 @@ export default function DetailGroup() {
   }
   return (
     <Container maxWidth="lg">
-      <Box sx={{ background: '#252728', padding: 2, mb: 2 }}>
+      <Box sx={{ background: '#d6ba73bf', padding: 2, mb: 2 }}>
         <Box
           sx={{ width: '100%' }}
           display="flex"

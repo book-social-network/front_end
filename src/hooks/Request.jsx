@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export const post = async (path, data) => {
   const token = localStorage.getItem('access_token')
@@ -13,8 +14,8 @@ export const post = async (path, data) => {
       },
     )
     return res
-  } catch (err) {
-    console.log(err)
+  }  catch{
+    toast.error("Network error" )
   }
 }
 export const get = async (path) => {

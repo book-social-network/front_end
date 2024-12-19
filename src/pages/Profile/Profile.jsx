@@ -43,8 +43,8 @@ export default function Profile() {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: '#212121',
-          color: 'white',
+          backgroundColor: '#c5e5f5',
+          color: '#000',
           padding: 3,
         }}
       >
@@ -57,20 +57,20 @@ export default function Profile() {
           <Typography variant="h4" gutterBottom>
             {user?.user?.name || 'Loading...'}
           </Typography>
-          <Typography variant="body2" color="#fff" sx={{ marginBottom: 1 }}>
+          <Typography variant="body2" color="#000" sx={{ marginBottom: 1 }}>
             {user?.posts?.length || 0} posts
           </Typography>
-          <Typography variant="body2" color="#fff" sx={{ marginBottom: 1 }}>
+          <Typography variant="body2" color="#000" sx={{ marginBottom: 1 }}>
             {user?.user?.point || 0} points
           </Typography>
           <Grid display="flex">
             <Grid item>
-              <Typography variant="body2" color="#fff">
+              <Typography variant="body2" color="#000">
                 {user?.followers?.user?.length || 0} Followers |
               </Typography>
             </Grid>
             <Grid item paddingLeft={1}>
-              <Typography variant="body2" color="#fff">
+              <Typography variant="body2" color="#000">
                 {user?.following?.user?.length || 0} Following
               </Typography>
             </Grid>
@@ -114,11 +114,11 @@ export default function Profile() {
 
       <Box sx={{ marginTop: 3 }}>
         {state === 'post' ? (
-          <Paper sx={{ padding: 3, backgroundColor: '#121212' }}>
+          <Paper sx={{ padding: 3, backgroundColor: '#c5e5f5' }}>
             <MyPost post={post} />
           </Paper>
         ) : (
-          <Paper sx={{ padding: 3, backgroundColor: '#121212' }}>
+          <Paper sx={{ padding: 3, backgroundColor: '#c5e5f5' }}>
             <SharePostList user={user} />
           </Paper>
         )}

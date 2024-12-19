@@ -85,7 +85,7 @@ export default function ModalReport({ open, close, id }) {
             control={<Radio />}
             label="I don't like this post"
           />
-          <FormControlLabel value="Other" control={<Radio />} label="Khác" />
+          <FormControlLabel value="Other" control={<Radio />} label="Other" />
         </RadioGroup>
 
         {selectedReason === 'Other' && (

@@ -12,7 +12,6 @@ const CenterContainer = () => {
     <>
       <SuggestBook />
       <Box
-        className="center-content"
         sx={{
           border: '2px solid #ccc',
           boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
@@ -20,9 +19,10 @@ const CenterContainer = () => {
           borderRadius: '8px',
           textAlign: 'center',
           marginTop: '20px',
+          backgroundColor: '#fff'
         }}
       >
-        <Grid container>
+        <Grid container bgcolor='#fff'>
           <Grid item sm={2} xs={12}>
             <img
               src={user ? user.user.image_url : ''}

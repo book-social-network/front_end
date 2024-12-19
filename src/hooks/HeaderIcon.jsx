@@ -13,7 +13,7 @@ const useIconInHeader = (icon, title, path = '/') => {
         }}
       >
         <Tooltip title={title}>
-          <IconButton sx={{ color: '#000' }}>{icon}</IconButton>
+          <IconButton sx={{ color: '#fff' }}>{icon}</IconButton>
         </Tooltip>
       </div>
     </Link>

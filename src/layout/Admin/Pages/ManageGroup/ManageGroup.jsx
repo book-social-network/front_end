@@ -54,7 +54,7 @@ export default function ManageGroup() {
     { field: 'state', headerName: 'State', width: 100 },
     {
       field: 'Delete',
-      headerName: 'Delete',
+      headerName: 'Action',
       maxWidth: 150,
       renderCell: (params) => (
         <Button
@@ -104,7 +104,7 @@ export default function ManageGroup() {
         align="left"
         sx={{ mb: 2 }}
       >
-        Tổng số: {groups?.length} nhóm
+        Total: {groups?.length} groups
       </Typography>
 
       <Paper sx={{ height: 400, width: '100%' }}>

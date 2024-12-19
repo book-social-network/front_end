@@ -136,7 +136,7 @@ const Header = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                color: '#000',
+                color: '#fff',
               }}
             >
               <HomeIcon />
@@ -149,7 +149,7 @@ const Header = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                color: '#000',
+                color: '#fff',
               }}
             >
               <MenuBookIcon />
@@ -162,7 +162,7 @@ const Header = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                color: '#000',
+                color: '#fff',
               }}
             >
               <GroupsIcon />
@@ -175,7 +175,7 @@ const Header = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                color: '#000',
+                color: '#fff',
               }}
             >
               <FaUserFriends />
@@ -188,7 +188,7 @@ const Header = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                color: '#000',
+                color: '#fff',
               }}
             >
               <LeaderboardIcon />
@@ -210,16 +210,16 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#DEB887' }}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#56494c' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <IconButton
-          color="#000"
+          color="#fff"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
           sx={{ mr: 2, display: { sm: 'none' } }}
         >
-          <MenuIcon color="#000" />
+          <MenuIcon color="#fff" />
         </IconButton>
 
         <Stack>
@@ -233,7 +233,7 @@ const Header = () => {
               display: { xs: 'none', sm: 'block' },
               fontWeight: 700,
               textDecoration: 'none',
-              color: '#000',
+              color: '#fff',
             }}
           >
             Social Book Network
@@ -280,7 +280,7 @@ const Header = () => {
             flexGrow: 0,
             display: 'flex',
             alignItems: 'center',
-            color: '#000',
+            color: '#fff',
             marginLeft: 'auto',
           }}
         >
@@ -290,7 +290,7 @@ const Header = () => {
             aria-label="add menu"
             color="inherit"
           >
-            <AddIcon />
+            <AddIcon/>
           </IconButton>
           <Menu
             anchorEl={anchorElAdd}
