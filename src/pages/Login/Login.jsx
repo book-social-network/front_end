@@ -39,7 +39,6 @@ const Login = () => {
         email: email,
         password: pass,
       })
-      console.log(res);
       if (res?.status === 401) {
         toast.error('Invalid email or password')
         setPasswordHelperText('Invalid email or password')
@@ -68,6 +67,20 @@ const Login = () => {
       toast.error(error.message)
       setPasswordHelperText('Error!!!')
       setPasswordError(true)
+    }
+  }
+  const handleForgot=async()=>{
+    if(email===null){
+      toast.error('Please enter your email')
+    }else{
+      try{
+        await AuthorizationAxios.post('/api/user/forget-password',{
+          email: email
+        })
+        toast.warning('Please check your email to get password');
+      }catch(err){
+        console.log(err);
+      }
     }
   }
 
@@ -116,7 +129,7 @@ const Login = () => {
           }}
         />
       </Box>
-      <Link href="#" className="forgot-password-link">
+      <Link href="#" className="forgot-password-link" onClick={handleForgot}>
         Forgot password?
       </Link>
       <Button

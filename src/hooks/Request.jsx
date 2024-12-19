@@ -15,7 +15,7 @@ export const post = async (path, data) => {
     )
     return res
   }  catch{
-    toast.error("Network error" )
+    toast.error("Error!!!!" )
   }
 }
 export const get = async (path) => {

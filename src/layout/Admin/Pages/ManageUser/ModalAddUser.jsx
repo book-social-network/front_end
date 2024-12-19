@@ -19,12 +19,15 @@ export default function ModalAddUser({ openModal, closeModal }) {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(value) || 'Invalid email format'
   }
-
+  const handleChange = (event) => {
+    setRole(event.target.value);
+  };
   const handleSubmit = async () => {
     if (
       name === '' ||
@@ -46,6 +49,7 @@ export default function ModalAddUser({ openModal, closeModal }) {
       password: password,
       email: email,
       password_confirmation: confirmPassword,
+      role: role
     }
 
     try {
@@ -141,6 +145,22 @@ export default function ModalAddUser({ openModal, closeModal }) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 variant="outlined"
               />
+            </Grid>
+
+            <Grid item sm={12}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={role}
+                  label="Role"
+                  onChange={handleChange}
+                >
+                  <MenuItem value='admin'>Admin</MenuItem>
+                  <MenuItem value='member'>Member</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
 
             <Grid item sm={12}>
