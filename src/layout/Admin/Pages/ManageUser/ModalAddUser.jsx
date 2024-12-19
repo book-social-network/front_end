@@ -26,8 +26,8 @@ export default function ModalAddUser({ openModal, closeModal }) {
     return emailRegex.test(value) || 'Invalid email format'
   }
   const handleChange = (event) => {
-    setRole(event.target.value);
-  };
+    setRole(event.target.value)
+  }
   const handleSubmit = async () => {
     if (
       name === '' ||
@@ -49,7 +49,7 @@ export default function ModalAddUser({ openModal, closeModal }) {
       password: password,
       email: email,
       password_confirmation: confirmPassword,
-      role: role
+      role: role,
     }
 
     try {
@@ -157,8 +157,8 @@ export default function ModalAddUser({ openModal, closeModal }) {
                   label="Role"
                   onChange={handleChange}
                 >
-                  <MenuItem value='admin'>Admin</MenuItem>
-                  <MenuItem value='member'>Member</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="member">Member</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

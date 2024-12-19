@@ -20,7 +20,7 @@ import AuthorizationAxios from '../../hooks/Request'
 import InsertNewAssessment from './InsertNewAssessment'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import GetAssessment from './GetAssessment'
-import { FaShare } from "react-icons/fa";
+import { FaShare } from 'react-icons/fa'
 import ModalShareBook from './ModalShareBook'
 import { toast } from 'react-toastify'
 
@@ -46,35 +46,35 @@ export default function DetailBook() {
         }
         setStatus(statusMap[book.status] || '')
         setRating(res?.data?.assessment?.star || 0)
-
       } catch (error) {
         console.error('Error fetching book details:', error)
       }
     }
     fetchData()
   }, [id])
-  const handleChange = async(event) => {
-      const value = event.target.value
-      setStatus(value)
-      const statusReverseMap = {
-        'want to read': 0,
-        reading: 1,
-        'finish reading': 2,
-      }
-      const numericStatus = statusReverseMap[value]
-  
-      
-      const data = AuthorizationAxios.post(`/api/assessment/update-state-read/${id}`, {
-        state_read: numericStatus,
-      } )
-      const statusRes = await data;
-      if(statusRes)
+  const handleChange = async (event) => {
+    const value = event.target.value
+    setStatus(value)
+    const statusReverseMap = {
+      'want to read': 0,
+      reading: 1,
+      'finish reading': 2,
+    }
+    const numericStatus = statusReverseMap[value]
+
+    const data = AuthorizationAxios.post(
+      `/api/assessment/update-state-read/${id}`,
       {
+        state_read: numericStatus,
+      },
+    )
+    const statusRes = await data
+    if (statusRes) {
       toast.success('You set state successfully')
-      }
+    }
   }
-  const handleOpen =()=> setIsOpen(true)
-  const handleClose =()=>setIsOpen(false)
+  const handleOpen = () => setIsOpen(true)
+  const handleClose = () => setIsOpen(false)
 
   if (!dataBook) {
     return (
@@ -113,18 +113,22 @@ export default function DetailBook() {
           </Grid>
           <Grid item sm={8} xs={12}>
             <Box sx={{ padding: 2 }}>
-              <Grid display='flex' alignItems='flex-start' justifyContent='space-between'>
-              <Typography
-                variant="h4"
-                sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}
+              <Grid
+                display="flex"
+                alignItems="flex-start"
+                justifyContent="space-between"
               >
-                {dataBook?.book?.name || 'Book Title'}
-              </Typography>
-              <IconButton onClick={handleOpen}>
-                <FaShare/>
-              </IconButton>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: 'bold', mb: 2, color: '#333' }}
+                >
+                  {dataBook?.book?.name || 'Book Title'}
+                </Typography>
+                <IconButton onClick={handleOpen}>
+                  <FaShare />
+                </IconButton>
               </Grid>
-              
+
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ mr: 1, color: '#555' }}>
                   Ratings:
@@ -235,7 +239,13 @@ export default function DetailBook() {
             </Box>
           </Grid>
         </Grid>
-        <ModalShareBook open={isOpen} close={handleClose} idBook={id} imageBook={dataBook?.book?.image} user={user}/> 
+        <ModalShareBook
+          open={isOpen}
+          close={handleClose}
+          idBook={id}
+          imageBook={dataBook?.book?.image}
+          user={user}
+        />
       </Container>
       <Footer />
     </>

@@ -31,6 +31,7 @@ import Pusher from 'pusher-js'
 import { toast } from 'react-toastify'
 
 export default function MyGroupItem({
+  group_name,
   user_id,
   user_avatar,
   group_avatar,
@@ -46,7 +47,7 @@ export default function MyGroupItem({
   user_name,
   timeStamp,
   noLink,
-  isDetailPostPage
+  isDetailPostPage,
 }) {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null)
   const [status, setStatus] = useState('Choose state')
@@ -132,9 +133,7 @@ export default function MyGroupItem({
           style={{ cursor: 'pointer', width: '100%' }}
         >
           <CardHeader
-            avatar={
-              <IconToIcon icon1={group_avatar} icon2={user_avatar} />
-            }
+            avatar={<IconToIcon icon1={group_avatar} icon2={user_avatar} />}
             action={
               user_id === user.user.id ? (
                 <>
@@ -169,10 +168,15 @@ export default function MyGroupItem({
                 style={{ textDecoration: 'none', color: 'inherit' }}
                 onClick={(event) => event.stopPropagation()}
               >
-                {user_name}
+                {group_name}
               </Link>
             }
-            subheader={timeAgo}
+            subheader={
+              <div>
+                <div>{user_name}</div>
+                <div>{timeAgo}</div>
+              </div>
+            }
           />
           <CardContent className="post-content">
             <Link
@@ -244,9 +248,7 @@ export default function MyGroupItem({
                     paddingLeft={1}
                     sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
                   >
-                    {countLike > 0
-                      ? `${countLike} liked`
-                      : '0 liked'}
+                    {countLike > 0 ? `${countLike} liked` : '0 liked'}
                   </Typography>
                 </IconButton>
               </Grid>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { 
-  Avatar, 
-  Box, 
-  IconButton, 
-  Modal, 
-  TextField, 
-  Typography, 
-  Paper, 
-  Container, 
-  Divider
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Modal,
+  TextField,
+  Typography,
+  Paper,
+  Container,
+  Divider,
 } from '@mui/material'
 import AuthorizationAxios from '../../../hooks/Request'
 import Pusher from 'pusher-js'
@@ -68,8 +68,8 @@ export default function ModalComment({ postId, open, close }) {
   }
 
   return (
-    <Modal 
-      open={open} 
+    <Modal
+      open={open}
       onClose={close}
       sx={{
         display: 'flex',
@@ -77,8 +77,8 @@ export default function ModalComment({ postId, open, close }) {
         justifyContent: 'center',
       }}
     >
-      <Paper 
-        elevation={3} 
+      <Paper
+        elevation={3}
         sx={{
           width: '100%',
           maxWidth: 500,
@@ -89,12 +89,12 @@ export default function ModalComment({ postId, open, close }) {
           outline: 'none',
         }}
       >
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            p: 2 
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            p: 2,
           }}
         >
           <Typography variant="h6" component="h2">
@@ -107,11 +107,11 @@ export default function ModalComment({ postId, open, close }) {
 
         <Divider />
 
-        <Box 
-          sx={{ 
-            flexGrow: 1, 
-            overflowY: 'auto', 
-            p: 2 
+        <Box
+          sx={{
+            flexGrow: 1,
+            overflowY: 'auto',
+            p: 2,
           }}
         >
           {listComment?.length > 0 ? (
@@ -128,11 +128,11 @@ export default function ModalComment({ postId, open, close }) {
               />
             ))
           ) : (
-            <Typography 
-              sx={{ 
-                textAlign: 'center', 
-                color: 'text.secondary', 
-                py: 2 
+            <Typography
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                py: 2,
               }}
             >
               No comments yet
@@ -142,18 +142,18 @@ export default function ModalComment({ postId, open, close }) {
 
         <Divider />
 
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            p: 2, 
-            gap: 2 
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            p: 2,
+            gap: 2,
           }}
         >
-          <Avatar 
-            src={data?.user[0].image_url} 
-            alt="User Avatar" 
-            sx={{ width: 40, height: 40 }} 
+          <Avatar
+            src={data?.user[0].image_url}
+            alt="User Avatar"
+            sx={{ width: 40, height: 40 }}
           />
           <TextField
             variant="outlined"

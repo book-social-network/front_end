@@ -42,7 +42,7 @@ export default function Followers({ followers, setFollower, setFollowed }) {
         ))
       ) : (
         <Box p={2}>
-          <Typography variant="body2" color='#3498db'>
+          <Typography variant="body2" color="#3498db">
             You don't have any followers yet
           </Typography>
         </Box>

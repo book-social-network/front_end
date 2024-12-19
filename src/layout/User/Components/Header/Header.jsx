@@ -290,7 +290,7 @@ const Header = () => {
             aria-label="add menu"
             color="inherit"
           >
-            <AddIcon/>
+            <AddIcon />
           </IconButton>
           <Menu
             anchorEl={anchorElAdd}

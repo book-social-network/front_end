@@ -28,7 +28,7 @@ export default function Profile() {
   const handleCloseModal = () => setIsModalOpen(false)
 
   const handleChange = (label) => {
-    setState(label) 
+    setState(label)
   }
 
   useEffect(() => {

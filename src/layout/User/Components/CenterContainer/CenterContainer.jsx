@@ -19,10 +19,10 @@ const CenterContainer = () => {
           borderRadius: '8px',
           textAlign: 'center',
           marginTop: '20px',
-          backgroundColor: '#fff'
+          backgroundColor: '#fff',
         }}
       >
-        <Grid container bgcolor='#fff'>
+        <Grid container bgcolor="#fff">
           <Grid item sm={2} xs={12}>
             <img
               src={user ? user.user.image_url : ''}

@@ -1,10 +1,16 @@
-import React from 'react';
-import { Box, Avatar, Typography } from '@mui/material';
-import { formatDistanceToNow } from 'date-fns';
+import React from 'react'
+import { Box, Avatar, Typography } from '@mui/material'
+import { formatDistanceToNow } from 'date-fns'
 
-export default function ItemAssessment({ idUser, imageUser, description, timeStamp, nameUser }) {
+export default function ItemAssessment({
+  idUser,
+  imageUser,
+  description,
+  timeStamp,
+  nameUser,
+}) {
   return (
-    <Box 
+    <Box
       sx={{
         display: 'flex',
         alignItems: 'flex-start',
@@ -17,9 +23,9 @@ export default function ItemAssessment({ idUser, imageUser, description, timeSta
       }}
     >
       {/* User Avatar */}
-      <Avatar 
-        alt={`Avatar of User ${idUser}`} 
-        src={imageUser} 
+      <Avatar
+        alt={`Avatar of User ${idUser}`}
+        src={imageUser}
         sx={{ width: 56, height: 56 }}
       />
 
@@ -39,5 +45,5 @@ export default function ItemAssessment({ idUser, imageUser, description, timeSta
         </Typography>
       </Box>
     </Box>
-  );
+  )
 }

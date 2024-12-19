@@ -92,10 +92,14 @@ export default function ManageBook() {
       maxWidth: 200,
       renderCell: (params) =>
         params.value ? (
-          <a href={params.value} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#1E90FF' }}>
+          <a
+            href={params.value}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', color: '#1E90FF' }}
+          >
             View Book
           </a>
-
         ) : (
           'No Link'
         ),

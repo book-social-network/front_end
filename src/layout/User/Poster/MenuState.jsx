@@ -1,5 +1,13 @@
 import React from 'react'
-import { Select, MenuItem, Typography, IconButton } from '@mui/material'
+import {
+  Select,
+  MenuItem,
+  Typography,
+  IconButton,
+  Box,
+  FormControl,
+  InputLabel,
+} from '@mui/material'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import StarIcon from '@mui/icons-material/Star'
 import AuthorizationAxios from '../../../hooks/Request'
@@ -35,18 +43,22 @@ const MenuState = ({
 
   return (
     <>
-      <Select
-        value={status}
-        onChange={handleChange}
-        variant="outlined"
-        size="small"
-        className="status-select"
-      >
-        <MenuItem value="Choose state">Choose state</MenuItem>
-        <MenuItem value="0">Want to Read</MenuItem>
-        <MenuItem value="1">Reading</MenuItem>
-        <MenuItem value="2">Read</MenuItem>
-      </Select>
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Status</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={status}
+            label="Status"
+            onChange={handleChange}
+          >
+            <MenuItem value="0">Want to Read</MenuItem>
+            <MenuItem value="1">Reading</MenuItem>
+            <MenuItem value="2">Read</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       {(status === '1' || status === '2') && (
         <div className="rating-section">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Modal,
   Box,
@@ -9,42 +9,42 @@ import {
   TextField,
   Button,
   Divider,
-} from '@mui/material';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import AuthorizationAxios from '../../../hooks/Request';
-import { toast } from 'react-toastify';
+} from '@mui/material'
+import ReportProblemIcon from '@mui/icons-material/ReportProblem'
+import AuthorizationAxios from '../../../hooks/Request'
+import { toast } from 'react-toastify'
 
 export default function ModalReport({ open, close, id }) {
-  const [selectedReason, setSelectedReason] = useState('');
-  const [customReason, setCustomReason] = useState('');
+  const [selectedReason, setSelectedReason] = useState('')
+  const [customReason, setCustomReason] = useState('')
 
   const handleReasonChange = (event) => {
-    const reason = event.target.value;
-    setSelectedReason(reason);
-    setCustomReason(''); 
-  };
+    const reason = event.target.value
+    setSelectedReason(reason)
+    setCustomReason('')
+  }
 
-  const handleSubmit = async() => {
-    const reasonToSubmit = selectedReason === 'Other' ? customReason : selectedReason;
+  const handleSubmit = async () => {
+    const reasonToSubmit =
+      selectedReason === 'Other' ? customReason : selectedReason
 
     if (!reasonToSubmit.trim()) {
-      alert('Please provide a reason for reporting.');
-      return;
+      alert('Please provide a reason for reporting.')
+      return
     }
 
-    const res = await AuthorizationAxios.post(`/api/warnings/report/${id}`,{
-        description: reasonToSubmit
+    const res = await AuthorizationAxios.post(`/api/warnings/report/${id}`, {
+      description: reasonToSubmit,
     })
-    if(res?.data){
-        toast.warn('You reported!!!')
+    if (res?.data) {
+      toast.warn('You reported!!!')
+    } else {
+      toast.warning('You only can only report a maximum of 3 times!!!')
     }
-    else{
-        toast.warning('You only can only report a maximum of 3 times!!!')
-    }
-    close(); 
-    setSelectedReason('');
-    setCustomReason('');
-  };
+    close()
+    setSelectedReason('')
+    setCustomReason('')
+  }
 
   return (
     <Modal open={open} onClose={close}>
@@ -110,12 +110,15 @@ export default function ModalReport({ open, close, id }) {
             variant="contained"
             color="error"
             onClick={handleSubmit}
-            disabled={!selectedReason || (selectedReason === 'Other' && !customReason.trim())}
+            disabled={
+              !selectedReason ||
+              (selectedReason === 'Other' && !customReason.trim())
+            }
           >
             Gửi
           </Button>
         </Box>
       </Box>
     </Modal>
-  );
+  )
 }

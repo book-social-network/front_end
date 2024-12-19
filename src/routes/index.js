@@ -44,5 +44,5 @@ export const routes = [
     path: '/admin',
     page: <HomePageAdmin />,
     isShowHeader: false,
-  }
+  },
 ]

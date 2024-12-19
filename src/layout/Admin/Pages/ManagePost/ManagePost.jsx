@@ -59,9 +59,9 @@ export default function ManagePosts() {
           <ToggleButton value="new">New Posts</ToggleButton>
         </ToggleButtonGroup>
         {state === 'all' ? (
-          <PostList path="/api/post/get-all"/>
+          <PostList path="/api/post/get-all" />
         ) : (
-          <PostList path="/api/post/get-all-post-new"/>
+          <PostList path="/api/post/get-all-post-new" />
         )}
       </div>
     </ThemeProvider>

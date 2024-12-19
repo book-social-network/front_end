@@ -23,7 +23,7 @@ function RecommendedGroup({
   DetailGroup,
   StateGroup,
 }) {
-  const { user } = useUserProfile();
+  const { user } = useUserProfile()
   const handleJoin = async () => {
     await AuthorizationAxios.post('/api/detail-group-user/insert', {
       user_id: user?.user.id,
@@ -46,7 +46,7 @@ function RecommendedGroup({
           className="img-group"
           alt={NameGroup}
           image={imgGroup}
-          sx={{ width: '100%', height: "200px !important", objectFit:'cover' }}
+          sx={{ width: '100%', height: '200px !important', objectFit: 'cover' }}
         />
         <CardContent>
           <Link

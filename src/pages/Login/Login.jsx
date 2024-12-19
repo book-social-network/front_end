@@ -69,17 +69,17 @@ const Login = () => {
       setPasswordError(true)
     }
   }
-  const handleForgot=async()=>{
-    if(email===null){
+  const handleForgot = async () => {
+    if (email === null) {
       toast.error('Please enter your email')
-    }else{
-      try{
-        await AuthorizationAxios.post('/api/user/forget-password',{
-          email: email
+    } else {
+      try {
+        await AuthorizationAxios.post('/api/user/forget-password', {
+          email: email,
         })
-        toast.warning('Please check your email to get password');
-      }catch(err){
-        console.log(err);
+        toast.warning('Please check your email to get password')
+      } catch (err) {
+        console.log(err)
       }
     }
   }

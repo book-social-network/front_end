@@ -23,7 +23,7 @@ export default function DetailPost() {
   useEffect(() => {
     getData()
   }, [param])
-  
+
   const getData = async () => {
     const response = await AuthorizationAxios.get(`/api/post/get/${param.id}`)
     setData(response?.data)

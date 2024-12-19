@@ -3,8 +3,8 @@ import AuthorizationAxios from '../../../../hooks/Request'
 import { toast } from 'react-toastify'
 import { DataGrid } from '@mui/x-data-grid'
 import { Typography, Paper, Grid, IconButton, Button } from '@mui/material'
-const GroupList = ({ path })=> {
-    const [groups, setGroups] = useState([])
+const GroupList = ({ path }) => {
+  const [groups, setGroups] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -44,38 +44,38 @@ const GroupList = ({ path })=> {
     }
   }
   const columns = [
-      { field: 'id', headerName: 'ID', width: 100 },
-      { field: 'name', headerName: 'Group Name', width: 200 },
-      { field: 'description', headerName: 'Description', width: 250 },
-      { field: 'user_count', headerName: 'Members', width: 180 },
-      { field: 'state', headerName: 'State', width: 100 },
-      {
-        field: 'Delete',
-        headerName: 'Action',
-        maxWidth: 150,
-        renderCell: (params) => (
-          <Button
-            variant="contained"
-            size="small"
-            color="error"
-            onClick={() => handleDelete(params.row.id)}
-          >
-            Delete
-          </Button>
-        ),
-      },
-    ]
-  
-    const rows = groups.map((item) => ({
-      id: item.group.id,
-      name: item.group.name,
-      description: item.group.description || 'No description',
-      user_count: item.users.length,
-      state: item.group.state === 0 ? 'Public' : 'Private',
-    }))
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'name', headerName: 'Group Name', width: 200 },
+    { field: 'description', headerName: 'Description', width: 250 },
+    { field: 'user_count', headerName: 'Members', width: 180 },
+    { field: 'state', headerName: 'State', width: 100 },
+    {
+      field: 'Delete',
+      headerName: 'Action',
+      maxWidth: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          size="small"
+          color="error"
+          onClick={() => handleDelete(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
+    },
+  ]
+
+  const rows = groups.map((item) => ({
+    id: item.group.id,
+    name: item.group.name,
+    description: item.group.description || 'No description',
+    user_count: item.users.length,
+    state: item.group.state === 0 ? 'Public' : 'Private',
+  }))
   return (
     <div>
-        <Typography
+      <Typography
         variant="subtitle1"
         color="#00635d"
         align="left"

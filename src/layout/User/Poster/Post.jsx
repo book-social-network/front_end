@@ -119,9 +119,9 @@ const Post = ({
     handleMenuClose()
   }
 
-  const handleReportPost =async()=>{
-    handleOpen();
-    handleMenuClose();
+  const handleReportPost = async () => {
+    handleOpen()
+    handleMenuClose()
   }
   return (
     <Container>
@@ -154,8 +154,8 @@ const Post = ({
                   <IconButton
                     aria-label="settings"
                     onClick={(event) => {
-                      event.stopPropagation();
-                      handleMenuOpen(event);
+                      event.stopPropagation()
+                      handleMenuOpen(event)
                     }}
                   >
                     <MoreVertIcon />
@@ -175,8 +175,8 @@ const Post = ({
                   <IconButton
                     aria-label="report"
                     onClick={(event) => {
-                      event.stopPropagation();
-                      handleMenuOpen(event);
+                      event.stopPropagation()
+                      handleMenuOpen(event)
                     }}
                   >
                     <MoreVertIcon />
@@ -191,7 +191,7 @@ const Post = ({
                   </Menu>
                 </>
               )
-            }            
+            }
             title={
               <Link
                 to={
@@ -277,9 +277,7 @@ const Post = ({
                     paddingLeft={1}
                     sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
                   >
-                    {countLike > 0
-                      ? `${countLike} liked`
-                      : '0 liked'}
+                    {countLike > 0 ? `${countLike} liked` : '0 liked'}
                   </Typography>
                 </IconButton>
               </Grid>
@@ -303,7 +301,7 @@ const Post = ({
           </CardActions>
         </Card>
       </Grid>
-      <ModalReport open={openModal} close={handleClose} id={postId}/>
+      <ModalReport open={openModal} close={handleClose} id={postId} />
     </Container>
   )
 }

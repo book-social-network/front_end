@@ -1,10 +1,10 @@
-import React from 'react';
-import Post from '../../layout/User/Poster/Post';
-import { useUserProfile } from '../../hooks/useUserProfile';
-import { Typography } from '@mui/material';
+import React from 'react'
+import Post from '../../layout/User/Poster/Post'
+import { useUserProfile } from '../../hooks/useUserProfile'
+import { Typography } from '@mui/material'
 
 function MyPost({ post }) {
-  const { user } = useUserProfile();
+  const { user } = useUserProfile()
 
   return (
     <>
@@ -16,7 +16,7 @@ function MyPost({ post }) {
         post.map((item, index) =>
           item.share === null ? (
             <Post
-              key={item.post.id || index} 
+              key={item.post.id || index}
               userName={user?.user.name}
               userId={user?.user.id}
               userAvatar={user?.user.image_url}
@@ -29,11 +29,11 @@ function MyPost({ post }) {
               likes={item?.likes?.length || 0}
               state_like={item['state-like']}
             />
-          ) : null 
+          ) : null,
         )
       )}
     </>
-  );
+  )
 }
 
-export default MyPost;
+export default MyPost

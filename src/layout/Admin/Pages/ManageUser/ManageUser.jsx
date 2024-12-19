@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Typography,
   ToggleButtonGroup,
   ToggleButton,
   ThemeProvider,
   createTheme,
-} from '@mui/material';
-import UserList from './UserList';
+} from '@mui/material'
+import UserList from './UserList'
 
 const theme = createTheme({
   components: {
@@ -24,16 +24,16 @@ const theme = createTheme({
       },
     },
   },
-});
+})
 
 export default function ManageUser() {
-  const [state, setState] = useState('all');
+  const [state, setState] = useState('all')
 
   const handleStateChange = (event, newState) => {
     if (newState !== null) {
-      setState(newState);
+      setState(newState)
     }
-  };
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,5 +63,5 @@ export default function ManageUser() {
         {state === 'old' && <UserList path="/api/user/get-all-user-old" />}
       </div>
     </ThemeProvider>
-  );
+  )
 }

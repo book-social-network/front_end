@@ -11,7 +11,6 @@ import MyGroupItem from '../../hooks/MyGroupItem'
 import AuthorizationAxios from '../../hooks/Request'
 
 const HomePage = () => {
-  ;<s></s>
   const { token } = useUserContext()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -51,7 +50,12 @@ const HomePage = () => {
               <LeftContainer />
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ paddingRight: '24px', background:'#ffd1dc5e'}}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            sx={{ paddingRight: '24px', background: '#ffd1dc5e' }}
+          >
             <CenterContainer />
             {posts.map((item, index) => {
               if (!item.group && item.share === null) {
@@ -74,27 +78,27 @@ const HomePage = () => {
                   />
                 )
               } else {
-                if(item.share === null)
-                return (
-                  <MyGroupItem
-                    key={index}
-                    book_link={item.books[0].link_book}
-                    group_avatar={item.group.image_group}
-                    group_description={item.group.description}
-                    group_id={item.group.id}
-                    group_name={item.group.name}
-                    image_book={item.books[0].image}
-                    name_book={item.books[0].name}
-                    user_id={item.user.id}
-                    post_id={item.post.id}
-                    likes={item.likes.length}
-                    state_like={item['state-like']}
-                    user_avatar={item.user.image_url}
-                    user_name={item.user.name}
-                    timeStamp={item.post.created_at}
-                    book_id={item.books[0].id}
-                  />
-                )
+                if (item.share === null)
+                  return (
+                    <MyGroupItem
+                      key={index}
+                      book_link={item.books[0].link_book}
+                      group_avatar={item.group.image_group}
+                      group_description={item.group.description}
+                      group_id={item.group.id}
+                      group_name={item.group.name}
+                      image_book={item.books[0].image}
+                      name_book={item.books[0].name}
+                      user_id={item.user.id}
+                      post_id={item.post.id}
+                      likes={item.likes.length}
+                      state_like={item['state-like']}
+                      user_avatar={item.user.image_url}
+                      user_name={item.user.name}
+                      timeStamp={item.post.created_at}
+                      book_id={item.books[0].id}
+                    />
+                  )
               }
             })}
           </Grid>

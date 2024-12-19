@@ -13,7 +13,7 @@ import {
 import { Copy } from 'lucide-react'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import AuthorizationAxios from '../../../../hooks/Request'
-import { CiShare1 } from "react-icons/ci";
+import { CiShare1 } from 'react-icons/ci'
 import { toast } from 'react-toastify'
 
 export default function DialogShare({ open, onClose, id }) {
@@ -32,8 +32,8 @@ export default function DialogShare({ open, onClose, id }) {
     handleUpdatePoint(1)
   }
 
-  const handleSharePost = async()=>{
-    await AuthorizationAxios.post(`/api/post/share`,{
+  const handleSharePost = async () => {
+    await AuthorizationAxios.post(`/api/post/share`, {
       share_id: id,
     })
     toast.success('Share successfully')
@@ -61,8 +61,8 @@ export default function DialogShare({ open, onClose, id }) {
           <IconButton color="primary" onClick={handleCopy}>
             <Copy />
           </IconButton>
-          <IconButton color='primary' onClick={handleSharePost}>
-            <CiShare1/>
+          <IconButton color="primary" onClick={handleSharePost}>
+            <CiShare1 />
           </IconButton>
         </Box>
       </DialogContent>

@@ -144,7 +144,7 @@ export default function DetailGroup() {
                 {dataGroup?.users
                   .slice(0, 4)
                   .map((user, index) =>
-                    user["role-in-group"] === 'admin' ? (
+                    user['role-in-group'] === 'admin' ? (
                       <IconAdmin image={user.user.image_url} />
                     ) : (
                       <Avatar

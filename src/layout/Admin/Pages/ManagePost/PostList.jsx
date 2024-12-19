@@ -66,13 +66,19 @@ const PostList = ({ path }) => {
       ),
     },
   ]
-  console.log(posts);
+  console.log(posts)
   const postRows = posts.map((postData) => ({
     id: postData.post.id,
     postId: postData.post.id,
-    description: postData.post.description !== null? postData.post.description : 'Bài viết chia sẻ',
+    description:
+      postData.post.description !== null
+        ? postData.post.description
+        : 'Bài viết chia sẻ',
     userName: postData.user.name,
-    booksName: postData.share!==null ? postData.share.books[0].name : postData.books[0].name,
+    booksName:
+      postData.share !== null
+        ? postData.share.books[0].name
+        : postData.books[0].name,
     commentsCount: postData.commemts.length,
     likesCount: postData.likes.length,
     reported: postData.warning.length,
