@@ -33,8 +33,7 @@ const MenuState = ({
         state_read: newStatus,
       },
     )
-    console.log(res)
-    if (res.status === 200) {
+    if (res?.status === 200) {
       console.log('State updated successfully!')
     } else {
       console.log('Failed to update state')

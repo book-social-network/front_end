@@ -194,7 +194,7 @@ export default function DetailBook() {
                       '& .MuiSelect-icon': { color: '#0056b3' },
                     }}
                   >
-                    <InputLabel id="status-label">Trạng thái</InputLabel>
+                    <InputLabel id="status-label">Status</InputLabel>
                     <Select
                       labelId="status-label"
                       value={status}

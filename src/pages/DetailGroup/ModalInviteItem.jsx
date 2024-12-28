@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa'
 import AuthorizationAxios from '../../hooks/Request'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import Pusher from 'pusher-js'
+import { toast } from 'react-toastify'
 
 export default function ModalInviteItem({
   user_id,
@@ -32,6 +33,7 @@ export default function ModalInviteItem({
         user_id: user_id,
       },
     )
+    toast.success(`You have invited ${user_name} join group`)
   }
   return (
     <Grid container alignItems="center" sx={{ marginBottom: 1 }}>

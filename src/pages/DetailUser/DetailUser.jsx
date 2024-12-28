@@ -6,6 +6,8 @@ import {
   Typography,
   Button,
   Divider,
+  Box,
+  Paper,
 } from '@mui/material'
 import { Avatar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
@@ -13,17 +15,21 @@ import { useParams } from 'react-router-dom'
 import Footer from '../../layout/User/Components/Footer/Footer'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import AuthorizationAxios from '../../hooks/Request'
+import MyPost from '../Profile/MyPost'
+import SharePostList from '../../layout/User/Poster/SharePostList'
 
 export default function DetailUser() {
   const { id } = useParams()
   const { user: loggedInUser, token } = useUserProfile()
   const [userDetails, setUserDetails] = useState(null)
+  const [post, setPost] = useState([])
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const resUser = await AuthorizationAxios.get(`/api/user/get/${id}`)
         setUserDetails(resUser.data)
+        setPost(resUser.data.posts)
       } catch (e) {
         console.error('Error fetching user data:', e)
       }
@@ -31,7 +37,6 @@ export default function DetailUser() {
 
     fetchUserData()
   }, [id, loggedInUser, token])
-
   const handleFollow = async () => {
     try {
       if (userDetails['state-follow'] === 1) {
@@ -132,6 +137,12 @@ export default function DetailUser() {
                   </div>
                 </CardContent>
               </Card>
+              <Box sx={{ marginTop: 3 }}>
+                  <Paper sx={{ padding: 3, backgroundColor: '#c5e5f5' }}>
+                    <SharePostList user={userDetails} />
+                    <MyPost post={post}/>
+                  </Paper>
+              </Box>
             </Grid>
           </Grid>
         </Container>

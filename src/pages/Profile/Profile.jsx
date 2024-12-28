@@ -17,15 +17,24 @@ import { Link } from 'react-router-dom'
 import ModalChangePass from './ModalChangePass'
 import MyPost from './MyPost'
 import SharePostList from '../../layout/User/Poster/SharePostList'
+import ModalFollowing from './ModalFollowing'
+import ModalFollower from './ModalFollower'
 
 export default function Profile() {
   const { user } = useUserProfile()
   const [state, setState] = useState('post')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalFollower, setModalFollower] = useState(false)
+  const [modalFollowing, setModalFollowing] = useState(false)
   const [post, setPost] = useState([])
+  console.log(user);
 
   const handleOpenModal = () => setIsModalOpen(true)
   const handleCloseModal = () => setIsModalOpen(false)
+  const handleOpenModalFollower = () => setModalFollower(true)
+  const handleCloseModalFollower = () => setModalFollower(false)
+  const handleOpenModalFollowing = () => setModalFollowing(true)
+  const handleCloseModalFollowing = ()=> setModalFollowing(false)
 
   const handleChange = (label) => {
     setState(label)
@@ -65,12 +74,12 @@ export default function Profile() {
           </Typography>
           <Grid display="flex">
             <Grid item>
-              <Typography variant="body2" color="#000">
+              <Typography variant="body2" color="#000" onClick={handleOpenModalFollower}>
                 {user?.followers?.user?.length || 0} Followers |
               </Typography>
             </Grid>
             <Grid item paddingLeft={1}>
-              <Typography variant="body2" color="#000">
+              <Typography variant="body2" color="#000" onClick={handleOpenModalFollowing}>
                 {user?.following?.user?.length || 0} Following
               </Typography>
             </Grid>
@@ -125,6 +134,8 @@ export default function Profile() {
       </Box>
 
       <ModalChangePass open={isModalOpen} close={handleCloseModal} />
+    <ModalFollowing open={modalFollowing} close={handleCloseModalFollowing} following={user?.following.user}/>
+    <ModalFollower open={modalFollower} close={handleCloseModalFollower} followers={user?.followers.user}/>
     </Container>
   )
 }
